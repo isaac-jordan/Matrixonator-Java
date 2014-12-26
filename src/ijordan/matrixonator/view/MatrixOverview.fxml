@@ -50,7 +50,7 @@
                   </GridPane>
                   <HBox layoutX="216.0" layoutY="259.0" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0">
                      <children>
-                        <Button layoutX="216.0" layoutY="259.0" mnemonicParsing="false" text="New..." />
+                        <Button layoutX="216.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNewMatrix" text="New..." />
                         <Button layoutX="278.0" layoutY="259.0" mnemonicParsing="false" text="Edit..." />
                         <Button layoutX="340.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDeleteMatrix" text="Delete" />
                      </children>

@@ -20,7 +20,7 @@ public class MainApp extends Application {
 	private BorderPane rootLayout;
 	
 	/**
-     * The data as an observable list of Persons.
+     * The data as an observable list of matrices.
      */
     private ObservableList<Matrix> matrixData = FXCollections.observableArrayList();
 
@@ -29,19 +29,13 @@ public class MainApp extends Application {
      */
     public MainApp() {
         // Add some sample data
-        matrixData.add(new Matrix("Hans"));
-        matrixData.add(new Matrix("Ruth"));
-        matrixData.add(new Matrix("Heinz"));
-        matrixData.add(new Matrix("Cornelia"));
-        matrixData.add(new Matrix("Werner"));
-        matrixData.add(new Matrix("Lydia"));
-        matrixData.add(new Matrix("Anna"));
-        matrixData.add(new Matrix("Stefan"));
-        matrixData.add(new Matrix("Martin"));
+        matrixData.add(new Matrix("Hans", new double[][]{{5,2},{3,0}}));
+        matrixData.add(new Matrix("Identity2", new double[][]{{1,0},{0,1}}));
+        
     }
 
     /**
-     * Returns the data as an observable list of Persons. 
+     * Returns the data as an observable list of matrices. 
      * @return
      */
     public ObservableList<Matrix> getMatrixData() {

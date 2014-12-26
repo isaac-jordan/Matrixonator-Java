@@ -15,27 +15,30 @@ public class Matrix {
     private final IntegerProperty numRows;
     private final IntegerProperty numCols;
     private final ObjectProperty<LocalDate> createdDate;
+    private final ObjectProperty<double[][]> data;
 
     /**
      * Default constructor.
+     * Creates an empty, unnamed matrix.
      */
     public Matrix() {
-        this(null);
+    	this(null, new double[0][0]);
     }
 
     /**
      * Constructor with some initial data.
      * 
-     * @param firstName
-     * @param lastName
+     * @param name
+     * @param data
      */
-    public Matrix(String name) {
+    public Matrix(String name, double[][] data) {
         this.name = new SimpleStringProperty(name);
+        this.data = new SimpleObjectProperty<double[][]>(data);
 
         // Some initial dummy data, just for convenient testing.
         this.numRows = new SimpleIntegerProperty(5);
         this.numCols = new SimpleIntegerProperty(6);
-        this.createdDate = new SimpleObjectProperty<LocalDate>(LocalDate.of(1999, 2, 21));
+        this.createdDate = new SimpleObjectProperty<LocalDate>(LocalDate.now());
     }
 
     //name
