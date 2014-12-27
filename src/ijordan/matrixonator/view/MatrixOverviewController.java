@@ -158,8 +158,10 @@ public class MatrixOverviewController {
 				for (int i = 0; i < numRows; i++) {
 					for (int j = 0; j < numCols; j++) {
 						// Naming of text fields needs to be improved
-						page2Grid.add(createTextField("" + i + " " + j, 20), j,
-								i);
+						TextField tx = createTextField("" + i + " " + j, 20);
+						tx.setPromptText("Enter integer");
+						page2Grid.add(tx,j,i);
+						
 					}
 				}
 				page2Grid.setHgap(5);
@@ -184,16 +186,23 @@ public class MatrixOverviewController {
 						.get("numCols"));
 				
 				double[][] data = new double[numRows][numCols];
+				
+				int currentData;
 
 				for (int i = 0; i < numRows; i++) {
 					for (int j = 0; j < numCols; j++) {
-						int currentData = Integer.parseInt((String) wizard
-								.getSettings().get("" + i + " " + j));
+						String raw = (String) wizard.getSettings().get("" + i + " " + j);
+						try {
+							currentData = Integer.parseInt(raw);
+						} catch (NumberFormatException e) {
+							currentData = 0;
+						}
+						
 						data[i][j] = currentData;
 
 					}
 				}
-				
+
 				mainApp.getMatrixData().add(new Matrix(name, data));
 
 			}

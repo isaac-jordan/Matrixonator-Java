@@ -35,9 +35,9 @@ public class Matrix {
         this.name = new SimpleStringProperty(name);
         this.data = new SimpleObjectProperty<double[][]>(data);
 
-        // Some initial dummy data, just for convenient testing.
-        this.numRows = new SimpleIntegerProperty(5);
-        this.numCols = new SimpleIntegerProperty(6);
+        
+        this.numRows = new SimpleIntegerProperty(data.length);
+        this.numCols = new SimpleIntegerProperty(data[0].length); //Assumes matrices have 1 entry
         this.createdDate = new SimpleObjectProperty<LocalDate>(LocalDate.now());
     }
 
