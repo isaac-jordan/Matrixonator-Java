@@ -93,6 +93,11 @@ public class MatrixOverviewController {
 		matrixTable.setItems(mainApp.getMatrixData());
 	}
 
+	/**
+	 * This method is called when the listener detects that a matrix was selected on the left hand table.
+	 * It updates the labels on the right-hand side of the GUI.
+	 * @param matrix
+	 */
 	private void showMatrixDetails(Matrix matrix) {
 		if (matrix != null) {
 			nameLabel.setText(matrix.getName());
@@ -109,6 +114,8 @@ public class MatrixOverviewController {
 
 	/**
 	 * Called when the user clicks on the new button.
+	 * This method will guide the user through the wizard
+	 * that asks them to enter the matrix details.
 	 */
 	@FXML
 	private void handleNewMatrix() {
@@ -235,7 +242,9 @@ public class MatrixOverviewController {
 	}
 
 	/**
-	 * Called when the user clicks on the delete button.
+	 * Method is called when the "Delete" button is pressed.
+	 * If a valid matrix is selected in the table on the right,
+	 * then it is deleted from the matrixTable.
 	 */
 	@FXML
 	private void handleDeleteMatrix() {
@@ -254,6 +263,12 @@ public class MatrixOverviewController {
 
 	}
 
+	/**
+	 * A utility method for creating TextFields with specified id and width.
+	 * @param id
+	 * @param width
+	 * @return
+	 */
 	private TextField createTextField(String id, int width) {
 		TextField textField = new TextField();
 		textField.setId(id);
