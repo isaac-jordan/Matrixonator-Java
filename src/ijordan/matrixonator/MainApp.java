@@ -4,6 +4,7 @@ import ijordan.matrixonator.model.Matrix;
 import ijordan.matrixonator.view.MatrixOverviewController;
 
 import java.io.IOException;
+import java.net.URL;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -60,7 +61,7 @@ public class MainApp extends Application {
         try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
+            loader.setLocation(MatrixOverviewController.class.getResource("RootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
 
             // Show the scene containing the root layout.
