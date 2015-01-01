@@ -1,5 +1,7 @@
 package ijordan.matrixonator.view;
 
+import java.util.Optional;
+
 import org.controlsfx.dialog.Wizard;
 import org.controlsfx.dialog.Wizard.WizardPane;
 import org.controlsfx.dialog.Wizard.LinearFlow;
@@ -17,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -240,10 +243,41 @@ public class MatrixOverviewController {
 					}
 				});
 	}
+	
+	/**
+	 * Method is called when the "Edit" button is pressed.
+	 * If a valid matrix is selected in the table on the left,
+	 * then it is deleted from the matrixTable.
+	 */
+	@FXML
+	private void handleEditMatrix() {
+		int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			//User has selected a valid matrix on the left.
+			TextInputDialog dialog = new TextInputDialog(matrixTable.getSelectionModel().getSelectedItem().getName());
+			dialog.setTitle("Editing Matrix");
+			dialog.setHeaderText("Leave blank, or click cancel for no changes.");
+			dialog.setContentText("Please enter new name:");
+			
+			Optional<String> result = dialog.showAndWait();
+
+			result.ifPresent(name -> matrixTable.getSelectionModel().getSelectedItem().setName(name));
+			
+		} else {
+			// Nothing is selected
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("No Selection");
+			alert.setHeaderText("No Matrix Selected");
+			alert.setContentText("Please select a matrix in the table.");
+
+			alert.showAndWait();
+		}
+
+	}
 
 	/**
 	 * Method is called when the "Delete" button is pressed.
-	 * If a valid matrix is selected in the table on the right,
+	 * If a valid matrix is selected in the table on the left,
 	 * then it is deleted from the matrixTable.
 	 */
 	@FXML
