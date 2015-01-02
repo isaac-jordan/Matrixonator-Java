@@ -10,7 +10,7 @@ public class MatrixTest {
 	@Test
     public void testMatrixCreation(){
 		double[][] data = new double[5][2];
-		data[1][2] = 5.2;
+		data[1][1] = 5.2;
 		
         final Matrix testMatrix = new Matrix("Test", data);
         assertEquals("Created matrix has inaccurate number of rows", testMatrix.getNumRows(), 5);
