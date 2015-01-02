@@ -93,6 +93,11 @@ public class Matrix {
 		return createdDate;
 	}
 	
+	//data
+	public double[][] getData() {
+		return data.get();
+	}
+	
 
 	
 
