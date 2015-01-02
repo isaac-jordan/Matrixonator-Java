@@ -169,7 +169,7 @@ public class MatrixOverviewController {
 					for (int j = 0; j < numCols; j++) {
 						// Naming of text fields needs to be improved
 						TextField tx = createTextField("" + i + " " + j, 20);
-						tx.setPromptText("Enter integer");
+						tx.setPromptText("Enter value");
 						page2Grid.add(tx,j,i);
 						
 					}
@@ -197,13 +197,13 @@ public class MatrixOverviewController {
 				
 				double[][] data = new double[numRows][numCols];
 				
-				int currentData;
+				double currentData;
 
 				for (int i = 0; i < numRows; i++) {
 					for (int j = 0; j < numCols; j++) {
 						String raw = (String) wizard.getSettings().get("" + i + " " + j);
 						try {
-							currentData = Integer.parseInt(raw);
+							currentData = Double.valueOf(raw);
 						} catch (NumberFormatException e) {
 							currentData = 0;
 						}
