@@ -40,6 +40,50 @@ public class Matrix {
         this.numCols = new SimpleIntegerProperty(data[0].length); //Assumes matrices have 1 entry
         this.createdDate = new SimpleObjectProperty<LocalDate>(LocalDate.now());
     }
+    
+    /**
+     * Checks whether it is possible to multiply two matrices together.
+     * @param A
+     * @param B
+     * @return
+     */
+    public static Boolean checkMultCompatibility(Matrix A, Matrix B) {
+		if (A.getData().length != B.getData()[0].length) {
+			return false;
+		}
+		return true;
+    	
+    }
+    
+    /**
+     * Uses naive method to calculate the product of two matrices.
+     * @param A
+     * @param B
+     * @return
+     */
+    public static Matrix multiplyMatrices(Matrix A, Matrix B) {
+    	if (checkMultCompatibility(A,B)) {
+    		double [][] data = new double[A.getNumRows()][B.getNumCols()];
+    		int i = 0;
+    		int j = 0;
+    		int k = 0;
+    		while (i < A.getNumRows()) {
+                while (j < B.getNumCols()) {
+                    while (k < B.getNumRows()) {
+                        data[i][j] = data[i][j] + A.getData()[i][k] * B.getData()[k][j];
+                        k += 1;
+                    }
+                    j += 1;
+                    k = 0;
+                }
+                i += 1;
+                j = 0;
+    		}
+    		return (new Matrix(null, data));
+    	}
+		return null;
+    	
+    }
 
     //name
 	public String getName() {
