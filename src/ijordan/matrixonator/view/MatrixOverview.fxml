@@ -36,6 +36,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Label text="Name" />
@@ -46,6 +47,8 @@
                         <Label fx:id="numColsLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label text="Date Created" GridPane.rowIndex="3" />
                         <Label fx:id="createdDateLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="Data" GridPane.rowIndex="4" />
+                        <Button mnemonicParsing="false" onAction="#handleShowData" text="Show Data" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
                   <HBox layoutX="216.0" layoutY="259.0" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0">

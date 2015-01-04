@@ -15,6 +15,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -295,6 +296,48 @@ public class MatrixOverviewController {
 			alert.showAndWait();
 		}
 
+	}
+	
+	@FXML
+	private void handleShowData() {
+		int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			alertMatrixData(matrixTable.getSelectionModel().getSelectedItem());
+		} else {
+			// Nothing is selected
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("No Selection");
+			alert.setHeaderText("No Matrix Selected");
+			alert.setContentText("Please select a matrix in the table.");
+
+			alert.showAndWait();
+		}
+
+	}
+	
+	/**
+	 * Creates and displays a pop-up (alert) that contains the data of the given matrix.
+	 * ONLY PARTIALLY WORKS
+	 * @param matrix
+	 */
+	private void alertMatrixData(Matrix matrix) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle(matrix.getName());
+		alert.setHeaderText("Showing the data associated with " + matrix.getName());
+		
+		GridPane alertGrid = new GridPane();
+		alertGrid.setHgap(10);
+		alertGrid.setVgap(5);
+		for (int i = 0; i < matrix.getNumRows(); i++) {
+			for (int j = 0; j < matrix.getNumCols(); j++) {
+				Label label = new Label();
+				label.setText(String.valueOf(matrix.getData()[i][j])); 
+				alertGrid.add(label,j,i);
+				
+			}
+		}
+		alert.getDialogPane().setExpandableContent(alertGrid);
+		alert.showAndWait();
 	}
 
 	/**
