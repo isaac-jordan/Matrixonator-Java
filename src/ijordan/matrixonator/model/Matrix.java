@@ -11,7 +11,7 @@ import javafx.beans.property.StringProperty;
 
 public class Matrix {
 	
-	private final StringProperty name;
+	private StringProperty name;
     private final IntegerProperty numRows;
     private final IntegerProperty numCols;
     private final ObjectProperty<LocalDate> createdDate;
@@ -84,7 +84,29 @@ public class Matrix {
 		return null;
     	
     }
-
+    
+    /**
+     * Static method that adds two matrices A, and B. 
+     * If the matrices cannot be added, an IllegalArgumentException is thrown.
+     * @param A
+     * @param B
+     * @return
+     */
+	public static Matrix addMatrices(Matrix A, Matrix B) {
+		if (A.getNumRows() == B.getNumRows() && A.getNumCols() == B.getNumCols()) {
+			double[][] data = new double[A.getNumRows()][A.getNumCols()];
+			for (int i = 0; i < A.getNumRows(); i++) {
+				for (int j = 0; j < A.getNumCols(); j++) {
+					data[i][j] = A.getData()[i][j] + B.getData()[i][j];
+				}
+			}
+			return (new Matrix(null, data));
+			
+		} else {
+			throw new IllegalArgumentException();
+		}
+	}
+    
     //name
 	public String getName() {
 		return name.get();
