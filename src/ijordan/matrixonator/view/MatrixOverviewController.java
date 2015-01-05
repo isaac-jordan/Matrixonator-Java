@@ -63,27 +63,19 @@ public class MatrixOverviewController {
 	@FXML
 	private void initialize() {
 		// Initialise the person table with the two columns.
-		nameColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.nameProperty());
+		nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 
 		// Not typesafe
-		numRowsColumn
-				.setCellValueFactory(new PropertyValueFactory<Matrix, Integer>(
-						"numRows"));
-		numColsColumn
-				.setCellValueFactory(new PropertyValueFactory<Matrix, Integer>(
-						"numCols"));
+		numRowsColumn.setCellValueFactory(new PropertyValueFactory<Matrix, Integer>("numRows"));
+		numColsColumn.setCellValueFactory(new PropertyValueFactory<Matrix, Integer>("numCols"));
 
 		// Clear matrix details.
 		showMatrixDetails(null);
 
 		// Listen for selection changes and show the person details when
 		// changed.
-		matrixTable
-				.getSelectionModel()
-				.selectedItemProperty()
-				.addListener(
-						(observable, oldValue, newValue) -> showMatrixDetails(newValue));
+		matrixTable.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> showMatrixDetails(newValue));
 	}
 
 	/**
@@ -99,8 +91,10 @@ public class MatrixOverviewController {
 	}
 
 	/**
-	 * This method is called when the listener detects that a matrix was selected on the left hand table.
-	 * It updates the labels on the right-hand side of the GUI.
+	 * This method is called when the listener detects that a matrix was
+	 * selected on the left hand table. It updates the labels on the right-hand
+	 * side of the GUI.
+	 * 
 	 * @param matrix
 	 */
 	private void showMatrixDetails(Matrix matrix) {
@@ -118,9 +112,8 @@ public class MatrixOverviewController {
 	}
 
 	/**
-	 * Called when the user clicks on the new button.
-	 * This method will guide the user through the wizard
-	 * that asks them to enter the matrix details.
+	 * Called when the user clicks on the new button. This method will guide the
+	 * user through the wizard that asks them to enter the matrix details.
 	 */
 	@FXML
 	private void handleNewMatrix() {
@@ -161,10 +154,8 @@ public class MatrixOverviewController {
 
 				// Bit of a horrible hack to get the integers. Need to find
 				// direct conversion.
-				int numRows = Integer.parseInt((String) wizard.getSettings()
-						.get("numRows"));
-				int numCols = Integer.parseInt((String) wizard.getSettings()
-						.get("numCols"));
+				int numRows = Integer.parseInt((String) wizard.getSettings().get("numRows"));
+				int numCols = Integer.parseInt((String) wizard.getSettings().get("numCols"));
 
 				GridPane page2Grid = new GridPane();
 				for (int i = 0; i < numRows; i++) {
@@ -172,8 +163,8 @@ public class MatrixOverviewController {
 						// Naming of text fields needs to be improved
 						TextField tx = createTextField("" + i + " " + j, 20);
 						tx.setPromptText("Enter value");
-						page2Grid.add(tx,j,i);
-						
+						page2Grid.add(tx, j, i);
+
 					}
 				}
 				page2Grid.setHgap(5);
@@ -192,13 +183,11 @@ public class MatrixOverviewController {
 
 				// Bit of a horrible hack to get the integers. Need to find
 				// direct conversion.
-				int numRows = Integer.parseInt((String) wizard.getSettings()
-						.get("numRows"));
-				int numCols = Integer.parseInt((String) wizard.getSettings()
-						.get("numCols"));
-				
+				int numRows = Integer.parseInt((String) wizard.getSettings().get("numRows"));
+				int numCols = Integer.parseInt((String) wizard.getSettings().get("numCols"));
+
 				double[][] data = new double[numRows][numCols];
-				
+
 				double currentData;
 
 				for (int i = 0; i < numRows; i++) {
@@ -209,7 +198,7 @@ public class MatrixOverviewController {
 						} catch (NumberFormatException e) {
 							currentData = 0;
 						}
-						
+
 						data[i][j] = currentData;
 
 					}
@@ -236,35 +225,35 @@ public class MatrixOverviewController {
 		wizard.setFlow(new LinearFlow(page1, page2, page3));
 
 		// show wizard and wait for response
-		wizard.showAndWait().ifPresent(
-				result -> {
-					if (result == ButtonType.FINISH) {
-						System.out.println("Wizard finished, settings: "
-								+ wizard.getSettings());
-						System.out.println(wizard.getProperties());
-					}
-				});
+		wizard.showAndWait().ifPresent(result -> {
+			if (result == ButtonType.FINISH) {
+				System.out.println("Wizard finished, settings: " + wizard.getSettings());
+				System.out.println(wizard.getProperties());
+			}
+		});
 	}
-	
+
 	/**
-	 * Method is called when the "Edit" button is pressed.
-	 * If a valid matrix is selected in the table on the left,
-	 * then it is deleted from the matrixTable.
+	 * Method is called when the "Edit" button is pressed. If a valid matrix is
+	 * selected in the table on the left, then it is deleted from the
+	 * matrixTable.
 	 */
 	@FXML
 	private void handleEditMatrix() {
 		int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
-			//User has selected a valid matrix on the left.
-			TextInputDialog dialog = new TextInputDialog(matrixTable.getSelectionModel().getSelectedItem().getName());
+			// User has selected a valid matrix on the left.
+			TextInputDialog dialog = new TextInputDialog(matrixTable.getSelectionModel()
+					.getSelectedItem().getName());
 			dialog.setTitle("Editing Matrix");
 			dialog.setHeaderText("Leave blank, or click cancel for no changes.");
 			dialog.setContentText("Please enter new name:");
-			
+
 			Optional<String> result = dialog.showAndWait();
 
-			result.ifPresent(name -> matrixTable.getSelectionModel().getSelectedItem().setName(name));
-			
+			result.ifPresent(name -> matrixTable.getSelectionModel().getSelectedItem()
+					.setName(name));
+
 		} else {
 			// Nothing is selected
 			Alert alert = new Alert(AlertType.ERROR);
@@ -278,9 +267,9 @@ public class MatrixOverviewController {
 	}
 
 	/**
-	 * Method is called when the "Delete" button is pressed.
-	 * If a valid matrix is selected in the table on the left,
-	 * then it is deleted from the matrixTable.
+	 * Method is called when the "Delete" button is pressed. If a valid matrix
+	 * is selected in the table on the left, then it is deleted from the
+	 * matrixTable.
 	 */
 	@FXML
 	private void handleDeleteMatrix() {
@@ -298,7 +287,7 @@ public class MatrixOverviewController {
 		}
 
 	}
-	
+
 	@FXML
 	private void handleShowData() {
 		int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
@@ -315,10 +304,11 @@ public class MatrixOverviewController {
 		}
 
 	}
-	
+
 	/**
-	 * Creates and displays a pop-up (alert) that contains the data of the given matrix.
-	 * ONLY PARTIALLY WORKS
+	 * Creates and displays a pop-up (alert) that contains the data of the given
+	 * matrix. ONLY PARTIALLY WORKS
+	 * 
 	 * @param matrix
 	 */
 	private void alertMatrixData(Matrix matrix) {
@@ -327,17 +317,17 @@ public class MatrixOverviewController {
 		dialog.setHeaderText("Showing the data associated with " + matrix.getName());
 		ButtonType closeButtonType = new ButtonType("Close", ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(closeButtonType);
-		
+
 		GridPane alertGrid = new GridPane();
 		alertGrid.setHgap(20);
 		alertGrid.setVgap(10);
 		for (int i = 0; i < matrix.getNumRows(); i++) {
 			for (int j = 0; j < matrix.getNumCols(); j++) {
 				Label label = new Label();
-			    //Should probably use decimalFormat for clean formatting
-				label.setText(String.valueOf(matrix.getData()[i][j])); 
-				alertGrid.add(label,j,i);
-				
+				// Should probably use decimalFormat for clean formatting
+				label.setText(String.valueOf(matrix.getData()[i][j]));
+				alertGrid.add(label, j, i);
+
 			}
 		}
 		dialog.getDialogPane().setContent(alertGrid);
@@ -346,6 +336,7 @@ public class MatrixOverviewController {
 
 	/**
 	 * A utility method for creating TextFields with specified id and width.
+	 * 
 	 * @param id
 	 * @param width
 	 * @return
