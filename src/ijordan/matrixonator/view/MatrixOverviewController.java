@@ -211,26 +211,11 @@ public class MatrixOverviewController {
 		page3.setHeaderText("Goodbye!");
 		page3.setContentText("Matrix created.");
 
-		// Example of how to add a button
-		// ButtonType helpDialogButton = new ButtonType("Help",
-		// ButtonData.HELP_2);
-		// page3.getButtonTypes().add(helpDialogButton);
-		// Button helpButton = (Button) page3.lookupButton(helpDialogButton);
-		// helpButton.addEventFilter(ActionEvent.ACTION, actionEvent -> {
-		// actionEvent.consume(); // stop hello.dialog from closing
-		// System.out.println("Help clicked!");
-		// });
-
 		// create wizard
 		wizard.setFlow(new LinearFlow(page1, page2, page3));
 
 		// show wizard and wait for response
-		wizard.showAndWait().ifPresent(result -> {
-			if (result == ButtonType.FINISH) {
-				System.out.println("Wizard finished, settings: " + wizard.getSettings());
-				System.out.println(wizard.getProperties());
-			}
-		});
+		wizard.showAndWait();
 	}
 
 	/**
@@ -307,7 +292,7 @@ public class MatrixOverviewController {
 
 	/**
 	 * Creates and displays a pop-up (alert) that contains the data of the given
-	 * matrix. ONLY PARTIALLY WORKS
+	 * matrix.
 	 * 
 	 * @param matrix
 	 */
@@ -332,6 +317,23 @@ public class MatrixOverviewController {
 		}
 		dialog.getDialogPane().setContent(alertGrid);
 		dialog.showAndWait();
+	}
+	
+	@FXML
+	private void handleCalculateRREF() {
+		int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			alertMatrixData(matrixTable.getSelectionModel().getSelectedItem().reducedEchelonForm());
+		} else {
+			// Nothing is selected
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("No Selection");
+			alert.setHeaderText("No Matrix Selected");
+			alert.setContentText("Please select a matrix in the table.");
+
+			alert.showAndWait();
+		}
+
 	}
 
 	/**
