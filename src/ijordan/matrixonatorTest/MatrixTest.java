@@ -96,5 +96,21 @@ public class MatrixTest {
         		Matrix.addMatrices(testMatrix1, testMatrix2).getData());
         
     }
+	
+	@Test
+    public void testMatrixReduce(){
+		double[][] dataFirst = {{1,0,3,3},{0,1,0,4},{0,0,0,1}};
+		double[][] dataSecond = {{6543, 7896, 9876, 156}, {76546, 765467, 4657, 573}, {34765, 28452, 9876789, 475645323234.0}};
+		
+		double[][] dataResult1 = {{1,0,3,0},{0,1,0,0},{0,0,0,1}};
+		
+        final Matrix testMatrix1 = new Matrix("Test1", dataFirst);
+        final Matrix testMatrix2 = new Matrix("Test2", dataSecond);
+        
+        assertEquals("Matrix Reduction gives incorrect result", 
+        		dataResult1, 
+        		testMatrix1.reducedEchelonForm().getData());
+        
+    }
 
 }
