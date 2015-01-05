@@ -6,9 +6,10 @@ To Do:
 ======
 See the issue tracker for feature/bugfix requests. Feel free to create some too!
 
-Install Dependencies
+Dependencies
 ====================
 - Java 8 SDK
-
-
-Two library files are required for GUI, these are included the /lib/ folder.
+- JavaFX SDK
+- ControlsFX jar (in /lib)
+- openjfx-dialogs jar (in /lib)
+- JUnit 4 (included in Java 8 SDK)
