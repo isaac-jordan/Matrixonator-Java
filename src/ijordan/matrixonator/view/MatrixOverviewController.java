@@ -15,6 +15,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -321,23 +322,26 @@ public class MatrixOverviewController {
 	 * @param matrix
 	 */
 	private void alertMatrixData(Matrix matrix) {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle(matrix.getName());
-		alert.setHeaderText("Showing the data associated with " + matrix.getName());
+		Dialog dialog = new Dialog();
+		dialog.setTitle(matrix.getName());
+		dialog.setHeaderText("Showing the data associated with " + matrix.getName());
+		ButtonType closeButtonType = new ButtonType("Close", ButtonData.OK_DONE);
+		dialog.getDialogPane().getButtonTypes().addAll(closeButtonType);
 		
 		GridPane alertGrid = new GridPane();
-		alertGrid.setHgap(10);
-		alertGrid.setVgap(5);
+		alertGrid.setHgap(20);
+		alertGrid.setVgap(10);
 		for (int i = 0; i < matrix.getNumRows(); i++) {
 			for (int j = 0; j < matrix.getNumCols(); j++) {
 				Label label = new Label();
+			    //Should probably use decimalFormat for clean formatting
 				label.setText(String.valueOf(matrix.getData()[i][j])); 
 				alertGrid.add(label,j,i);
 				
 			}
 		}
-		alert.getDialogPane().setExpandableContent(alertGrid);
-		alert.showAndWait();
+		dialog.getDialogPane().setContent(alertGrid);
+		dialog.showAndWait();
 	}
 
 	/**

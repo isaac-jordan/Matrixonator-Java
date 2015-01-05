@@ -81,7 +81,7 @@ public class Matrix {
     		}
     		return (new Matrix(null, data));
     	}
-		return null;
+		throw new IllegalArgumentException("Matrices are not compatible");
     	
     }
     
@@ -103,7 +103,7 @@ public class Matrix {
 			return (new Matrix(null, data));
 			
 		} else {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Matrices are not compatible.");
 		}
 	}
     
