@@ -164,6 +164,15 @@ public class Matrix {
 			
 
 		}
+		//At this stage, the data may contain -0.0, which is not equal to 0.0. So we convert all -0.0 to 0.0.
+		for (i = 0; i<localMatrix.getNumRows(); i++) {
+			for (j = 0; j<localMatrix.getNumCols();j++) {
+				if (localMatrix.getData()[i][j] == -0.0) {
+					localMatrix.getData()[i][j] = 0.0;
+				}
+			}
+		}
+		
 		System.out.println("RREF: " + Arrays.deepToString(localMatrix.getData()));
 		return localMatrix;
 

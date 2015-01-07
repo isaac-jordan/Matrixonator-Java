@@ -112,7 +112,7 @@ public class MatrixTest {
 	
 	@Test
 	public void testMatrixReduceNormal2() {
-		double[][] data = { { 15, 2, 3 }, { 0, 2, 3 } };
+		double[][] data = { { 15, 3, 6 }, { 0, 3, 6 } };
 		double[][] dataResult = { { 1, 0, 0 }, { 0, 1, 2 } };
 		final Matrix testMatrix = new Matrix("Test1", data);
 
