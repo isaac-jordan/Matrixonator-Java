@@ -118,7 +118,8 @@ public class Matrix {
 	 * @return
 	 */
 	public Matrix reducedEchelonForm() {
-		Matrix localMatrix = new Matrix(null, this.getData());
+		double[][] data = this.getData();
+		Matrix localMatrix = new Matrix(null, data);
 		int i = 0;
 		int j = 0;
 		while (i < this.getNumRows() && j < this.getNumCols()) {
@@ -152,7 +153,9 @@ public class Matrix {
 			if (stepOne(localMatrix, i, j) && j != localMatrix.getNumCols()-1) {
 				j++;
 			}
-			stepTwo(localMatrix, i, j);
+			if (localMatrix.getData()[i][j] != 0) {
+				stepTwo(localMatrix, i, j);
+			}
 			
 			stepThree(localMatrix, i, j);
 
@@ -164,30 +167,6 @@ public class Matrix {
 		System.out.println("RREF: " + Arrays.deepToString(localMatrix.getData()));
 		return localMatrix;
 
-	}
-
-	public Matrix ERO1(Matrix A, int row1, int row2) {
-		// Swaps row1 and row2
-		double[] temp = A.getData()[row1];
-		A.getData()[row1] = A.getData()[row2];
-		A.getData()[row2] = temp;
-		return A;
-	}
-
-	public Matrix ERO2(Matrix A, int row, double scalar) {
-		// Multiply every element of row by scalar
-		for (int i = 0; i < A.getNumCols(); i++) {
-			A.getData()[row][i] *= scalar;
-		}
-		return A;
-	}
-
-	public Matrix ERO3(Matrix A, int row1, int row2, double scalar) {
-		//row1 = row1 + scalar*row2
-		for (int i = 0; i < A.getNumCols(); i++) {
-			A.getData()[row1][i] += scalar * A.getData()[row2][i];
-		}
-		return A;
 	}
 
 	// http://www.csun.edu/~panferov/math262/262_rref.pdf
@@ -238,6 +217,30 @@ public class Matrix {
 			}
 			x += 1;
 		}
+	}
+	
+	public Matrix ERO1(Matrix A, int row1, int row2) {
+		// Swaps row1 and row2
+		double[] temp = A.getData()[row1];
+		A.getData()[row1] = A.getData()[row2];
+		A.getData()[row2] = temp;
+		return A;
+	}
+
+	public Matrix ERO2(Matrix A, int row, double scalar) {
+		// Multiply every element of row by scalar
+		for (int i = 0; i < A.getNumCols(); i++) {
+			A.getData()[row][i] *= scalar;
+		}
+		return A;
+	}
+
+	public Matrix ERO3(Matrix A, int row1, int row2, double scalar) {
+		//row1 = row1 + scalar*row2
+		for (int i = 0; i < A.getNumCols(); i++) {
+			A.getData()[row1][i] += scalar * A.getData()[row2][i];
+		}
+		return A;
 	}
 
 	// END OF RREF CODE
