@@ -60,6 +60,18 @@ public class MatrixTest {
 		//If either fails, we've failed this test!
 		assertFalse("Matrix get Row has invalid members", RowFails);
 	}
+	
+	
+	@Test //Tests that matrix will be saved properly
+	public void testMatrixSave()
+	{
+		double[][] data  = { { 1,2,3,4,5 } ,
+				             { 6,7,8,9,10} };
+		
+		Matrix testMatrix = new Matrix("testMatrixSave", data);
+			
+		assertTrue("Matrix did not save successfully", testMatrix.save());
+	}
 
 
 }
