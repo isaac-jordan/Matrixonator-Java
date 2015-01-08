@@ -3,6 +3,9 @@ package ijordan.matrixonatorTest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.time.LocalDate;
+
 import ijordan.matrixonator.model.*;
 
 import org.junit.Test;
@@ -82,6 +85,30 @@ public class MatrixTest {
 		assertTrue("Matrix did not save successfully", testMatrix.save());
 	}
 
+	@Test //Test to check Matrix load
+	public void testMatrixLoad()
+	{
+		/* THIS IS EXTREMELY BAD PRACTICE TO OREDER UNIT TESTS
+		 * BUT IS DONE FOR SAKE OF EASE AT THIS STAGE
+		 */
+		Matrix testMatrix = new Matrix("Test",new double[2][2]);
+		
+		boolean result = testMatrix.load("./testMatrixSave.matrix");
+		
+		if (!result) { testMatrixSave(); result = testMatrix.load("./testMatrixSave.matrix"); }
+		
+		assertTrue("Matrix was not loaded successfully", result); 	//Check to load file correctly
+		
+		assertTrue("Matrix name data was invalid", testMatrix.getName() == "TestMatrixSave");
+		assertTrue("Matrix creation date was wrong", testMatrix.getCreatedDate() == LocalDate.now());
+		assertTrue("Matrix row count is wrong", testMatrix.getNumRows() == 2);
+		assertTrue("Matrix col count is wrong", testMatrix.getNumCols() == 5);
+		
+		double[][] data = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 } };
+		
+		assertTrue("Matrix data is wrong", data.equals(testMatrix.getData()));
+	}
+	
 	/*
 	 * -------------------------- Matrix Solving Tests
 	 */

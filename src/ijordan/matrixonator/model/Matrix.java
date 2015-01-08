@@ -10,11 +10,12 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-
-//Required for Save
+//Required for Save/Load
 import java.io.File;
 import java.io.BufferedWriter;
+import java.io.BufferedReader;
 import java.io.FileWriter;
+import java.io.FileReader;
 import java.io.IOException;
 
 public class Matrix {
@@ -49,7 +50,7 @@ public class Matrix {
 		this.numCols = new SimpleIntegerProperty(data[0].length);
 		this.createdDate = new SimpleObjectProperty<LocalDate>(LocalDate.now());
 	}
-
+	
 	// Getters/Setters
 	// name
 	public String getName() {
@@ -182,6 +183,67 @@ public class Matrix {
 			bw.close();
 			return true;
 		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	/**
+	 * load
+	 * 
+	 * @param Matrix file to load
+	 * @returns True on success, false if error occurs
+	 */
+	public boolean load(String filename) {
+
+		// Checking for location settings are shown
+		if (!filename.startsWith("./")) {
+			filename = "./" + filename;
+		}
+
+		File matrixFile = new File(filename);
+
+		if (!matrixFile.exists()) {
+			return false;
+		}
+
+		try {
+			FileReader fr = new FileReader(matrixFile);
+			BufferedReader br = new BufferedReader(fr);
+
+			String name = br.readLine();
+			LocalDate date = LocalDate.parse(br.readLine());
+			String[] NumRowsCols = br.readLine().split(",");
+			int Rows = Integer.parseInt(NumRowsCols[0]);
+			int Cols = Integer.parseInt(NumRowsCols[1]);
+
+			double[][] matrixData = new double[Rows][Cols];
+
+			for (int i = 0; i < Rows; ++i) {
+				String row = br.readLine();
+				String[] Values = row.split(",");
+				int Col = 0;
+
+				for (String val : Values) {
+					matrixData[i][Col] = Double.parseDouble(val);
+					++Col;
+				}
+			}
+
+			br.close();
+
+			// Adding data to the class
+			this.setName(name);
+			this.setCreatedDate(LocalDate.from(date));
+			this.setNumRows(Rows);
+			this.setNumCols(Cols);
+			this.data.setValue(matrixData);
+
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
