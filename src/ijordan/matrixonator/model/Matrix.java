@@ -71,36 +71,6 @@ public class Matrix {
 	//Returns a given row of Matrix
 	public double[] getRow(int row) { return getData()[row]; }
 	
-	//Returns a given column of the matrix
-	public double[] getCol(int col) 
-	{
-		int rows = getNumRows();
-		double[] column = new double[rows];
-		double[][] matrix = data.get();
-		
-		for(int i = 0; i < rows; ++i) { column[i] = matrix[i][col]; }
-			
-		return column;
-		
-	}
-
 	//Returns a given cell of the matrix
 	public double getCell(int row, int col){ return data.get()[row][col]; }
-	
-	//Rounds all values in the matrix
-	public void roundValues()
-	{
-		double[][] newdata = new double[getNumRows()][getNumCols()];
-		double[][] olddata = data.get();
-		
-		for(int i = 0; i < getNumRows(); ++i)
-		{
-			for (int j = 0; j < getNumCols(); ++j)
-			{
-				newdata[i][j] = Math.round(olddata[i][j]);
-			}
-		}
-		
-		this.data = new SimpleObjectProperty<double[][]>(olddata);
-	}
 }

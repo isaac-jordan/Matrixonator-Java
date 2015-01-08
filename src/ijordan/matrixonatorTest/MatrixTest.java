@@ -40,7 +40,7 @@ public class MatrixTest {
 	
 	
 	@Test //Checks if we have our row and col getters working properly
-	public void testMartixRolCol2(){	
+	public void testMartixRol2(){	
 							//C1   C2   C3
 		double[][] data = {  {1.0, 1.0, 1.0} ,	//R1
 				             {1.0, 2.0, 3.0} ,	//R2
@@ -50,21 +50,15 @@ public class MatrixTest {
 		
 		//Get the first row and column
 		double[] Row1 = testMatrix.getRow(0);
-		double[] Col1 = testMatrix.getCol(0);
 		
 		boolean RowFails = false;
-		boolean ColFails = false;
 		
-		//Check that each value in the Row and Column only has 1.0 in it
+		//Check that each value in the Row only has 1.0 in it
 		for(double val : Row1)
 		{ if (val != 1.0) { RowFails = true; break;}}
 		
-		for(double val : Col1)
-		{ if (val != 1.0) { ColFails = true; break;}}
-		
 		//If either fails, we've failed this test!
 		assertFalse("Matrix get Row has invalid members", RowFails);
-		assertFalse("Matrix get Col has invalid members", ColFails);
 	}
 
 

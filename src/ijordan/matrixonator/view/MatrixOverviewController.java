@@ -46,10 +46,6 @@ public class MatrixOverviewController {
 	// Reference to the main application.
 	private MainApp mainApp;
 	
-	//Matrix Classes we require (since Revision 2)
-	private SimpleMatrixArithmetic SMA = new SimpleMatrixArithmetic();
-	private MatrixSolver MS = new MatrixSolver();
-
 	/**
 	 * The constructor. The constructor is called before the initialise()
 	 * method.
@@ -324,7 +320,7 @@ public class MatrixOverviewController {
 	private void handleCalculateRREF() {
 		int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
-			alertMatrixData(MS.reducedEchelonForm(matrixTable.getSelectionModel().getSelectedItem()));
+			alertMatrixData(MatrixOperations.reducedEchelonForm(matrixTable.getSelectionModel().getSelectedItem()));
 		} else {
 			// Nothing is selected
 			Alert alert = new Alert(AlertType.ERROR);
