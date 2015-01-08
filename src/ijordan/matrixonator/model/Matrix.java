@@ -170,6 +170,8 @@ public class Matrix {
 				if (localMatrix.getData()[i][j] == -0.0) {
 					localMatrix.getData()[i][j] = 0.0;
 				}
+				//Round number to 10 decimal places.
+				localMatrix.getData()[i][j] = Math.round(localMatrix.getData()[i][j] * 10000000000.0) / 10000000000.0;
 			}
 		}
 		
