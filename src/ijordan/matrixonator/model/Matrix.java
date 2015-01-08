@@ -141,7 +141,7 @@ public class Matrix {
 			
 			for(String line : buffer)
 			{
-				bw.append(line);
+				bw.append(line + "\n");
 			}
 			
 			bw.close();
