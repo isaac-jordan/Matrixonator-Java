@@ -77,30 +77,20 @@ public class MatrixTest {
 
 	@Test
 	// Tests that matrix will be saved properly
-	public void testMatrixSave() {
+	public void testMatrixSaveLoad() {
 		double[][] data = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 } };
 
 		Matrix testMatrix = new Matrix("testMatrixSave", data);
 
 		assertTrue("Matrix did not save successfully", testMatrix.save());
-	}
-
-	@Test //Test to check Matrix load
-	public void testMatrixLoad()
-	{
-		/* THIS IS EXTREMELY BAD PRACTICE TO ORDER UNIT TESTS
-		 * BUT IS DONE FOR SAKE OF EASE AT THIS STAGE
-		 */
-		testMatrixSave();	//<-- MUST DO SOMETHING WITH THIS CALL
 		
-		Matrix testMatrix = new Matrix("./testMatrixSave.matrix");
-					
-		assertTrue("Matrix name data was invalid", testMatrix.getName().equals("testMatrixSave"));
-		assertTrue("Matrix creation date was wrong", testMatrix.getCreatedDate().equals(LocalDate.now()));
-		assertTrue("Matrix row count is wrong", testMatrix.getNumRows() == 2);
-		assertTrue("Matrix col count is wrong", testMatrix.getNumCols() == 5);
+		Matrix testMatrixL = new Matrix("./testMatrixSave.matrix");
 		
-		double[][] data = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 } };
+		assertTrue("Matrix name data was invalid", testMatrixL.getName().equals("testMatrixSave"));
+		assertTrue("Matrix creation date was wrong", testMatrixL.getCreatedDate().equals(LocalDate.now()));
+		assertTrue("Matrix row count is wrong", testMatrixL.getNumRows() == 2);
+		assertTrue("Matrix col count is wrong", testMatrixL.getNumCols() == 5);
+		
 		double[][] matrixData = testMatrix.getData();
 		boolean result = true;
 		
