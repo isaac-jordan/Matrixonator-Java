@@ -7,16 +7,13 @@ import org.controlsfx.dialog.Wizard.WizardPane;
 import org.controlsfx.dialog.Wizard.LinearFlow;
 
 import ijordan.matrixonator.MainApp;
-import ijordan.matrixonator.model.Matrix;
-import javafx.event.ActionEvent;
+import ijordan.matrixonator.model.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -48,7 +45,7 @@ public class MatrixOverviewController {
 
 	// Reference to the main application.
 	private MainApp mainApp;
-
+	
 	/**
 	 * The constructor. The constructor is called before the initialise()
 	 * method.
@@ -297,7 +294,7 @@ public class MatrixOverviewController {
 	 * @param matrix
 	 */
 	private void alertMatrixData(Matrix matrix) {
-		Dialog dialog = new Dialog();
+		Dialog<Object> dialog = new Dialog<Object>();
 		dialog.setTitle(matrix.getName());
 		dialog.setHeaderText("Showing the data associated with " + matrix.getName());
 		ButtonType closeButtonType = new ButtonType("Close", ButtonData.OK_DONE);

@@ -4,7 +4,6 @@ import ijordan.matrixonator.model.Matrix;
 import ijordan.matrixonator.view.MatrixOverviewController;
 
 import java.io.IOException;
-import java.net.URL;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
