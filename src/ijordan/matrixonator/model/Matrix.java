@@ -50,7 +50,66 @@ public class Matrix {
 		this.numCols = new SimpleIntegerProperty(data[0].length);
 		this.createdDate = new SimpleObjectProperty<LocalDate>(LocalDate.now());
 	}
-	
+
+	/**
+	 * Constructor to load from file
+	 * 
+	 * @param Filename
+	 */
+	public Matrix(String filename) {
+		// Checking for location settings are shown
+		if (!filename.startsWith("./")) {
+			filename = "./" + filename;
+		}
+
+		File matrixFile = new File(filename);
+
+		//Properties from file
+		String name = "";
+		LocalDate date = null;
+		int Rows = 0;
+		int Cols = 0;
+		double[][] matrixData = null;
+
+		try {			
+			//Attempting to read in file given
+			FileReader fr = new FileReader(matrixFile);
+			BufferedReader br = new BufferedReader(fr);
+
+			name = br.readLine();
+			date = LocalDate.parse(br.readLine());
+			String[] NumRowsCols = br.readLine().split(",");
+			Rows = Integer.parseInt(NumRowsCols[0]);
+			Cols = Integer.parseInt(NumRowsCols[1]);
+
+			matrixData = new double[Rows][Cols];
+
+			for (int i = 0; i < Rows; ++i) {
+				String row = br.readLine();
+				String[] Values = row.split(",");
+				int Col = 0;
+
+				for (String val : Values) {
+					matrixData[i][Col] = Double.parseDouble(val);
+					++Col;
+				}
+			}
+
+			br.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// Adding data to the class
+		this.name = new SimpleStringProperty(name);
+		this.data = new SimpleObjectProperty<double[][]>(matrixData);
+
+		this.numRows = new SimpleIntegerProperty(Rows);
+		this.numCols = new SimpleIntegerProperty(Cols);
+		this.createdDate = new SimpleObjectProperty<LocalDate>(
+				LocalDate.from(date));
+	}
+
 	// Getters/Setters
 	// name
 	public String getName() {
@@ -183,67 +242,6 @@ public class Matrix {
 			bw.close();
 			return true;
 		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	/**
-	 * load
-	 * 
-	 * @param Matrix file to load
-	 * @returns True on success, false if error occurs
-	 */
-	public boolean load(String filename) {
-
-		// Checking for location settings are shown
-		if (!filename.startsWith("./")) {
-			filename = "./" + filename;
-		}
-
-		File matrixFile = new File(filename);
-
-		if (!matrixFile.exists()) {
-			return false;
-		}
-
-		try {
-			FileReader fr = new FileReader(matrixFile);
-			BufferedReader br = new BufferedReader(fr);
-
-			String name = br.readLine();
-			LocalDate date = LocalDate.parse(br.readLine());
-			String[] NumRowsCols = br.readLine().split(",");
-			int Rows = Integer.parseInt(NumRowsCols[0]);
-			int Cols = Integer.parseInt(NumRowsCols[1]);
-
-			double[][] matrixData = new double[Rows][Cols];
-
-			for (int i = 0; i < Rows; ++i) {
-				String row = br.readLine();
-				String[] Values = row.split(",");
-				int Col = 0;
-
-				for (String val : Values) {
-					matrixData[i][Col] = Double.parseDouble(val);
-					++Col;
-				}
-			}
-
-			br.close();
-
-			// Adding data to the class
-			this.setName(name);
-			this.setCreatedDate(LocalDate.from(date));
-			this.setNumRows(Rows);
-			this.setNumCols(Cols);
-			this.data.setValue(matrixData);
-
-			return true;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
