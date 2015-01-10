@@ -24,7 +24,7 @@ public class Matrix {
 	private final IntegerProperty numRows;
 	private final IntegerProperty numCols;
 	private final ObjectProperty<LocalDate> createdDate;
-	private ObjectProperty<double[][]> data;
+	private final ObjectProperty<double[][]> data;
 
 	/**
 	 * Default constructor. Creates an empty, unnamed matrix.
@@ -32,7 +32,7 @@ public class Matrix {
 	 * @throws Exception
 	 */
 	public Matrix() {
-		this(null, new double[0][0]);
+		this(null, new double[0][0], null);
 	}
 
 	/**
@@ -42,13 +42,17 @@ public class Matrix {
 	 * @param data
 	 * @throws Exception
 	 */
-	public Matrix(String name, double[][] data) {
+	public Matrix(String name, double[][] data, LocalDate date) {
 		this.name = new SimpleStringProperty(name);
 		this.data = new SimpleObjectProperty<double[][]>(data);
 
 		this.numRows = new SimpleIntegerProperty(data.length);
 		this.numCols = new SimpleIntegerProperty(data[0].length);
-		this.createdDate = new SimpleObjectProperty<LocalDate>(LocalDate.now());
+		if (date != null) {
+			this.createdDate = new SimpleObjectProperty<LocalDate>(date);
+		} else {
+			this.createdDate = new SimpleObjectProperty<LocalDate>(LocalDate.now());
+		}
 	}
 	
 	// Getters/Setters
@@ -70,10 +74,6 @@ public class Matrix {
 		return numRows.get();
 	}
 
-	public void setNumRows(int numRows) {
-		this.numRows.set(numRows);
-	}
-
 	public IntegerProperty numRowsProperty() {
 		return numRows;
 	}
@@ -83,10 +83,6 @@ public class Matrix {
 		return numCols.get();
 	}
 
-	public void setNumCols(int numCols) {
-		this.numCols.set(numCols);
-	}
-
 	public IntegerProperty numColsProperty() {
 		return numCols;
 	}
@@ -94,10 +90,6 @@ public class Matrix {
 	// createdDate
 	public LocalDate getCreatedDate() {
 		return createdDate.get();
-	}
-
-	public void setCreatedDate(LocalDate createdDate) {
-		this.createdDate.set(createdDate);
 	}
 
 	public ObjectProperty<LocalDate> createdDateProperty() {
@@ -232,12 +224,16 @@ public class Matrix {
 
 			br.close();
 
+			//MOVE SAVE/LOAD METHODS TO CONTROLLER, 
+			//SINCE THIS MATRIX MUST BE ADDED TO
+			//THE OBSERVABLE LIST.
+			
 			// Adding data to the class
-			this.setName(name);
+			/*this.setName(name);
 			this.setCreatedDate(LocalDate.from(date));
 			this.setNumRows(Rows);
 			this.setNumCols(Cols);
-			this.data.setValue(matrixData);
+			this.data.setValue(matrixData);*/
 
 			return true;
 		} catch (IOException e) {
@@ -289,7 +285,7 @@ public class Matrix {
 				i += 1;
 				j = 0;
 			}
-			return (new Matrix(null, data));
+			return (new Matrix(null, data, null));
 		}
 		throw new IllegalArgumentException("Matrices are not compatible");
 	}
@@ -311,14 +307,13 @@ public class Matrix {
 					data[i][j] = A.getData()[i][j] + B.getData()[i][j];
 				}
 			}
-			return (new Matrix(null, data));
+			return (new Matrix(null, data, null));
 		} else {
 			throw new IllegalArgumentException("Matrices are not compatible.");
 		}
 	}
 
-	// THIS SECTION'S METHODS ARE ALL FOR SOLVING A MATRIX
-	// NEEDS RESTRUCTURING
+	// THIS SECTION'S METHODS ARE ALL FOR REDUCING A MATRIX
 	/**
 	 * Returns the reduced row echelon form of this matrix.
 	 *
@@ -326,7 +321,7 @@ public class Matrix {
 	 */
 	public Matrix reducedEchelonForm() {
 		double[][] data = this.getData();
-		Matrix localMatrix = new Matrix(null, data);
+		Matrix localMatrix = new Matrix(null, data, null);
 		int i = 0;
 		int j = 0;
 		while (i < this.getNumRows() && j < this.getNumCols()) {
