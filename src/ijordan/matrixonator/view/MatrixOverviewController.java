@@ -201,7 +201,7 @@ public class MatrixOverviewController {
 					}
 				}
 
-				mainApp.getMatrixData().add(new Matrix(name, data));
+				mainApp.getMatrixData().add(new Matrix(name, data, null));
 
 			}
 		};

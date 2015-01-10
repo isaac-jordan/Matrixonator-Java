@@ -42,4 +42,4 @@ Thumbs.db
 .project
 .settings/
 /bin/
-.matrix
+*.matrix
