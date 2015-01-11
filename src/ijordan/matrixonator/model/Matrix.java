@@ -320,7 +320,12 @@ public class Matrix {
 	 * @return
 	 */
 	public Matrix reducedEchelonForm() {
-		double[][] data = this.getData();
+		double[][] data = new double[this.getNumRows()][this.getNumCols()];
+		for (int x = 0; x < this.getNumRows(); x++) {
+			for (int y = 0; y < this.getNumCols(); y++) {
+				data[x][y] = this.getData()[x][y]; 
+			}
+		}
 		Matrix localMatrix = new Matrix(null, data, null);
 		int i = 0;
 		int j = 0;
