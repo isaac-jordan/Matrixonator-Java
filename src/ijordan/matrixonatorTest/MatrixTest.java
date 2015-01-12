@@ -12,12 +12,12 @@ import org.junit.Test;
 
 public class MatrixTest {
 
-	// ---------------------------------------------------
-	// MATRIX CREATION + METHODS
-	// ---------------------------------------------------
+	/*
+	 * -------------------------- Matrix Creation and Methods Tests ---
+	 */
 
 	@Test
-	// Checks to see if a Martix is created properly
+	// Checks to see if a Matrix is created properly
 	// Revision 1: Changed how to test for data
 	public void testMatrixCreation() {
 		double[][] data = new double[5][2];
@@ -41,7 +41,6 @@ public class MatrixTest {
 		data[3][1] = 1.0;
 
 		Matrix testMatrix = new Matrix("Test", data, null);
-
 		assertTrue("Matrix has row/col conflict.",
 				testMatrix.getCell(1, 3) == 3.0);
 		assertTrue("Matrix has row/col conflict.",
@@ -60,7 +59,6 @@ public class MatrixTest {
 
 		// Get the first row and column
 		double[] Row1 = testMatrix.getRow(0);
-
 		boolean RowFails = false;
 
 		// Check that each value in the Row only has 1.0 in it
@@ -105,7 +103,7 @@ public class MatrixTest {
 	}
 
 	/*
-	 * -------------------------- Matrix Reduction Tests
+	 * -------------------------- Matrix Reduction Tests -------------------
 	 */
 
 	@Test
@@ -161,7 +159,6 @@ public class MatrixTest {
 
 		assertEquals("Matrix Reduction gives incorrect result", dataResult,
 				testMatrix.reducedEchelonForm().getData());
-
 	}
 
 	@Test
@@ -199,7 +196,6 @@ public class MatrixTest {
 		double[][] data = { { 1, 2, 1 }, { -2, 0, 1 }, { 3, 5, 0 } };
 		double[][] dataResult = { { 1, 2, 1 }, { 3, 5, 0 }, { -2, 0, 1 } };
 		final Matrix testMatrix = new Matrix("Test2", data, null);
-
 		testMatrix.stepOne(testMatrix, 1, 1);
 
 		assertEquals("Matrix stepOne gives incorrect result", dataResult,
@@ -213,7 +209,6 @@ public class MatrixTest {
 		double[][] dataResult = { { 1.0, 0.0, -5.0 }, { 0.0, 1.0, 3.0 },
 				{ 0.0, 0.0, 0.0 } };
 		final Matrix testMatrix = new Matrix("Test2", data, null);
-
 		testMatrix.stepOne(testMatrix, 2, 2);
 
 		assertEquals("Matrix stepOne gives incorrect result", dataResult,
@@ -221,16 +216,30 @@ public class MatrixTest {
 	}
 
 	/*
-	 * ------------ Matrix Arithmetic Tests
+	 * ------------ Matrix Arithmetic Tests ----------------------------------
 	 */
 
 	@Test
-	public void testMatrixMultiplication1() {
+	public void testMatrixMultiplicationBaseCase() {
+		double[][] dataFirst = { { 0, 0, 0 }, { 0, 0, 0 } };
+		double[][] dataSecond = { { 0, 0 }, { 0, 0 }, { 0, 0 } };
+		double[][] dataResult = { { 0, 0 }, { 0, 0 } };
+		final Matrix testMatrix1 = new Matrix("Test1", dataFirst, null);
+		final Matrix testMatrix2 = new Matrix("Test2", dataSecond, null);
+		final Matrix testMatrixResult = new Matrix("TestResult", dataResult,
+				null);
+		assertTrue("Matrices should be compatible",
+				Matrix.checkMultCompatibility(testMatrix1, testMatrix2));
+		assertEquals("Matrix Multiplication gives incorrect result",
+				testMatrixResult.getData(),
+				Matrix.multiplyMatrices(testMatrix1, testMatrix2).getData());
+	}
+
+	@Test
+	public void testMatrixMultiplicationSimple() {
 		double[][] dataFirst = { { 1, 2, 3 }, { 4, 5, 6 } };
 		double[][] dataSecond = { { 7, 8 }, { 9, 10 }, { 11, 12 } };
-
 		double[][] dataResult = { { 58, 64 }, { 139, 154 } };
-
 		final Matrix testMatrix1 = new Matrix("Test1", dataFirst, null);
 		final Matrix testMatrix2 = new Matrix("Test2", dataSecond, null);
 		final Matrix testMatrixResult = new Matrix("TestResult", dataResult,
@@ -242,22 +251,19 @@ public class MatrixTest {
 		assertEquals("Matrix Multiplication gives incorrect result",
 				testMatrixResult.getData(),
 				Matrix.multiplyMatrices(testMatrix1, testMatrix2).getData());
-
 	}
 
 	@Test
-	public void testMatrixMultiplication2() {
+	public void testMatrixMultiplicationBig() {
 		double[][] dataFirst = { { 1586, 7546, 85746, 57564 },
 				{ 756, 374, 385, 0 }, { 8765, 123, 765, 234 } };
 		double[][] dataSecond = { { 6543, 7896, 9876 },
 				{ 76546, 765467, 4657 }, { 34765, 28452, 9876789 },
 				{ 897655, 876, 5 } };
-
 		double[][] dataResult = {
 				{ 55241565424.0, 8278808294.0, 846946242472.0 },
 				{ 46959237, 303208054, 3811771739.0 },
 				{ 303411048, 185331645, 7642880706.0 } };
-
 		final Matrix testMatrix1 = new Matrix("Test1", dataFirst, null);
 		final Matrix testMatrix2 = new Matrix("Test2", dataSecond, null);
 		final Matrix testMatrixResult = new Matrix("TestResult", dataResult,
@@ -276,7 +282,6 @@ public class MatrixTest {
 	public void testMatrixMultCompatibility() {
 		double[][] dataFirst = { { 1, 2, 3 }, { 1, 2, 3 }, { 12, 3, 4 } };
 		double[][] dataSecond = { { 2, 3 }, { 3, 7 } };
-
 		final Matrix testMatrix1 = new Matrix("Test1", dataFirst, null);
 		final Matrix testMatrix2 = new Matrix("Test2", dataSecond, null);
 
@@ -289,17 +294,43 @@ public class MatrixTest {
 	}
 
 	@Test
-	public void testMatrixAdd() {
+	public void testMatrixAddBaseCase() {
+		double[][] dataFirst = { { 0, 0 }, { 0, 0 } };
+		double[][] dataSecond = { { 0, 0 }, { 0, 0 } };
+		double[][] dataResult = { { 0, 0 }, { 0, 0 } };
+		final Matrix testMatrix1 = new Matrix("Test1", dataFirst, null);
+		final Matrix testMatrix2 = new Matrix("Test2", dataSecond, null);
+		final Matrix testMatrixResult = new Matrix("TestResult", dataResult,
+				null);
+		assertEquals("Matrix Addition gives incorrect result",
+				testMatrixResult.getData(),
+				Matrix.addMatrices(testMatrix1, testMatrix2).getData());
+	}
+
+	@Test
+	public void testMatrixAddSimple() {
+		double[][] dataFirst = { { 1, 2 }, { 2, 3 } };
+		double[][] dataSecond = { { 4, 2 }, { 3, 5 } };
+		double[][] dataResult = { { 5, 4 }, { 5, 8 } };
+		final Matrix testMatrix1 = new Matrix("Test1", dataFirst, null);
+		final Matrix testMatrix2 = new Matrix("Test2", dataSecond, null);
+		final Matrix testMatrixResult = new Matrix("TestResult", dataResult,
+				null);
+		assertEquals("Matrix Addition gives incorrect result",
+				testMatrixResult.getData(),
+				Matrix.addMatrices(testMatrix1, testMatrix2).getData());
+	}
+
+	@Test
+	public void testMatrixAddBig() {
 		double[][] dataFirst = { { 1586, 7546, 85746, 57564 },
 				{ 756, 374, 385, 0 }, { 8765, 123, 765, 234 } };
 		double[][] dataSecond = { { 6543, 7896, 9876, 156 },
 				{ 76546, 765467, 4657, 573 },
 				{ 34765, 28452, 9876789, 475645323234.0 } };
-
 		double[][] dataResult = { { 8129, 15442, 95622, 57720 },
 				{ 77302, 765841, 5042, 573 },
 				{ 43530, 28575, 9877554, 475645323468.0 } };
-
 		final Matrix testMatrix1 = new Matrix("Test1", dataFirst, null);
 		final Matrix testMatrix2 = new Matrix("Test2", dataSecond, null);
 		final Matrix testMatrixResult = new Matrix("TestResult", dataResult,
