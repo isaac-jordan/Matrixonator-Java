@@ -320,7 +320,7 @@ public class MatrixOverviewController {
 	private void handleCalculateRREF() {
 		int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
-			alertMatrixData(matrixTable.getSelectionModel().getSelectedItem().reducedEchelonForm());
+			alertMatrixData(new RREFMatrix(matrixTable.getSelectionModel().getSelectedItem()));
 		} else {
 			// Nothing is selected
 			Alert alert = new Alert(AlertType.ERROR);
