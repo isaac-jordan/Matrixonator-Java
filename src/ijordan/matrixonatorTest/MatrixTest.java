@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 import ijordan.matrixonator.model.*;
 
@@ -102,8 +103,6 @@ public class MatrixTest {
 		assertTrue("Matrix data in invalid", result);
 	}
 
-	
-
 	/*
 	 * ------------ Matrix Arithmetic Tests ----------------------------------
 	 */
@@ -119,9 +118,10 @@ public class MatrixTest {
 				null);
 		assertTrue("Matrices should be compatible",
 				Matrix.checkMultCompatibility(testMatrix1, testMatrix2));
-		assertEquals("Matrix Multiplication gives incorrect result",
-				testMatrixResult.getData(),
-				Matrix.multiplyMatrices(testMatrix1, testMatrix2).getData());
+
+		assertTrue("Matrix Multiplication gives incorrect result",
+				Arrays.deepEquals(testMatrixResult.getData(), Matrix
+						.multiplyMatrices(testMatrix1, testMatrix2).getData()));
 	}
 
 	@Test
@@ -137,9 +137,9 @@ public class MatrixTest {
 		assertTrue("Matrices should be compatible",
 				Matrix.checkMultCompatibility(testMatrix1, testMatrix2));
 
-		assertEquals("Matrix Multiplication gives incorrect result",
-				testMatrixResult.getData(),
-				Matrix.multiplyMatrices(testMatrix1, testMatrix2).getData());
+		assertTrue("Matrix Multiplication gives incorrect result",
+				Arrays.deepEquals(testMatrixResult.getData(), Matrix
+						.multiplyMatrices(testMatrix1, testMatrix2).getData()));
 	}
 
 	@Test
@@ -161,9 +161,9 @@ public class MatrixTest {
 		assertTrue("Matrices should be compatible",
 				Matrix.checkMultCompatibility(testMatrix1, testMatrix2));
 
-		assertEquals("Matrix Multiplication gives incorrect result",
-				testMatrixResult.getData(),
-				Matrix.multiplyMatrices(testMatrix1, testMatrix2).getData());
+		assertTrue("Matrix Multiplication gives incorrect result",
+				Arrays.deepEquals(testMatrixResult.getData(), Matrix
+						.multiplyMatrices(testMatrix1, testMatrix2).getData()));
 
 	}
 
@@ -191,9 +191,9 @@ public class MatrixTest {
 		final Matrix testMatrix2 = new Matrix("Test2", dataSecond, null);
 		final Matrix testMatrixResult = new Matrix("TestResult", dataResult,
 				null);
-		assertEquals("Matrix Addition gives incorrect result",
+		assertTrue("Matrix Addition gives incorrect result", Arrays.deepEquals(
 				testMatrixResult.getData(),
-				Matrix.addMatrices(testMatrix1, testMatrix2).getData());
+				Matrix.addMatrices(testMatrix1, testMatrix2).getData()));
 	}
 
 	@Test
@@ -205,9 +205,9 @@ public class MatrixTest {
 		final Matrix testMatrix2 = new Matrix("Test2", dataSecond, null);
 		final Matrix testMatrixResult = new Matrix("TestResult", dataResult,
 				null);
-		assertEquals("Matrix Addition gives incorrect result",
+		assertTrue("Matrix Addition gives incorrect result", Arrays.deepEquals(
 				testMatrixResult.getData(),
-				Matrix.addMatrices(testMatrix1, testMatrix2).getData());
+				Matrix.addMatrices(testMatrix1, testMatrix2).getData()));
 	}
 
 	@Test
@@ -225,9 +225,9 @@ public class MatrixTest {
 		final Matrix testMatrixResult = new Matrix("TestResult", dataResult,
 				null);
 
-		assertEquals("Matrix Addition gives incorrect result",
+		assertTrue("Matrix Addition gives incorrect result", Arrays.deepEquals(
 				testMatrixResult.getData(),
-				Matrix.addMatrices(testMatrix1, testMatrix2).getData());
+				Matrix.addMatrices(testMatrix1, testMatrix2).getData()));
 
 	}
 }

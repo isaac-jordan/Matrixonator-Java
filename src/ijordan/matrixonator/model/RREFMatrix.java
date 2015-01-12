@@ -1,7 +1,5 @@
 package ijordan.matrixonator.model;
 
-import java.util.Arrays;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
