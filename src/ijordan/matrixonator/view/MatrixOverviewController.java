@@ -149,10 +149,20 @@ public class MatrixOverviewController {
 			public void onEnteringPage(Wizard wizard) {
 				String name = (String) wizard.getSettings().get("name");
 
-				// Bit of a horrible hack to get the integers. Need to find
-				// direct conversion.
-				int numRows = Integer.parseInt((String) wizard.getSettings().get("numRows"));
-				int numCols = Integer.parseInt((String) wizard.getSettings().get("numCols"));
+				int numRows = 0;
+				int numCols = 0;
+				try {
+					numRows = Integer.parseInt((String) wizard.getSettings().get("numRows"));
+					numCols = Integer.parseInt((String) wizard.getSettings().get("numCols"));
+				} catch (NumberFormatException e) {
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Error");
+					alert.setHeaderText("Invalid number of rows, or columns.");
+					alert.setContentText("Please enter ONLY integers next time. Please cancel and try again.");
+
+					alert.showAndWait();
+					return;
+				}
 
 				GridPane page2Grid = new GridPane();
 				for (int i = 0; i < numRows; i++) {
@@ -178,10 +188,20 @@ public class MatrixOverviewController {
 			public void onEnteringPage(Wizard wizard) {
 				String name = (String) wizard.getSettings().get("name");
 
-				// Bit of a horrible hack to get the integers. Need to find
-				// direct conversion.
-				int numRows = Integer.parseInt((String) wizard.getSettings().get("numRows"));
-				int numCols = Integer.parseInt((String) wizard.getSettings().get("numCols"));
+				int numRows = 0;
+				int numCols = 0;
+				try {
+					numRows = Integer.parseInt((String) wizard.getSettings().get("numRows"));
+					numCols = Integer.parseInt((String) wizard.getSettings().get("numCols"));
+				} catch (NumberFormatException e) {
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Error");
+					alert.setHeaderText("Invalid number of rows, or columns.");
+					alert.setContentText("Please enter ONLY integers next time. Please Cancel and try again.");
+
+					alert.showAndWait();
+					return;
+				}
 
 				double[][] data = new double[numRows][numCols];
 
