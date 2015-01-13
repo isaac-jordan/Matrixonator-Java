@@ -1,13 +1,12 @@
 package ijordan.matrixonatorTest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.time.LocalDate;
 import java.util.Arrays;
 
 import ijordan.matrixonator.model.*;
+import ijordan.matrixonator.view.MatrixIO;
 
 import org.junit.Test;
 
@@ -79,8 +78,19 @@ public class MatrixTest {
 	public void testMatrixSaveLoad() {
 		double[][] data = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 } };
 		Matrix testMatrix = new Matrix("testMatrixSave", data, LocalDate.now());
-		assertTrue("Matrix did not save successfully", testMatrix.save());
-		Matrix testMatrixL = new Matrix("./testMatrixSave.matrix");
+		assertTrue("Matrix did not save successfully",
+				MatrixIO.save(testMatrix));
+
+		Matrix testMatrixL = null;
+
+		// We fail in the try incase this can't load. Adds extra catch if the
+		// save isn't working
+		try {
+			testMatrixL = MatrixIO.load("./testMatrixSave.matrix");
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Exception was thrown");
+		}
 		assertTrue("Matrix name data was invalid", testMatrixL.getName()
 				.equals("testMatrixSave"));
 		assertTrue("Matrix creation date was wrong", testMatrixL
@@ -103,6 +113,22 @@ public class MatrixTest {
 		assertTrue("Matrix data in invalid", result);
 	}
 
+	@Test //Tests for saving falg within Matrix IO
+	public void testMatrixIOwithFlag()
+	{
+		MatrixIO.setSaveFlag(); //Simulating that the setup function hasn't worked correctly
+		
+		Matrix testMatrix = new Matrix(null, null, null);
+		
+		//Attempting to load. Expected to return null
+		try {
+			testMatrix = MatrixIO.load("thisisnevergoingtobeusedasafilename.matrix");
+		} catch (Exception e) { fail("Exception should not be thrown."); }
+		
+		assertTrue("Matrix should not contain anything", testMatrix == null);
+		
+		assertTrue("Matrix should not be saved!", MatrixIO.save(testMatrix));
+	}
 	/*
 	 * ------------ Matrix Arithmetic Tests ----------------------------------
 	 */
