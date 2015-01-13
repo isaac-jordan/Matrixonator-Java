@@ -86,7 +86,7 @@ public class MatrixTest {
 		// We fail in the try incase this can't load. Adds extra catch if the
 		// save isn't working
 		try {
-			testMatrixL = MatrixIO.load("./testMatrixSave.matrix");
+			testMatrixL = MatrixIO.loadMatrix("testMatrixSave.matrix");
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Exception was thrown");
@@ -97,20 +97,7 @@ public class MatrixTest {
 				.getCreatedDate().equals(LocalDate.now()));
 		assertTrue("Matrix row count is wrong", testMatrixL.getNumRows() == 2);
 		assertTrue("Matrix col count is wrong", testMatrixL.getNumCols() == 5);
-		double[][] matrixData = testMatrix.getData();
-		boolean result = true;
-		// Check each value is the same
-		// .equals here doesn't work for some reason, returns false result,
-		// perhaps different IDs?
-		for (int x = 0; x < 2; ++x) {
-			for (int y = 0; y < 5; ++y) {
-				if (data[x][y] != matrixData[x][y]) {
-					result = false;
-					break;
-				}
-			}
-		}
-		assertTrue("Matrix data in invalid", result);
+		assertTrue("Matrix data in invalid", Arrays.deepEquals(data, testMatrix.getData()));
 	}
 
 	@Test //Tests for saving falg within Matrix IO
@@ -118,16 +105,46 @@ public class MatrixTest {
 	{
 		MatrixIO.setSaveFlag(); //Simulating that the setup function hasn't worked correctly
 		
-		Matrix testMatrix = new Matrix(null, null, null);
+		Matrix testMatrix = new Matrix(null, new double[1][1], LocalDate.now());
 		
 		//Attempting to load. Expected to return null
 		try {
-			testMatrix = MatrixIO.load("thisisnevergoingtobeusedasafilename.matrix");
-		} catch (Exception e) { fail("Exception should not be thrown."); }
+			testMatrix = MatrixIO.loadMatrix("thisisnevergoingtobeusedasafilename.matrix");
+			fail("Matrix should not have loaded anything");
+		} catch (Exception e) { assertTrue("Exception should occur here", e.getMessage().contains("Save is currently disabled due to Matrixonator not having working directories")); }
 		
-		assertTrue("Matrix should not contain anything", testMatrix == null);
+		assertTrue("Matrix should not contain anything", testMatrix.getName() == null);	
+		assertFalse("Matrix should not be saved!", MatrixIO.save(testMatrix));
 		
-		assertTrue("Matrix should not be saved!", MatrixIO.save(testMatrix));
+		//Resetting the flag for testing purposed
+		MatrixIO.resetSaveFlag();
+	}
+	
+	@Test //Checks we can load and save RREF matrices with the same code
+	public void testSaveLoadRREF()
+	{
+		double[][] data = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 } };
+		RREFMatrix testMatrix = new RREFMatrix(new Matrix("testMatrixSave", data, LocalDate.now()));
+		assertTrue("Matrix did not save successfully",
+				MatrixIO.save(testMatrix));
+
+		RREFMatrix testMatrixL = null;
+
+		// We fail in the try incase this can't load. Adds extra catch if the
+		// save isn't working
+		try {
+			testMatrixL = MatrixIO.loadRREFMatrix("RREFtestMatrixSave.matrix");
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Exception was thrown");
+		}
+		assertTrue("Matrix name data was invalid", testMatrixL.getName()
+				.equals("RREFtestMatrixSave"));
+		assertTrue("Matrix creation date was wrong", testMatrixL
+				.getCreatedDate().equals(LocalDate.now()));
+		assertTrue("Matrix row count is wrong", testMatrixL.getNumRows() == 2);
+		assertTrue("Matrix col count is wrong", testMatrixL.getNumCols() == 5);
+		assertTrue("Matrix data in invalid", Arrays.deepEquals(testMatrix.getData(), testMatrixL.getData()));
 	}
 	/*
 	 * ------------ Matrix Arithmetic Tests ----------------------------------

@@ -1,11 +1,12 @@
 package ijordan.matrixonator;
 
 import ijordan.matrixonator.model.Matrix;
-import ijordan.matrixonator.view.DirectoryNotCreatedException;
 import ijordan.matrixonator.view.MatrixIO;
 import ijordan.matrixonator.view.MatrixOverviewController;
+import ijordan.matrixonator.view.MatrixonatorIOException;
 
 import java.io.IOException;
+
 
 //TEMP IMPORT FOR MESSAGE BOX
 import javax.swing.JOptionPane;
@@ -44,7 +45,7 @@ public class MainApp extends Application {
 		 */
 		try {
 			MatrixIO.checkDirectories();
-		} catch (DirectoryNotCreatedException e) {
+		} catch (MatrixonatorIOException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 			MatrixIO.setSaveFlag();
 		}
