@@ -253,8 +253,8 @@ public class Matrix {
 		return ret;
 	} // end method
 
-	public static double determinant(Matrix A) {
-		return det(A.getNumRows(), A.getData());
+	public double determinant() {
+		return det(this.getNumRows(), this.getData());
 	}
 
 }

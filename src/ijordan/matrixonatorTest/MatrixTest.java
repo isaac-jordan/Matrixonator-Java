@@ -279,7 +279,7 @@ public class MatrixTest {
 		double[][] dataFirst = {{1,2,3},{0,-4,1},{0,3,-1}};
 		double dataResult = 1;
 		final Matrix testMatrix1 = new Matrix("Test1", dataFirst, null);
-		assertTrue("Matrix Addition gives incorrect result", Matrix.determinant(testMatrix1) == dataResult);
+		assertTrue("Matrix Addition gives incorrect result", testMatrix1.determinant() == dataResult);
 	}
 	
 	@Test
@@ -287,6 +287,6 @@ public class MatrixTest {
 		double[][] dataFirst = {{1,2,3},{3,2,1},{2,1,3}};
 		double dataResult = -12;
 		final Matrix testMatrix1 = new Matrix("Test1", dataFirst, null);
-		assertTrue("Matrix Addition gives incorrect result", Matrix.determinant(testMatrix1) == dataResult);
+		assertTrue("Matrix Addition gives incorrect result", testMatrix1.determinant() == dataResult);
 	}
 }
