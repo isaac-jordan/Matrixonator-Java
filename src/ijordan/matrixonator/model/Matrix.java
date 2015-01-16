@@ -1,6 +1,7 @@
 package ijordan.matrixonator.model;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -174,16 +175,86 @@ public class Matrix {
 		}
 	}
 
-	// THIS SECTION'S METHODS ARE ALL FOR REDUCING A MATRIX
-	/**
-	 * Returns the reduced row echelon form of this matrix.
-	 *
-	 * @return
-	 */
-	public Matrix reducedEchelonForm() {
-		double[][] data = new double[this.getNumRows()][this.getNumCols()];
-		return null;
-		
+//	public static double determinant(Matrix A) {
+//		double[][] data = A.getData();
+//		if (A.getNumRows() != A.getNumCols()) {
+//			throw new IllegalArgumentException("Matrix is not square");
+//		}
+//		
+//		if (A.getNumRows() == 2) {
+//			return data[0][0]*data[1][1] - data[1][0]*data[0][1];
+//		}
+//		
+//		//Has Big O of at least O(n!)
+//		if (A.getNumRows() > 2) {
+//			double current = 0;
+//			double[][] currentData = new double[A.getNumRows()-1][A.getNumCols()-1];
+//			int j = 0;
+//			for (int i = 0; i < A.getNumRows(); i++) {
+//				for (int x = 0; x < A.getNumRows(); x++) {
+//					for (int y = 1; y < A.getNumCols(); y++){
+//						if (x != i) {
+//							int rowIndex = (x < i ? i - x : x);
+//							currentData[rowIndex][y-1] = data[x][y];
+//							System.out.println(Arrays.deepToString(currentData));
+//						}
+//					}
+//				}
+//			}
+//		}
+//		return 0;
+//	}
+
+	//Source: http://en.wikibooks.org/wiki/Algorithm_Implementation/Linear_Algebra/Determinant_of_a_Matrix
+	//TODO: Make this more readable, and fit the code style better.
+	private static double[][] reduce(double[][] x, double[][] y, int r, int c, int n) {
+		for (int h = 0, j = 0; h < n; h++) {
+			if (h == r)
+				continue;
+			for (int i = 0, k = 0; i < n; i++) {
+				if (i == c)
+					continue;
+				y[j][k] = x[h][i];
+				k++;
+			} // end inner loop
+			j++;
+		} // end outer loop
+		return y;
+	} // end method
+
+	// ===================================================
+	private static double det(int NMAX, double[][] x) {
+		double ret = 0;
+		if (NMAX < 4)// base case
+		{
+			double prod1 = 1, prod2 = 1;
+			for (int i = 0; i < NMAX; i++) {
+				prod1 = 1;
+				prod2 = 1;
+
+				for (int j = 0; j < NMAX; j++) {
+					prod1 *= x[(j + i + 1) % NMAX][j];
+					prod2 *= x[(j + i + 1) % NMAX][NMAX - j - 1];
+				} // end inner loop
+				ret += prod1 - prod2;
+			} // end outer loop
+			return ret;
+		} // end base case
+		double[][] y = new double[NMAX - 1][NMAX - 1];
+		for (int h = 0; h < NMAX; h++) {
+			if (x[h][0] == 0)
+				continue;
+			reduce(x, y, h, 0, NMAX);
+			if (h % 2 == 0)
+				ret -= det(NMAX - 1, y) * x[h][0];
+			if (h % 2 == 1)
+				ret += det(NMAX - 1, y) * x[h][0];
+		} // end loop
+		return ret;
+	} // end method
+
+	public static double determinant(Matrix A) {
+		return det(A.getNumRows(), A.getData());
 	}
 
 }
