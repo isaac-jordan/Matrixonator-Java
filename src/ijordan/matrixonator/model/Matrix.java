@@ -151,6 +151,14 @@ public class Matrix {
 		}
 		throw new IllegalArgumentException("Matrices are not compatible");
 	}
+	
+	public void scalarMultiply(double c) {
+		for (int i = 0; i < this.getNumRows(); i++) {
+			for (int j = 0; j < this.getNumCols(); j++) {
+				this.getData()[i][j] *= c;
+			}
+		}
+	}
 
 	/**
 	 * Static method that adds two matrices A, and B. If the matrices cannot be
@@ -174,36 +182,6 @@ public class Matrix {
 			throw new IllegalArgumentException("Matrices are not compatible.");
 		}
 	}
-
-//	public static double determinant(Matrix A) {
-//		double[][] data = A.getData();
-//		if (A.getNumRows() != A.getNumCols()) {
-//			throw new IllegalArgumentException("Matrix is not square");
-//		}
-//		
-//		if (A.getNumRows() == 2) {
-//			return data[0][0]*data[1][1] - data[1][0]*data[0][1];
-//		}
-//		
-//		//Has Big O of at least O(n!)
-//		if (A.getNumRows() > 2) {
-//			double current = 0;
-//			double[][] currentData = new double[A.getNumRows()-1][A.getNumCols()-1];
-//			int j = 0;
-//			for (int i = 0; i < A.getNumRows(); i++) {
-//				for (int x = 0; x < A.getNumRows(); x++) {
-//					for (int y = 1; y < A.getNumCols(); y++){
-//						if (x != i) {
-//							int rowIndex = (x < i ? i - x : x);
-//							currentData[rowIndex][y-1] = data[x][y];
-//							System.out.println(Arrays.deepToString(currentData));
-//						}
-//					}
-//				}
-//			}
-//		}
-//		return 0;
-//	}
 
 	//Source: http://en.wikibooks.org/wiki/Algorithm_Implementation/Linear_Algebra/Determinant_of_a_Matrix
 	//TODO: Make this more readable, and fit the code style better.

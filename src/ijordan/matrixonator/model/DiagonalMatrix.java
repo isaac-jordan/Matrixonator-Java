@@ -1,7 +1,6 @@
 package ijordan.matrixonator.model;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 
 public class DiagonalMatrix extends Matrix {
 
@@ -10,6 +9,18 @@ public class DiagonalMatrix extends Matrix {
 		double[][] data = this.getData();
 		for (int i = 0; i < values.length; i++) {
 			data[i][i] = values[i];
+		}
+	}
+	
+	public DiagonalMatrix(Matrix parent) {
+		//Check whether matrix parent is diagonalisable.
+		//http://en.wikipedia.org/wiki/Diagonalizable_matrix
+	}
+	
+	@Override
+	public void scalarMultiply(double c) {
+		for (int i = 0; i < this.getNumRows(); i++) {
+			this.getData()[i][i] *= c;
 		}
 	}
 
