@@ -25,5 +25,16 @@ public class DiagonalMatrixTest {
 		assertTrue("Created matrix has inaccurate data",
 				Arrays.deepEquals(testMatrix.getData(), resultData));
 	}
+	
+	@Test
+	// Checks to see if a Diagonal Matrix is created properly
+	public void testDiagonalMatrixDeterminant() {
+		double[] data = {1, 3, 6, 9, 3};
+		double resultData = 486;
+
+		final Matrix testMatrix = new DiagonalMatrix("Test", data, null);
+		assertTrue("Determinant calculation gives incorrect result.",
+				testMatrix.determinant() == resultData);
+	}
 
 }

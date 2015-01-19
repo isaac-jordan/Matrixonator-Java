@@ -23,5 +23,14 @@ public class DiagonalMatrix extends Matrix {
 			this.getData()[i][i] *= c;
 		}
 	}
+	
+	@Override
+	public double determinant() {
+		double result = 1;
+		for (int i = 0; i < this.getNumRows(); i++) {
+			result *= this.getData()[i][i];
+		}
+		return result;
+	}
 
 }
