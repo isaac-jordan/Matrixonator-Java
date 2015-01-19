@@ -1,7 +1,6 @@
 package ijordan.matrixonator.model;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -250,6 +249,31 @@ public class Matrix {
 			}
 		}
 		return result;
+	}
+	
+	
+	public Matrix ERO1(Matrix A, int row1, int row2) {
+		// Swaps row1 and row2
+		double[] temp = A.getData()[row1];
+		A.getData()[row1] = A.getData()[row2];
+		A.getData()[row2] = temp;
+		return A;
+	}
+
+	public Matrix ERO2(Matrix A, int row, double scalar) {
+		// Multiply every element of row by scalar
+		for (int i = 0; i < A.getNumCols(); i++) {
+			A.getData()[row][i] *= scalar;
+		}
+		return A;
+	}
+
+	public Matrix ERO3(Matrix A, int row1, int row2, double scalar) {
+		// row1 = row1 + scalar*row2
+		for (int i = 0; i < A.getNumCols(); i++) {
+			A.getData()[row1][i] += scalar * A.getData()[row2][i];
+		}
+		return A;
 	}
 	
 

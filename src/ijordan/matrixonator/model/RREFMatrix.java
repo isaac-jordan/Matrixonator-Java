@@ -2,16 +2,10 @@ package ijordan.matrixonator.model;
 
 import java.time.LocalDate;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-
 public class RREFMatrix extends Matrix {
-
-	private final ObjectProperty<Matrix> parent;
 
 	public RREFMatrix(Matrix parent) {		
 		super("RREF" + parent.getName(), new double[parent.getNumRows()][parent.getNumCols()], LocalDate.now());
-		this.parent = new SimpleObjectProperty<Matrix>(parent);
 		double[][] data = new double[parent.getNumRows()][parent.getNumCols()];
 
 		for (int x = 0; x < parent.getNumRows(); x++) {
@@ -69,7 +63,7 @@ public class RREFMatrix extends Matrix {
 	// i,j i,j+1 i,j+2
 	// i+1,j i+1,j+1 i+1,j+2
 	// i+2,j i+2,j+2 i+2,j+2 etc
-	public static boolean stepOne(Matrix A, int i, int j) {
+	private boolean stepOne(Matrix A, int i, int j) {
 		// If A[i][j] = 0 swap the ith row with some other row (A[i+b]) below to
 		// make A[i][j] not 0.
 		// This A[i][j], non-zero entry is called a pivot.
@@ -89,12 +83,12 @@ public class RREFMatrix extends Matrix {
 		}
 	}
 
-	public static void stepTwo(Matrix A, int i, int j) {
+	private void stepTwo(Matrix A, int i, int j) {
 		// Divide the ith row by A[i][j] to make the pivot entry = 1
 		A = ERO2(A, i, (1 / A.getData()[i][j]));
 	}
 
-	public static void stepThree(Matrix A, int i, int j) {
+	private void stepThree(Matrix A, int i, int j) {
 		// Eliminate all other entries in the
 		// jth column by subtracting suitable multiples of the
 		// ith row from the other rows
@@ -109,29 +103,6 @@ public class RREFMatrix extends Matrix {
 		}
 	}
 
-	public static Matrix ERO1(Matrix A, int row1, int row2) {
-		// Swaps row1 and row2
-		double[] temp = A.getData()[row1];
-		A.getData()[row1] = A.getData()[row2];
-		A.getData()[row2] = temp;
-		return A;
-	}
-
-	public static Matrix ERO2(Matrix A, int row, double scalar) {
-		// Multiply every element of row by scalar
-		for (int i = 0; i < A.getNumCols(); i++) {
-			A.getData()[row][i] *= scalar;
-		}
-		return A;
-	}
-
-	public static Matrix ERO3(Matrix A, int row1, int row2, double scalar) {
-		// row1 = row1 + scalar*row2
-		for (int i = 0; i < A.getNumCols(); i++) {
-			A.getData()[row1][i] += scalar * A.getData()[row2][i];
-		}
-		return A;
-	}
 	// END OF RREF CODE
 
 }
