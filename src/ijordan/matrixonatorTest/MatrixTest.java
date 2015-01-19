@@ -279,7 +279,7 @@ public class MatrixTest {
 		double[][] dataFirst = {{1,2,3},{0,-4,1},{0,3,-1}};
 		double dataResult = 1;
 		final Matrix testMatrix1 = new Matrix("Test1", dataFirst, null);
-		assertTrue("Matrix Addition gives incorrect result", Matrix.determinant(testMatrix1) == dataResult);
+		assertTrue("Matrix Addition gives incorrect result", testMatrix1.determinant() == dataResult);
 	}
 	
 	@Test
@@ -287,6 +287,22 @@ public class MatrixTest {
 		double[][] dataFirst = {{1,2,3},{3,2,1},{2,1,3}};
 		double dataResult = -12;
 		final Matrix testMatrix1 = new Matrix("Test1", dataFirst, null);
-		assertTrue("Matrix Addition gives incorrect result", Matrix.determinant(testMatrix1) == dataResult);
+		assertTrue("Matrix Addition gives incorrect result", testMatrix1.determinant() == dataResult);
+	}
+	
+	@Test
+	public void testMatrixPowerBig() {
+		double[][] dataFirst = {{1,2,-3},{4,8,1},{0,3,5}};
+		double[][] dataResult = {{-654572067, -1330179531, 26989594}, {11511254796.0, 21852059469.0, -3420681349.0}, {9447742572.0, 18081183669.0, -2527619248.0}};
+		final Matrix testMatrix = new Matrix("Test", dataFirst, null);
+		assertTrue("Matrix raised to power gives incorrect result", Arrays.deepEquals(testMatrix.toPower(11).getData(), dataResult));
+	}
+	
+	@Test
+	public void testMatrixPowerSmall() {
+		double[][] dataFirst = {{1,2},{2,1}};
+		double[][] dataResult = {{88573, 88574}, {88574, 88573}};
+		final Matrix testMatrix = new Matrix("Test", dataFirst, null);
+		assertTrue("Matrix raised to power gives incorrect result", Arrays.deepEquals(testMatrix.toPower(11).getData(), dataResult));
 	}
 }
