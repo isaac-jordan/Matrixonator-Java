@@ -152,6 +152,13 @@ public class Matrix {
 		throw new IllegalArgumentException("Matrices are not compatible");
 	}
 	
+	public Matrix toPower(int n) {
+		Matrix resultMatrix = new Matrix(null, this.cloneData(), null);
+		for (int i=1; i<n; i++) {
+			resultMatrix = Matrix.multiplyMatrices(this, resultMatrix);
+		}
+		return resultMatrix;
+	}
 	public void scalarMultiply(double c) {
 		for (int i = 0; i < this.getNumRows(); i++) {
 			for (int j = 0; j < this.getNumCols(); j++) {
@@ -234,5 +241,16 @@ public class Matrix {
 	public double determinant() {
 		return det(this.getNumRows(), this.getData());
 	}
+	
+	public double[][] cloneData() {
+		double[][] result = new double[this.getNumRows()][this.getNumCols()];
+		for (int i=0;i<this.getNumRows();i++) {
+			for (int j=0;j<this.getNumCols();j++) {
+				result[i][j] = this.getData()[i][j];
+			}
+		}
+		return result;
+	}
+	
 
 }
