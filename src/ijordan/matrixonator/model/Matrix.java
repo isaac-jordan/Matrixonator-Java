@@ -101,6 +101,15 @@ public class Matrix {
 	public double[] getRow(int row) {
 		return data.get()[row];
 	}
+	
+	// Returns a given row of Matrix
+		public double[] getCol(int colNum) {
+			double[] column = new double[this.getNumRows()];
+			for (int i=0; i<this.getNumRows();i++) {
+				column[i] = data.get()[i][colNum];
+			}
+			return column;
+		}
 
 	// Returns a given cell of the matrix
 	public double getCell(int row, int col) {
@@ -250,6 +259,26 @@ public class Matrix {
 			}
 		}
 		return result;
+	}
+	
+	public Matrix transpose() {
+		double[][] data = new double[this.getNumCols()][this.getNumRows()];
+		for (int i=0;i<this.getNumRows();i++) {
+			data[i] = this.getCol(i);
+		}
+		return new Matrix(null, data, null);
+	}
+	
+	//Not Working Yet
+	public Matrix inverse() { 
+		double[][] data = this.cloneData();
+		Matrix inverse = new Matrix(null, data, null);
+		double det = this.determinant();
+		if (det != 0) {
+			return inverse;
+		} else {
+			return null;
+		}
 	}
 	
 

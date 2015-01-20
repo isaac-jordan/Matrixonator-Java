@@ -305,4 +305,44 @@ public class MatrixTest {
 		final Matrix testMatrix = new Matrix("Test", dataFirst, null);
 		assertTrue("Matrix raised to power gives incorrect result", Arrays.deepEquals(testMatrix.toPower(11).getData(), dataResult));
 	}
+	
+	@Test
+	public void testMatrixInverse() {
+		double[][] dataFirst = {{1,2,-3},{4,8,1},{0,3,5}};
+		double[][] dataResult = {{-37/39, 19/39, -2/3}, {20/39, -5/39, 1/3}, {-4/13, 1/13, 0}};
+		final Matrix testMatrix = new Matrix("Test", dataFirst, null);
+		assertTrue("Matrix inverse gives incorrect result", Arrays.deepEquals(testMatrix.inverse().getData(), dataResult));
+	}
+	
+	@Test
+	public void testMatrixTranspose() {
+		double[][] dataFirst = {{1,2,-3},{4,8,1},{0,3,5}};
+		double[][] dataResult = {{1, 4, 0}, {2, 8, 3}, {-3, 1, 5}};
+		final Matrix testMatrix = new Matrix("Test", dataFirst, null);
+		assertTrue("Matrix inverse gives incorrect result", Arrays.deepEquals(testMatrix.transpose().getData(), dataResult));
+	}
+	
+	@Test
+	public void testMatrixGetRow() {
+		double[][] dataFirst = {{1,2,-3},{4,8,1},{0,3,5}};
+		double[] dataResult0 = {1,2,-3};
+		double[] dataResult1 = {4,8,1};
+		double[] dataResult2 = {0,3,5};
+		final Matrix testMatrix = new Matrix("Test", dataFirst, null);
+		assertTrue("Matrix getRow gives incorrect result", Arrays.equals(testMatrix.getRow(0), dataResult0));
+		assertTrue("Matrix getRow gives incorrect result", Arrays.equals(testMatrix.getRow(1), dataResult1));
+		assertTrue("Matrix getRow gives incorrect result", Arrays.equals(testMatrix.getRow(2), dataResult2));
+	}
+	
+	@Test
+	public void testMatrixGetCol() {
+		double[][] dataFirst = {{1,2,-3},{4,8,1},{0,3,5}};
+		double[] dataResult0 = {1,4,0};
+		double[] dataResult1 = {2,8,3};
+		double[] dataResult2 = {-3,1,5};
+		final Matrix testMatrix = new Matrix("Test", dataFirst, null);
+		assertTrue("Matrix getCol gives incorrect result", Arrays.equals(testMatrix.getCol(0), dataResult0));
+		assertTrue("Matrix getCol gives incorrect result", Arrays.equals(testMatrix.getCol(1), dataResult1));
+		assertTrue("Matrix getCol gives incorrect result", Arrays.equals(testMatrix.getCol(2), dataResult2));
+	}
 }
