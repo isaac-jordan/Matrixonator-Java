@@ -63,7 +63,7 @@ public class RREFMatrix extends Matrix {
 	// i,j i,j+1 i,j+2
 	// i+1,j i+1,j+1 i+1,j+2
 	// i+2,j i+2,j+2 i+2,j+2 etc
-	private boolean stepOne(Matrix A, int i, int j) {
+	public static boolean stepOne(Matrix A, int i, int j) {
 		// If A[i][j] = 0 swap the ith row with some other row (A[i+b]) below to
 		// make A[i][j] not 0.
 		// This A[i][j], non-zero entry is called a pivot.
@@ -73,7 +73,7 @@ public class RREFMatrix extends Matrix {
 			if (A.getData()[i + b][j] == 0) {
 				b += 1;
 			} else {
-				A = ERO1(A, i, (i + b));
+				A = Matrix.ERO1(A, i, (i + b));
 			}
 		}
 		if (A.getData()[i][j] == 0) {
@@ -83,12 +83,12 @@ public class RREFMatrix extends Matrix {
 		}
 	}
 
-	private void stepTwo(Matrix A, int i, int j) {
+	public static void stepTwo(Matrix A, int i, int j) {
 		// Divide the ith row by A[i][j] to make the pivot entry = 1
-		A = ERO2(A, i, (1 / A.getData()[i][j]));
+		A = Matrix.ERO2(A, i, (1 / A.getData()[i][j]));
 	}
 
-	private void stepThree(Matrix A, int i, int j) {
+	public static void stepThree(Matrix A, int i, int j) {
 		// Eliminate all other entries in the
 		// jth column by subtracting suitable multiples of the
 		// ith row from the other rows
@@ -97,7 +97,7 @@ public class RREFMatrix extends Matrix {
 			if (A.getData()[x][j] != 0 && x != i) {
 				// If this entry in the jth column isn't zero
 				// and it's not the ith row make it zero
-				A = ERO3(A, x, i, (A.getData()[x][j] * -1));
+				A = Matrix.ERO3(A, x, i, (A.getData()[x][j] * -1));
 			}
 			x += 1;
 		}
