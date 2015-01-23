@@ -167,12 +167,13 @@ public class Matrix {
 		}
 		return resultMatrix;
 	}
-	public void scalarMultiply(double c) {
+	public Matrix scalarMultiply(double c) {
 		for (int i = 0; i < this.getNumRows(); i++) {
 			for (int j = 0; j < this.getNumCols(); j++) {
 				this.getData()[i][j] *= c;
 			}
 		}
+		return this;
 	}
 
 	/**
@@ -200,51 +201,54 @@ public class Matrix {
 
 	//Source: http://en.wikibooks.org/wiki/Algorithm_Implementation/Linear_Algebra/Determinant_of_a_Matrix
 	//TODO: Make this more readable, and fit the code style better.
-	private static double[][] reduce(double[][] x, double[][] y, int r, int c, int n) {
-		for (int h = 0, j = 0; h < n; h++) {
-			if (h == r)
+	
+	//Seems to return cofactor matrix of x.
+	//http://en.wikipedia.org/wiki/Minor_(linear_algebra)
+	private static double[][] reduce(double[][] initialData, double[][] returnData, int row, int column, int numRows) {
+		for (int h = 0, j = 0; h < numRows; h++) {
+			if (h == row)
 				continue;
-			for (int i = 0, k = 0; i < n; i++) {
-				if (i == c)
+			for (int i = 0, k = 0; i < numRows; i++) {
+				if (i == column)
 					continue;
-				y[j][k] = x[h][i];
+				returnData[j][k] = initialData[h][i];
 				k++;
 			} // end inner loop
 			j++;
 		} // end outer loop
-		return y;
+		return returnData;
 	} // end method
 
 	// ===================================================
-	private static double det(int NMAX, double[][] x) {
+	private static double det(int numRows, double[][] data) {
 		double ret = 0;
-		if (NMAX < 4)// base case
-		{
+		if (numRows < 4) {
 			double prod1 = 1, prod2 = 1;
-			for (int i = 0; i < NMAX; i++) {
+			for (int i = 0; i < numRows; i++) {
 				prod1 = 1;
 				prod2 = 1;
 
-				for (int j = 0; j < NMAX; j++) {
-					prod1 *= x[(j + i + 1) % NMAX][j];
-					prod2 *= x[(j + i + 1) % NMAX][NMAX - j - 1];
-				} // end inner loop
+				for (int j = 0; j < numRows; j++) {
+					prod1 *= data[(j + i + 1) % numRows][j];
+					prod2 *= data[(j + i + 1) % numRows][numRows - j - 1];
+				}
 				ret += prod1 - prod2;
-			} // end outer loop
+			}
 			return ret;
-		} // end base case
-		double[][] y = new double[NMAX - 1][NMAX - 1];
-		for (int h = 0; h < NMAX; h++) {
-			if (x[h][0] == 0)
+		}
+		
+		double[][] reduced = new double[numRows - 1][numRows - 1]; //Create new matrix to contain cofactor matrix.
+		for (int h = 0; h < numRows; h++) {
+			if (data[h][0] == 0)
 				continue;
-			reduce(x, y, h, 0, NMAX);
+			reduce(data, reduced, h, 0, numRows);
 			if (h % 2 == 0)
-				ret -= det(NMAX - 1, y) * x[h][0];
+				ret -= det(numRows-1, reduced) * data[h][0];
 			if (h % 2 == 1)
-				ret += det(NMAX - 1, y) * x[h][0];
-		} // end loop
+				ret += det(numRows-1, reduced) * data[h][0];
+		}
 		return ret;
-	} // end method
+	}
 
 	public double determinant() {
 		return det(this.getNumRows(), this.getData());
@@ -294,10 +298,10 @@ public class Matrix {
 	//Not Working Yet
 	public Matrix inverse() { 
 		double[][] data = this.cloneData();
-		Matrix inverse = new Matrix(null, data, null);
+		Matrix newMatrix = new Matrix(null, data, null);
 		double det = this.determinant();
 		if (det != 0) {
-			return inverse;
+			return newMatrix.transpose().scalarMultiply(1/det);
 		} else {
 			return null;
 		}
