@@ -25,7 +25,6 @@ public class DiagonalMatrix extends Matrix {
 		return this;
 	}
 	
-	@Override
 	public double determinant() {
 		double result = 1;
 		for (int i = 0; i < this.getNumRows(); i++) {

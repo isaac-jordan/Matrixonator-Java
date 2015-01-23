@@ -279,7 +279,7 @@ public class MatrixTest {
 		double[][] dataFirst = {{1,2,3},{0,-4,1},{0,3,-1}};
 		double dataResult = 1;
 		final Matrix testMatrix1 = new Matrix("Test1", dataFirst, null);
-		assertTrue("Matrix Addition gives incorrect result", testMatrix1.determinant() == dataResult);
+		assertTrue("Matrix Addition gives incorrect result", Matrix.determinant(testMatrix1.getData()) == dataResult);
 	}
 	
 	@Test
@@ -287,7 +287,15 @@ public class MatrixTest {
 		double[][] dataFirst = {{1,2,3},{3,2,1},{2,1,3}};
 		double dataResult = -12;
 		final Matrix testMatrix1 = new Matrix("Test1", dataFirst, null);
-		assertTrue("Matrix Addition gives incorrect result", testMatrix1.determinant() == dataResult);
+		assertTrue("Matrix Addition gives incorrect result", Matrix.determinant(testMatrix1.getData()) == dataResult);
+	}
+	
+	@Test
+	public void testMatrixDeterminantSmall() {
+		double[][] dataFirst = {{1,2},{0,3}};
+		double dataResult = 3;
+		final Matrix testMatrix1 = new Matrix("Test1", dataFirst, null);
+		assertTrue("Matrix Addition gives incorrect result", Matrix.determinant(testMatrix1.getData()) == dataResult);
 	}
 	
 	@Test
@@ -309,9 +317,12 @@ public class MatrixTest {
 	@Test
 	public void testMatrixInverse() {
 		double[][] dataFirst = {{1,2,-3},{4,8,1},{0,3,5}};
-		double[][] dataResult = {{-37/39, 19/39, -2/3}, {20/39, -5/39, 1/3}, {-4/13, 1/13, 0}};
+		double[][] dataResult = {{-37.0/39, 19.0/39, -2.0/3}, {20.0/39, -5.0/39, 1.0/3}, {-4.0/13, 1.0/13, 0}};
 		final Matrix testMatrix = new Matrix("Test", dataFirst, null);
-		assertTrue("Matrix inverse gives incorrect result", Arrays.deepEquals(testMatrix.inverse().getData(), dataResult));
+		final Matrix testMatrix2 = new Matrix("Test", dataResult, null);
+		System.out.println(Arrays.deepToString(testMatrix.inverse().getData()));
+		System.out.println(Arrays.deepToString(dataResult));
+		assertTrue("Matrix inverse gives incorrect result", Arrays.deepEquals(testMatrix.inverse().getData(), testMatrix2.normalise().getData()));
 	}
 	
 	@Test
@@ -320,6 +331,14 @@ public class MatrixTest {
 		double[][] dataResult = {{1, 4, 0}, {2, 8, 3}, {-3, 1, 5}};
 		final Matrix testMatrix = new Matrix("Test", dataFirst, null);
 		assertTrue("Matrix inverse gives incorrect result", Arrays.deepEquals(testMatrix.transpose().getData(), dataResult));
+	}
+	
+	@Test
+	public void testMatrixCofactor() {
+		double[][] dataFirst = {{1,2,-3},{4,8,1},{0,3,5}};
+		double[][] dataResult = {{37, -20, 12}, {-19, 5, -3}, {26, -13, 0}};
+		final Matrix testMatrix = new Matrix("Test", dataFirst, null);
+		assertTrue("Matrix cofactor gives incorrect result", Arrays.deepEquals(testMatrix.cofactorMatrix().getData(), dataResult));
 	}
 	
 	@Test

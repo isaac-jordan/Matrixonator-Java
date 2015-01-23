@@ -47,17 +47,8 @@ public class RREFMatrix extends Matrix {
 		}
 		// At this stage, the data may contain -0.0, which is not equal to 0.0.
 		// So we convert all -0.0 to 0.0.
-		for (i = 0; i < localMatrix.getNumRows(); i++) {
-			for (j = 0; j < localMatrix.getNumCols(); j++) {
-				if (localMatrix.getData()[i][j] == -0.0) {
-					localMatrix.getData()[i][j] = 0.0;
-				}
-				// Round number to 10 decimal places.
-				localMatrix.getData()[i][j] = Math
-						.round(localMatrix.getData()[i][j] * 10000000000.0) / 10000000000.0;
-			}
-		}
-
+		localMatrix.normalise();
+		
 		for (int x = 0; x < parent.getNumRows(); x++) {
 			for (int y = 0; y < parent.getNumCols(); y++) {
 				this.getData()[x][y] = localMatrix.getData()[x][y];

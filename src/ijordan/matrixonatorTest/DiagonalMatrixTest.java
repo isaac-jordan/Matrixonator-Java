@@ -32,7 +32,7 @@ public class DiagonalMatrixTest {
 		double[] data = {1, 3, 6, 9, 3};
 		double resultData = 486;
 
-		final Matrix testMatrix = new DiagonalMatrix("Test", data, null);
+		final DiagonalMatrix testMatrix = new DiagonalMatrix("Test", data, null);
 		assertTrue("Determinant calculation gives incorrect result.",
 				testMatrix.determinant() == resultData);
 	}

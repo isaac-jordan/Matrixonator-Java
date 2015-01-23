@@ -214,15 +214,47 @@ public class Matrix {
 					continue;
 				returnData[j][k] = initialData[h][i];
 				k++;
-			} // end inner loop
+			}
 			j++;
-		} // end outer loop
+		} 
 		return returnData;
-	} // end method
+	}
+	
+	public Matrix cofactorMatrix() {
+		double[][] data = this.getData();
+		double[][] cofactorData = new double[this.getNumRows()][this.getNumCols()];
+		double det;
+		for (int i=0;i<this.getNumRows();i++) {
+			for (int j=0;j<this.getNumCols();j++) {
+				double[][] reduced = new double[this.getNumRows() - 1][this.getNumCols() - 1];
+				det = determinant(reduce(data,reduced,i,j,this.getNumRows()));
+				cofactorData[i][j] = ((i + j) % 2 == 0 ? det : -det);
+			}
+		}
+		return new Matrix(null, cofactorData, null);
+	}
+	
+	public Matrix normalise() {
+		for (int i = 0; i < this.getNumRows(); i++) {
+			for (int j = 0; j < this.getNumCols(); j++) {
+				if (this.getData()[i][j] == -0.0) {
+					this.getData()[i][j] = 0.0;
+				}
+				// Round number to 10 decimal places.
+				this.getData()[i][j] = Math
+						.round(this.getData()[i][j] * 10000000000.0) / 10000000000.0;
+			}
+		}
+		return this;
+	}
 
-	// ===================================================
-	private static double det(int numRows, double[][] data) {
+	public static double determinant(double[][] data) {
+		int numRows = data.length;
 		double ret = 0;
+		if (numRows == 2) {
+			return data[0][0]*data[1][1] - data[0][1]*data[1][0];
+		}
+		
 		if (numRows < 4) {
 			double prod1 = 1, prod2 = 1;
 			for (int i = 0; i < numRows; i++) {
@@ -244,15 +276,11 @@ public class Matrix {
 				continue;
 			reduce(data, reduced, h, 0, numRows);
 			if (h % 2 == 0)
-				ret -= det(numRows-1, reduced) * data[h][0];
+				ret -= determinant(reduced) * data[h][0];
 			if (h % 2 == 1)
-				ret += det(numRows-1, reduced) * data[h][0];
+				ret += determinant(reduced) * data[h][0];
 		}
 		return ret;
-	}
-
-	public double determinant() {
-		return det(this.getNumRows(), this.getData());
 	}
 	
 	public double[][] cloneData() {
@@ -273,13 +301,12 @@ public class Matrix {
 		return new Matrix(null, data, null);
 	}
 	
-	//Not Working Yet
 	public Matrix inverse() { 
 		double[][] data = this.cloneData();
 		Matrix newMatrix = new Matrix(null, data, null);
-		double det = this.determinant();
+		double det = determinant(this.getData());
 		if (det != 0) {
-			return newMatrix.transpose().scalarMultiply(1/det);
+			return newMatrix.cofactorMatrix().transpose().scalarMultiply(1/det).normalise();
 		} else {
 			return null;
 		}
