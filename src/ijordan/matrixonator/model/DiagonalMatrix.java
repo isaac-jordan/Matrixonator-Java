@@ -18,7 +18,7 @@ public class DiagonalMatrix extends Matrix {
 	}
 	
 	@Override
-	public DiagonalMatrix scalarMultiply(double c) {
+	public DiagonalMatrix multiplyScalar(double c) {
 		for (int i = 0; i < this.getNumRows(); i++) {
 			this.getData()[i][i] *= c;
 		}
