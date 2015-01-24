@@ -248,7 +248,7 @@ public class Matrix {
 		return this;
 	}
 
-	public static double determinant(double[][] data) {
+	private static double determinant(double[][] data) {
 		int numRows = data.length;
 		double ret = 0;
 		if (numRows == 2) {
@@ -281,6 +281,14 @@ public class Matrix {
 				ret += determinant(reduced) * data[h][0];
 		}
 		return ret;
+	}
+	
+	/**
+	 * Public method for determinant calculation.
+	 * @return
+	 */
+	public double determinant() {
+		return determinant(getData());
 	}
 	
 	public double[][] cloneData() {
