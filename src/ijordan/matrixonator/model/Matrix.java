@@ -255,15 +255,12 @@ public class Matrix {
 	 * Public method for determinant calculation.
 	 * @return
 	 */
-	public double determinant() {
-		return determinant(getData());
-	}
+	public double determinant() { return determinant(getData()); }
 	
 	public Matrix transpose() {
 		double[][] data = new double[getNumCols()][getNumRows()];
-		for (int i=0;i<getNumRows();i++) {
+		for (int i=0;i<getNumRows();i++)
 			data[i] = getCol(i);
-		}
 		return new Matrix(null, data, null);
 	}
 	
@@ -271,11 +268,10 @@ public class Matrix {
 		double[][] data = cloneData();
 		Matrix newMatrix = new Matrix(null, data, null);
 		double det = determinant(getData());
-		if (det != 0) {
+		if (det != 0)
 			return newMatrix.cofactorMatrix().transpose().multiplyScalar(1/det).normalise();
-		} else {
+		else
 			return null;
-		}
 	}
 	
 }

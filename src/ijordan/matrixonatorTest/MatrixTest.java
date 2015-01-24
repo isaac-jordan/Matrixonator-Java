@@ -324,6 +324,13 @@ public class MatrixTest {
 	}
 	
 	@Test
+	public void testMatrixNoInverse() {
+		double[][] dataFirst = {{1,2,3},{4,5,6},{7,8,9}};
+		final Matrix testMatrix = new Matrix("Test", dataFirst, null);
+		assertTrue("Matrix inverse gives incorrect result", testMatrix.inverse() == null);
+	}
+	
+	@Test
 	public void testMatrixTranspose() {
 		double[][] dataFirst = {{1,2,-3},{4,8,1},{0,3,5}};
 		double[][] dataResult = {{1, 4, 0}, {2, 8, 3}, {-3, 1, 5}};
