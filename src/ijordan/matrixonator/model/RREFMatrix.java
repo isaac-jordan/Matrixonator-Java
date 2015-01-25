@@ -12,11 +12,7 @@ public class RREFMatrix extends Matrix {
 	public RREFMatrix(Matrix parent) {		
 		super("RREF" + parent.getName(), new double[parent.getNumRows()][parent.getNumCols()], LocalDate.now());
 		this.parent = new SimpleObjectProperty<Matrix>(parent);
-		double[][] data = new double[parent.getNumRows()][parent.getNumCols()];
-
-		for (int x = 0; x < parent.getNumRows(); x++)
-			for (int y = 0; y < parent.getNumCols(); y++)
-				data[x][y] = parent.getData()[x][y];
+		double[][] data = parent.cloneData();
 		
 		Matrix localMatrix = new Matrix(null, data, null);
 		int i = 0;

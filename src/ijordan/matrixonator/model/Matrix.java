@@ -2,6 +2,7 @@ package ijordan.matrixonator.model;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Optional;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -17,6 +18,11 @@ public class Matrix {
 	private final IntegerProperty numCols;
 	private final ObjectProperty<LocalDate> createdDate;
 	private final ObjectProperty<double[][]> data;
+	
+	private Optional<Integer> determinant;
+	private Optional<Matrix> inverse;
+	private Optional<RREFMatrix> RREForm;
+	private Optional<Matrix> cofactor;
 
 	/**
 	 * Default constructor. Creates an empty, unnamed matrix.
