@@ -25,346 +25,341 @@ import javafx.scene.layout.Priority;
 
 public class MatrixOverviewController {
 
-	@FXML
-	private TableView<Matrix> matrixTable;
-	@FXML
-	private TableColumn<Matrix, String> nameColumn;
-	@FXML
-	private TableColumn<Matrix, Integer> numRowsColumn;
-	@FXML
-	private TableColumn<Matrix, Integer> numColsColumn;
+  @FXML
+  private TableView<Matrix> matrixTable;
+  @FXML
+  private TableColumn<Matrix, String> nameColumn;
+  @FXML
+  private TableColumn<Matrix, Integer> numRowsColumn;
+  @FXML
+  private TableColumn<Matrix, Integer> numColsColumn;
 
-	@FXML
-	private Label nameLabel;
-	@FXML
-	private Label numRowsLabel;
-	@FXML
-	private Label numColsLabel;
-	@FXML
-	private Label createdDateLabel;
+  @FXML
+  private Label nameLabel;
+  @FXML
+  private Label numRowsLabel;
+  @FXML
+  private Label numColsLabel;
+  @FXML
+  private Label createdDateLabel;
 
-	// Reference to the main application.
-	private MainApp mainApp;
-	
-	/**
-	 * The constructor. The constructor is called before the initialise()
-	 * method.
-	 */
-	public MatrixOverviewController() {
-	}
+  // Reference to the main application.
+  private MainApp mainApp;
 
-	/**
-	 * Initialises the controller class. This method is automatically called
-	 * after the fxml file has been loaded.
-	 */
-	@FXML
-	private void initialize() {
-		// Initialise the person table with the two columns.
-		nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+  /**
+   * The constructor. The constructor is called before the initialise() method.
+   */
+  public MatrixOverviewController() {}
 
-		// Not typesafe
-		numRowsColumn.setCellValueFactory(new PropertyValueFactory<Matrix, Integer>("numRows"));
-		numColsColumn.setCellValueFactory(new PropertyValueFactory<Matrix, Integer>("numCols"));
+  /**
+   * Initialises the controller class. This method is automatically called after the fxml file has
+   * been loaded.
+   */
+  @FXML
+  private void initialize() {
+    // Initialise the person table with the two columns.
+    nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 
-		// Clear matrix details.
-		showMatrixDetails(null);
+    // Not typesafe
+    numRowsColumn.setCellValueFactory(new PropertyValueFactory<Matrix, Integer>("numRows"));
+    numColsColumn.setCellValueFactory(new PropertyValueFactory<Matrix, Integer>("numCols"));
 
-		// Listen for selection changes and show the person details when
-		// changed.
-		matrixTable.getSelectionModel().selectedItemProperty()
-				.addListener((observable, oldValue, newValue) -> showMatrixDetails(newValue));
-	}
+    // Clear matrix details.
+    showMatrixDetails(null);
 
-	/**
-	 * Is called by the main application to give a reference back to itself.
-	 * 
-	 * @param mainApp
-	 */
-	public void setMainApp(MainApp mainApp) {
-		this.mainApp = mainApp;
+    // Listen for selection changes and show the person details when
+    // changed.
+    matrixTable.getSelectionModel().selectedItemProperty()
+        .addListener((observable, oldValue, newValue) -> showMatrixDetails(newValue));
+  }
 
-		// Add observable list data to the table
-		matrixTable.setItems(mainApp.getMatrixData());
-	}
+  /**
+   * Is called by the main application to give a reference back to itself.
+   * 
+   * @param mainApp
+   */
+  public void setMainApp(MainApp mainApp) {
+    this.mainApp = mainApp;
 
-	/**
-	 * This method is called when the listener detects that a matrix was
-	 * selected on the left hand table. It updates the labels on the right-hand
-	 * side of the GUI.
-	 * 
-	 * @param matrix
-	 */
-	private void showMatrixDetails(Matrix matrix) {
-		if (matrix != null) {
-			nameLabel.setText(matrix.getName());
-			numRowsLabel.setText(Integer.toString(matrix.getNumRows()));
-			numColsLabel.setText(Integer.toString(matrix.getNumCols()));
-			createdDateLabel.setText(matrix.getCreatedDate().toString());
-		} else {
-			nameLabel.setText("");
-			numRowsLabel.setText("");
-			numColsLabel.setText("");
-			createdDateLabel.setText("");
-		}
-	}
+    // Add observable list data to the table
+    matrixTable.setItems(mainApp.getMatrixData());
+  }
 
-	/**
-	 * Called when the user clicks on the new button. This method will guide the
-	 * user through the wizard that asks them to enter the matrix details.
-	 */
-	@FXML
-	private void handleNewMatrix() {
-		// define pages to show
+  /**
+   * This method is called when the listener detects that a matrix was selected on the left hand
+   * table. It updates the labels on the right-hand side of the GUI.
+   * 
+   * @param matrix
+   */
+  private void showMatrixDetails(Matrix matrix) {
+    if (matrix != null) {
+      nameLabel.setText(matrix.getName());
+      numRowsLabel.setText(Integer.toString(matrix.getNumRows()));
+      numColsLabel.setText(Integer.toString(matrix.getNumCols()));
+      createdDateLabel.setText(matrix.getCreatedDate().toString());
+    } else {
+      nameLabel.setText("");
+      numRowsLabel.setText("");
+      numColsLabel.setText("");
+      createdDateLabel.setText("");
+    }
+  }
 
-		Wizard wizard = new Wizard();
-		wizard.setTitle("Create New Matrix");
+  /**
+   * Called when the user clicks on the new button. This method will guide the user through the
+   * wizard that asks them to enter the matrix details.
+   */
+  @FXML
+  private void handleNewMatrix() {
+    // define pages to show
 
-		// --- page 1
-		int row = 0;
+    Wizard wizard = new Wizard();
+    wizard.setTitle("Create New Matrix");
 
-		GridPane page1Grid = new GridPane();
-		page1Grid.setVgap(10);
-		page1Grid.setHgap(10);
+    // --- page 1
+    int row = 0;
 
-		page1Grid.add(new Label("Name:"), 0, row);
-		TextField txFirstName = createTextField("name", 80);
-		page1Grid.add(txFirstName, 1, row++);
+    GridPane page1Grid = new GridPane();
+    page1Grid.setVgap(10);
+    page1Grid.setHgap(10);
 
-		page1Grid.add(new Label("Number of rows:"), 0, row);
-		TextField txNumRows = createTextField("numRows", 80);
-		page1Grid.add(txNumRows, 1, row++);
+    page1Grid.add(new Label("Name:"), 0, row);
+    TextField txFirstName = createTextField("name", 80);
+    page1Grid.add(txFirstName, 1, row++);
 
-		page1Grid.add(new Label("Number of columns:"), 0, row);
-		TextField txNumCols = createTextField("numCols", 80);
-		page1Grid.add(txNumCols, 1, row);
+    page1Grid.add(new Label("Number of rows:"), 0, row);
+    TextField txNumRows = createTextField("numRows", 80);
+    page1Grid.add(txNumRows, 1, row++);
 
-		WizardPane page1 = new WizardPane();
-		page1.setHeaderText("Please Enter Matrix Details");
-		page1.setContent(page1Grid);
+    page1Grid.add(new Label("Number of columns:"), 0, row);
+    TextField txNumCols = createTextField("numCols", 80);
+    page1Grid.add(txNumCols, 1, row);
 
-		// --- page 2
+    WizardPane page1 = new WizardPane();
+    page1.setHeaderText("Please Enter Matrix Details");
+    page1.setContent(page1Grid);
 
-		final WizardPane page2 = new WizardPane() {
-			@Override
-			public void onEnteringPage(Wizard wizard) {
-				String name = (String) wizard.getSettings().get("name");
+    // --- page 2
 
-				int numRows = 0;
-				int numCols = 0;
-				try {
-					numRows = Integer.parseInt((String) wizard.getSettings().get("numRows"));
-					numCols = Integer.parseInt((String) wizard.getSettings().get("numCols"));
-				} catch (NumberFormatException e) {
-					Alert alert = new Alert(AlertType.ERROR);
-					alert.setTitle("Error");
-					alert.setHeaderText("Invalid number of rows, or columns.");
-					alert.setContentText("Please enter ONLY integers next time. Please cancel and try again.");
+    final WizardPane page2 = new WizardPane() {
+      @Override
+      public void onEnteringPage(Wizard wizard) {
+        String name = (String) wizard.getSettings().get("name");
 
-					alert.showAndWait();
-					return;
-				}
+        int numRows = 0;
+        int numCols = 0;
+        try {
+          numRows = Integer.parseInt((String) wizard.getSettings().get("numRows"));
+          numCols = Integer.parseInt((String) wizard.getSettings().get("numCols"));
+        } catch (NumberFormatException e) {
+          Alert alert = new Alert(AlertType.ERROR);
+          alert.setTitle("Error");
+          alert.setHeaderText("Invalid number of rows, or columns.");
+          alert
+              .setContentText("Please enter ONLY integers next time. Please cancel and try again.");
 
-				GridPane page2Grid = new GridPane();
-				for (int i = 0; i < numRows; i++) {
-					for (int j = 0; j < numCols; j++) {
-						// Naming of text fields needs to be improved
-						TextField tx = createTextField("" + i + " " + j, 20);
-						tx.setPromptText("Enter value");
-						page2Grid.add(tx, j, i);
+          alert.showAndWait();
+          return;
+        }
 
-					}
-				}
-				page2Grid.setHgap(5);
-				page2Grid.setVgap(10);
-				setContent(page2Grid);
+        GridPane page2Grid = new GridPane();
+        for (int i = 0; i < numRows; i++) {
+          for (int j = 0; j < numCols; j++) {
+            // Naming of text fields needs to be improved
+            TextField tx = createTextField("" + i + " " + j, 20);
+            tx.setPromptText("Enter value");
+            page2Grid.add(tx, j, i);
 
-			}
-		};
-		page2.setHeaderText("Creating Matrix");
+          }
+        }
+        page2Grid.setHgap(5);
+        page2Grid.setVgap(10);
+        setContent(page2Grid);
 
-		// --- page 3
-		WizardPane page3 = new WizardPane() {
-			@Override
-			public void onEnteringPage(Wizard wizard) {
-				String name = (String) wizard.getSettings().get("name");
+      }
+    };
+    page2.setHeaderText("Creating Matrix");
 
-				int numRows = 0;
-				int numCols = 0;
-				try {
-					numRows = Integer.parseInt((String) wizard.getSettings().get("numRows"));
-					numCols = Integer.parseInt((String) wizard.getSettings().get("numCols"));
-				} catch (NumberFormatException e) {
-					Alert alert = new Alert(AlertType.ERROR);
-					alert.setTitle("Error");
-					alert.setHeaderText("Invalid number of rows, or columns.");
-					alert.setContentText("Please enter ONLY integers next time. Please Cancel and try again.");
+    // --- page 3
+    WizardPane page3 = new WizardPane() {
+      @Override
+      public void onEnteringPage(Wizard wizard) {
+        String name = (String) wizard.getSettings().get("name");
 
-					alert.showAndWait();
-					return;
-				}
+        int numRows = 0;
+        int numCols = 0;
+        try {
+          numRows = Integer.parseInt((String) wizard.getSettings().get("numRows"));
+          numCols = Integer.parseInt((String) wizard.getSettings().get("numCols"));
+        } catch (NumberFormatException e) {
+          Alert alert = new Alert(AlertType.ERROR);
+          alert.setTitle("Error");
+          alert.setHeaderText("Invalid number of rows, or columns.");
+          alert
+              .setContentText("Please enter ONLY integers next time. Please Cancel and try again.");
 
-				double[][] data = new double[numRows][numCols];
+          alert.showAndWait();
+          return;
+        }
 
-				double currentData;
+        double[][] data = new double[numRows][numCols];
 
-				for (int i = 0; i < numRows; i++) {
-					for (int j = 0; j < numCols; j++) {
-						String raw = (String) wizard.getSettings().get("" + i + " " + j);
-						try {
-							currentData = Double.valueOf(raw);
-						} catch (NumberFormatException e) {
-							currentData = 0;
-						}
+        double currentData;
 
-						data[i][j] = currentData;
+        for (int i = 0; i < numRows; i++) {
+          for (int j = 0; j < numCols; j++) {
+            String raw = (String) wizard.getSettings().get("" + i + " " + j);
+            try {
+              currentData = Double.valueOf(raw);
+            } catch (NumberFormatException e) {
+              currentData = 0;
+            }
 
-					}
-				}
+            data[i][j] = currentData;
 
-				mainApp.getMatrixData().add(new Matrix(name, data, null));
+          }
+        }
 
-			}
-		};
-		page3.setHeaderText("Goodbye!");
-		page3.setContentText("Matrix created.");
+        mainApp.getMatrixData().add(new Matrix(name, data, null));
 
-		// create wizard
-		wizard.setFlow(new LinearFlow(page1, page2, page3));
+      }
+    };
+    page3.setHeaderText("Goodbye!");
+    page3.setContentText("Matrix created.");
 
-		// show wizard and wait for response
-		wizard.showAndWait();
-	}
+    // create wizard
+    wizard.setFlow(new LinearFlow(page1, page2, page3));
 
-	/**
-	 * Method is called when the "Edit" button is pressed. If a valid matrix is
-	 * selected in the table on the left, then it is deleted from the
-	 * matrixTable.
-	 */
-	@FXML
-	private void handleEditMatrix() {
-		int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
-		if (selectedIndex >= 0) {
-			// User has selected a valid matrix on the left.
-			TextInputDialog dialog = new TextInputDialog(matrixTable.getSelectionModel()
-					.getSelectedItem().getName());
-			dialog.setTitle("Editing Matrix");
-			dialog.setHeaderText("Leave blank, or click cancel for no changes.");
-			dialog.setContentText("Please enter new name:");
+    // show wizard and wait for response
+    wizard.showAndWait();
+  }
 
-			Optional<String> result = dialog.showAndWait();
+  /**
+   * Method is called when the "Edit" button is pressed. If a valid matrix is selected in the table
+   * on the left, then it is deleted from the matrixTable.
+   */
+  @FXML
+  private void handleEditMatrix() {
+    int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
+    if (selectedIndex >= 0) {
+      // User has selected a valid matrix on the left.
+      TextInputDialog dialog =
+          new TextInputDialog(matrixTable.getSelectionModel().getSelectedItem().getName());
+      dialog.setTitle("Editing Matrix");
+      dialog.setHeaderText("Leave blank, or click cancel for no changes.");
+      dialog.setContentText("Please enter new name:");
 
-			result.ifPresent(name -> matrixTable.getSelectionModel().getSelectedItem()
-					.setName(name));
+      Optional<String> result = dialog.showAndWait();
 
-		} else {
-			// Nothing is selected
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("No Selection");
-			alert.setHeaderText("No Matrix Selected");
-			alert.setContentText("Please select a matrix in the table.");
+      result.ifPresent(name -> matrixTable.getSelectionModel().getSelectedItem().setName(name));
 
-			alert.showAndWait();
-		}
+    } else {
+      // Nothing is selected
+      Alert alert = new Alert(AlertType.ERROR);
+      alert.setTitle("No Selection");
+      alert.setHeaderText("No Matrix Selected");
+      alert.setContentText("Please select a matrix in the table.");
 
-	}
+      alert.showAndWait();
+    }
 
-	/**
-	 * Method is called when the "Delete" button is pressed. If a valid matrix
-	 * is selected in the table on the left, then it is deleted from the
-	 * matrixTable.
-	 */
-	@FXML
-	private void handleDeleteMatrix() {
-		int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
-		if (selectedIndex >= 0) {
-			matrixTable.getItems().remove(selectedIndex);
-		} else {
-			// Nothing is selected
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("No Selection");
-			alert.setHeaderText("No Matrix Selected");
-			alert.setContentText("Please select a matrix in the table.");
+  }
 
-			alert.showAndWait();
-		}
+  /**
+   * Method is called when the "Delete" button is pressed. If a valid matrix is selected in the
+   * table on the left, then it is deleted from the matrixTable.
+   */
+  @FXML
+  private void handleDeleteMatrix() {
+    int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
+    if (selectedIndex >= 0) {
+      matrixTable.getItems().remove(selectedIndex);
+    } else {
+      // Nothing is selected
+      Alert alert = new Alert(AlertType.ERROR);
+      alert.setTitle("No Selection");
+      alert.setHeaderText("No Matrix Selected");
+      alert.setContentText("Please select a matrix in the table.");
 
-	}
+      alert.showAndWait();
+    }
 
-	@FXML
-	private void handleShowData() {
-		int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
-		if (selectedIndex >= 0) {
-			alertMatrixData(matrixTable.getSelectionModel().getSelectedItem());
-		} else {
-			// Nothing is selected
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("No Selection");
-			alert.setHeaderText("No Matrix Selected");
-			alert.setContentText("Please select a matrix in the table.");
+  }
 
-			alert.showAndWait();
-		}
+  @FXML
+  private void handleShowData() {
+    int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
+    if (selectedIndex >= 0) {
+      alertMatrixData(matrixTable.getSelectionModel().getSelectedItem());
+    } else {
+      // Nothing is selected
+      Alert alert = new Alert(AlertType.ERROR);
+      alert.setTitle("No Selection");
+      alert.setHeaderText("No Matrix Selected");
+      alert.setContentText("Please select a matrix in the table.");
 
-	}
+      alert.showAndWait();
+    }
 
-	/**
-	 * Creates and displays a pop-up (alert) that contains the data of the given
-	 * matrix.
-	 * 
-	 * @param matrix
-	 */
-	private void alertMatrixData(Matrix matrix) {
-		Dialog<Object> dialog = new Dialog<Object>();
-		dialog.setTitle(matrix.getName());
-		dialog.setHeaderText("Showing the data associated with " + matrix.getName());
-		ButtonType closeButtonType = new ButtonType("Close", ButtonData.OK_DONE);
-		dialog.getDialogPane().getButtonTypes().addAll(closeButtonType);
+  }
 
-		GridPane alertGrid = new GridPane();
-		alertGrid.setHgap(20);
-		alertGrid.setVgap(10);
-		for (int i = 0; i < matrix.getNumRows(); i++) {
-			for (int j = 0; j < matrix.getNumCols(); j++) {
-				Label label = new Label();
-				// Should probably use decimalFormat for clean formatting
-				label.setText(String.valueOf(matrix.getData()[i][j]));
-				alertGrid.add(label, j, i);
+  /**
+   * Creates and displays a pop-up (alert) that contains the data of the given matrix.
+   * 
+   * @param matrix
+   */
+  private void alertMatrixData(Matrix matrix) {
+    Dialog<Object> dialog = new Dialog<Object>();
+    dialog.setTitle(matrix.getName());
+    dialog.setHeaderText("Showing the data associated with " + matrix.getName());
+    ButtonType closeButtonType = new ButtonType("Close", ButtonData.OK_DONE);
+    dialog.getDialogPane().getButtonTypes().addAll(closeButtonType);
 
-			}
-		}
-		dialog.getDialogPane().setContent(alertGrid);
-		dialog.showAndWait();
-	}
-	
-	@FXML
-	private void handleCalculateRREF() {
-		int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
-		if (selectedIndex >= 0) {
-			alertMatrixData(new RREFMatrix(matrixTable.getSelectionModel().getSelectedItem()));
-		} else {
-			// Nothing is selected
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("No Selection");
-			alert.setHeaderText("No Matrix Selected");
-			alert.setContentText("Please select a matrix in the table.");
+    GridPane alertGrid = new GridPane();
+    alertGrid.setHgap(20);
+    alertGrid.setVgap(10);
+    for (int i = 0; i < matrix.getNumRows(); i++) {
+      for (int j = 0; j < matrix.getNumCols(); j++) {
+        Label label = new Label();
+        // Should probably use decimalFormat for clean formatting
+        label.setText(String.valueOf(matrix.getData()[i][j]));
+        alertGrid.add(label, j, i);
 
-			alert.showAndWait();
-		}
+      }
+    }
+    dialog.getDialogPane().setContent(alertGrid);
+    dialog.showAndWait();
+  }
 
-	}
+  @FXML
+  private void handleCalculateRREF() {
+    int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
+    if (selectedIndex >= 0) {
+      alertMatrixData(new RREFMatrix(matrixTable.getSelectionModel().getSelectedItem()));
+    } else {
+      // Nothing is selected
+      Alert alert = new Alert(AlertType.ERROR);
+      alert.setTitle("No Selection");
+      alert.setHeaderText("No Matrix Selected");
+      alert.setContentText("Please select a matrix in the table.");
 
-	/**
-	 * A utility method for creating TextFields with specified id and width.
-	 * 
-	 * @param id
-	 * @param width
-	 * @return
-	 */
-	private TextField createTextField(String id, int width) {
-		TextField textField = new TextField();
-		textField.setId(id);
-		textField.setPrefWidth(width);
-		GridPane.setHgrow(textField, Priority.ALWAYS);
-		return textField;
-	}
+      alert.showAndWait();
+    }
+
+  }
+
+  /**
+   * A utility method for creating TextFields with specified id and width.
+   * 
+   * @param id
+   * @param width
+   * @return
+   */
+  private TextField createTextField(String id, int width) {
+    TextField textField = new TextField();
+    textField.setId(id);
+    textField.setPrefWidth(width);
+    GridPane.setHgrow(textField, Priority.ALWAYS);
+    return textField;
+  }
 }
