@@ -19,10 +19,10 @@ public class Matrix {
   private final ObjectProperty<LocalDate> createdDate;
   private final ObjectProperty<double[][]> data;
 
-  private Optional<Integer> determinant;
-  private Optional<Matrix> inverse;
-  private Optional<RREFMatrix> RREForm;
-  private Optional<Matrix> cofactor;
+  private Double determinant;
+  private Matrix inverse;
+  private RREFMatrix RREForm;
+  private Matrix cofactor;
 
   /**
    * Default constructor. Creates an empty, unnamed matrix.
@@ -235,6 +235,9 @@ public class Matrix {
   }
 
   public Matrix cofactorMatrix() {
+    if (cofactor != null) {
+      return cofactor;
+    }
     double[][] data = getData();
     double[][] cofactorData = new double[getNumRows()][getNumCols()];
     double det;
@@ -245,7 +248,8 @@ public class Matrix {
         cofactorData[i][j] = ((i + j) % 2 == 0 ? det : -det);
       }
     }
-    return new Matrix(null, cofactorData, null);
+    cofactor = new Matrix(null, cofactorData, null);
+    return cofactor;
   }
 
 
@@ -297,7 +301,11 @@ public class Matrix {
    * @return
    */
   public double determinant() {
-    return determinant(getData());
+    if (determinant != null) {
+      return determinant;
+    }
+    determinant = determinant(getData());
+    return determinant;
   }
 
   public Matrix transpose() {
@@ -308,12 +316,14 @@ public class Matrix {
   }
 
   public Matrix inverse() {
-    double[][] data = cloneData();
-    Matrix newMatrix = new Matrix(null, data, null);
-    double det = determinant(getData());
-    if (det != 0)
-      return newMatrix.cofactorMatrix().transpose().multiplyScalar(1 / det).normalise();
-    else
+    if (inverse != null) {
+      return inverse;
+    }
+    double det = determinant();
+    if (det != 0) {
+      inverse = cofactorMatrix().transpose().multiplyScalar(1 / det).normalise();
+      return inverse;
+    } else
       return null;
   }
 
