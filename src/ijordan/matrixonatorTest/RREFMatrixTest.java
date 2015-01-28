@@ -75,7 +75,6 @@ public class RREFMatrixTest {
     double[][] dataResult = { {1, 2, 1}, {3, 5, 0}, {-2, -3, 1}};
     final Matrix testMatrix = new Matrix("Test", data, null);
     assertTrue("Matrix ERO1 gives incorrect result",
-    assertTrue("Matrix ERO1 gives incorrect result",
         Arrays.deepEquals(dataResult, RREFMatrix.ERO1(testMatrix, 2, 1).getData()));
   }
 
@@ -85,7 +84,6 @@ public class RREFMatrixTest {
     double[][] dataResult = { {1, 2, 1}, {2, 3, -1}, {3, 5, 0}};
     final Matrix testMatrix = new Matrix("Test", data, null);
     assertTrue("Matrix ERO2 gives incorrect result",
-    assertTrue("Matrix ERO2 gives incorrect result",
         Arrays.deepEquals(dataResult, RREFMatrix.ERO2(testMatrix, 1, -1).getData()));
   }
 
@@ -94,7 +92,6 @@ public class RREFMatrixTest {
     double[][] data = { {1, 2, 1}, {-2, -3, 1}, {3, 5, 0}};
     double[][] dataResult = { {1, 2, 1}, {-8, -13, 1}, {3, 5, 0}};
     final Matrix testMatrix = new Matrix("Test", data, null);
-    assertTrue("Matrix ERO3 gives incorrect result",
     assertTrue("Matrix ERO3 gives incorrect result",
         Arrays.deepEquals(dataResult, RREFMatrix.ERO3(testMatrix, 1, 2, -2).getData()));
   }

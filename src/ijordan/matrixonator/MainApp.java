@@ -7,15 +7,14 @@ import ijordan.matrixonator.view.MatrixonatorIOException;
 
 import java.io.IOException;
 
-// TEMP IMPORT FOR MESSAGE BOX
-import javax.swing.JOptionPane;
-
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
@@ -40,10 +39,6 @@ public class MainApp extends Application {
     /*
 		 * NB: ONLY HERE FOR TESTING PURPOSES, PERHAPS MOVE TO INIT AND OUT OF CONSTRUCTOR?
      * OUT OF CONSTRUCTOR?
-     */
-    try {
-      MatrixIO.checkDirectories();
-    } catch (MatrixonatorIOException e) {
      */
     try {
       MatrixIO.checkDirectories();
