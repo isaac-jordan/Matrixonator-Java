@@ -112,6 +112,7 @@ public class MatrixTest {
           e.getMessage().contains(
               "Save is currently disabled due to Matrixonator not having working directories"));
     }
+
     assertTrue("Matrix should not contain anything", testMatrix.getName() == null);
     assertFalse("Matrix should not be saved!", MatrixIO.save(testMatrix));
 
@@ -136,7 +137,7 @@ public class MatrixTest {
       e.printStackTrace();
       fail("Exception was thrown");
     }
-    assertTrue("Matrix name data was invalid", testMatrixL.getName().equals("RREFtestMatrixSave"));
+    assertTrue("Matrix name data was invalid", testMatrixL.getName().equals("RREF testMatrixSave"));
     assertTrue("Matrix creation date was wrong",
         testMatrixL.getCreatedDate().equals(LocalDate.now()));
     assertTrue("Matrix row count is wrong", testMatrixL.getNumRows() == 2);

@@ -7,8 +7,7 @@ import ijordan.matrixonator.view.MatrixonatorIOException;
 
 import java.io.IOException;
 
-
-//TEMP IMPORT FOR MESSAGE BOX
+// TEMP IMPORT FOR MESSAGE BOX
 import javax.swing.JOptionPane;
 
 import javafx.application.Application;
@@ -40,6 +39,11 @@ public class MainApp extends Application {
 
     /*
 		 * NB: ONLY HERE FOR TESTING PURPOSES, PERHAPS MOVE TO INIT AND OUT OF CONSTRUCTOR?
+     * OUT OF CONSTRUCTOR?
+     */
+    try {
+      MatrixIO.checkDirectories();
+    } catch (MatrixonatorIOException e) {
      */
     try {
       MatrixIO.checkDirectories();
