@@ -43,3 +43,4 @@ Thumbs.db
 .settings/
 /bin/
 *.matrix
+*.bat
