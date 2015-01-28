@@ -91,12 +91,14 @@ public class MatrixTest {
     assertTrue("Matrix row count is wrong", testMatrixL.getNumRows() == 2);
     assertTrue("Matrix col count is wrong", testMatrixL.getNumCols() == 5);
     assertTrue("Matrix data in invalid", Arrays.deepEquals(data, testMatrix.getData()));
+				Arrays.deepEquals(data, testMatrix.getData());
   }
 
   @Test
   // Tests for saving falg within Matrix IO
   public void testMatrixIOwithFlag() {
     MatrixIO.setSaveFlag(); // Simulating that the setup function hasn't worked correctly
+								// worked correctly
 
     Matrix testMatrix = new Matrix(null, new double[1][1], LocalDate.now());
 
@@ -110,7 +112,6 @@ public class MatrixTest {
           e.getMessage().contains(
               "Save is currently disabled due to Matrixonator not having working directories"));
     }
-
     assertTrue("Matrix should not contain anything", testMatrix.getName() == null);
     assertFalse("Matrix should not be saved!", MatrixIO.save(testMatrix));
 
@@ -371,5 +372,57 @@ public class MatrixTest {
         Arrays.equals(testMatrix.getCol(1), dataResult1));
     assertTrue("Matrix getCol gives incorrect result",
         Arrays.equals(testMatrix.getCol(2), dataResult2));
+	}
+
+	@Test
+	public void testERO1() {
+		double[][] data = { { 1, 2, 1 }, { -2, -3, 1 }, { 3, 5, 0 } };
+		double[][] dataResult = { { 1, 2, 1 }, { 3, 5, 0 }, { -2, -3, 1 } };
+		final Matrix testMatrix = new Matrix("Test", data, null);
+		assertTrue("Matrix ERO1 gives incorrect result", Arrays.deepEquals(
+				dataResult, RREFMatrix.ERO1(testMatrix, 2, 1).getData()));
   }
+
+	@Test
+	public void testERO2Negative() {
+		double[][] data = { { 1, 2, 1 }, { -2, -3, 1 }, { 3, 5, 0 } };
+		double[][] dataResult = { { 1, 2, 1 }, { 2, 3, -1 }, { 3, 5, 0 } };
+		final Matrix testMatrix = new Matrix("Test", data, null);
+		assertTrue("Matrix ERO2 gives incorrect result", Arrays.deepEquals(
+				dataResult, RREFMatrix.ERO2(testMatrix, 1, -1).getData()));
+	}
+
+	@Test
+	public void testERO3Negative() {
+		double[][] data = { { 1, 2, 1 }, { -2, -3, 1 }, { 3, 5, 0 } };
+		double[][] dataResult = { { 1, 2, 1 }, { -8, -13, 1 }, { 3, 5, 0 } };
+		final Matrix testMatrix = new Matrix("Test", data, null);
+		assertTrue(
+				"Matrix ERO3 gives incorrect result",
+				Arrays.deepEquals(dataResult,
+						RREFMatrix.ERO3(testMatrix, 1, 2, -2).getData()));
+	}
+
+	@Test
+	public void testStepOne() {
+		double[][] data = { { 1, 2, 1 }, { -2, 0, 1 }, { 3, 5, 0 } };
+		double[][] dataResult = { { 1, 2, 1 }, { 3, 5, 0 }, { -2, 0, 1 } };
+		final Matrix testMatrix = new Matrix("Test", data, null);
+		RREFMatrix.stepOne(testMatrix, 1, 1);
+		assertTrue("Matrix stepOne gives incorrect result",
+				Arrays.deepEquals(dataResult, testMatrix.getData()));
+	}
+
+	@Test
+	public void testStepOne2() {
+		double[][] data = { { 1.0, 0.0, -5.0 }, { 0.0, 1.0, 3.0 },
+				{ 0.0, 0.0, 0.0 } };
+		double[][] dataResult = { { 1.0, 0.0, -5.0 }, { 0.0, 1.0, 3.0 },
+				{ 0.0, 0.0, 0.0 } };
+		final Matrix testMatrix = new Matrix("Test", data, null);
+		RREFMatrix.stepOne(testMatrix, 2, 2);
+		assertTrue("Matrix stepOne gives incorrect result",
+				Arrays.deepEquals(dataResult, testMatrix.getData()));
+	}
+
 }

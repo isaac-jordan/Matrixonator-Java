@@ -1,7 +1,6 @@
 package ijordan.matrixonator.model;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Optional;
 
 import javafx.beans.property.IntegerProperty;
@@ -308,23 +307,47 @@ public class Matrix {
     return determinant;
   }
 
-  public Matrix transpose() {
-    double[][] data = new double[getNumCols()][getNumRows()];
-    for (int i = 0; i < getNumRows(); i++)
-      data[i] = getCol(i);
-    return new Matrix(null, data, null);
-  }
+	public static Matrix ERO1(Matrix A, int row1, int row2) {
+		// Swaps row1 and row2
+		double[] temp = A.getData()[row1];
+		A.getData()[row1] = A.getData()[row2];
+		A.getData()[row2] = temp;
+		return A;
+	}
 
-  public Matrix inverse() {
-    if (inverse != null) {
-      return inverse;
-    }
-    double det = determinant();
-    if (det != 0) {
-      inverse = cofactorMatrix().transpose().multiplyScalar(1 / det).normalise();
-      return inverse;
-    } else
-      return null;
-  }
+	public static Matrix ERO2(Matrix A, int row, double scalar) {
+		// Multiply every element of row by scalar
+		for (int i = 0; i < A.getNumCols(); i++) {
+			A.getData()[row][i] *= scalar;
+		}
+		return A;
+	}
+
+	public static Matrix ERO3(Matrix A, int row1, int row2, double scalar) {
+		// row1 = row1 + scalar*row2
+		for (int i = 0; i < A.getNumCols(); i++) {
+			A.getData()[row1][i] += scalar * A.getData()[row2][i];
+		}
+		return A;
+	}
+	public Matrix transpose() {
+		double[][] data = new double[this.getNumCols()][this.getNumRows()];
+		for (int i=0;i<this.getNumRows();i++) {
+			data[i] = this.getCol(i);
+		}
+		return new Matrix(null, data, null);
+	}
+	
+	//Not Working Yet
+	public Matrix inverse() { 
+		double[][] data = this.cloneData();
+		Matrix newMatrix = new Matrix(null, data, null);
+		double det = this.determinant();
+		if (det != 0) {
+			return newMatrix.transpose().multiplyScalar(1/det);
+		} else {
+			return null;
+		}
+	}
 
 }
