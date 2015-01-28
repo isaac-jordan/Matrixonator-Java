@@ -91,7 +91,7 @@ public class MatrixTest {
     assertTrue("Matrix row count is wrong", testMatrixL.getNumRows() == 2);
     assertTrue("Matrix col count is wrong", testMatrixL.getNumCols() == 5);
     assertTrue("Matrix data in invalid", Arrays.deepEquals(data, testMatrix.getData()));
-				Arrays.deepEquals(data, testMatrix.getData()));
+				Arrays.deepEquals(data, testMatrix.getData());
   }
 
   @Test
@@ -105,7 +105,6 @@ public class MatrixTest {
     // Attempting to load. Expected to return null
     try {
       testMatrix = MatrixIO.loadMatrix("thisisnevergoingtobeusedasafilename.matrix");
-					.loadMatrix("thisisnevergoingtobeusedasafilename.matrix");
       fail("Matrix should not have loaded anything");
     } catch (Exception e) {
       assertTrue(
@@ -113,10 +112,7 @@ public class MatrixTest {
           e.getMessage().contains(
               "Save is currently disabled due to Matrixonator not having working directories"));
     }
-		}
-
     assertTrue("Matrix should not contain anything", testMatrix.getName() == null);
-				testMatrix.getName() == null);
     assertFalse("Matrix should not be saved!", MatrixIO.save(testMatrix));
 
     // Resetting the flag for testing purposed
@@ -273,7 +269,6 @@ public class MatrixTest {
     double dataResult = 1;
     final Matrix testMatrix1 = new Matrix("Test1", dataFirst, null);
     assertTrue("Matrix Addition gives incorrect result", testMatrix1.determinant() == dataResult);
-				testMatrix1.determinant() == dataResult);
   }
 
   @Test
@@ -282,7 +277,6 @@ public class MatrixTest {
     double dataResult = -12;
     final Matrix testMatrix1 = new Matrix("Test1", dataFirst, null);
     assertTrue("Matrix Addition gives incorrect result", testMatrix1.determinant() == dataResult);
-				testMatrix1.determinant() == dataResult);
   }
 
   @Test

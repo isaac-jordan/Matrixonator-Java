@@ -2,9 +2,13 @@ package ijordan.matrixonator.model;
 
 import java.time.LocalDate;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+
 public class RREFMatrix extends Matrix {
 
   private final ObjectProperty<Matrix> parent;
+  
   public RREFMatrix(Matrix parent) {
     super("RREF " + parent.getName(), new double[parent.getNumRows()][parent.getNumCols()],
         LocalDate.now());

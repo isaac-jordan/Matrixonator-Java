@@ -344,7 +344,7 @@ public class Matrix {
 		Matrix newMatrix = new Matrix(null, data, null);
 		double det = this.determinant();
 		if (det != 0) {
-			return newMatrix.transpose().scalarMultiply(1/det);
+			return newMatrix.transpose().multiplyScalar(1/det);
 		} else {
 			return null;
 		}
