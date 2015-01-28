@@ -340,15 +340,15 @@ public class Matrix {
     return new Matrix(null, data, null);
   }
 
-  // Not Working Yet
   public Matrix inverse() {
-    double[][] data = this.cloneData();
-    Matrix newMatrix = new Matrix(null, data, null);
-    double det = this.determinant();
-    if (det != 0) {
-      return newMatrix.transpose().multiplyScalar(1 / det);
-    } else {
-      return null;
-    }
+    if (inverse != null) {
+      return inverse;
+  }
+  double det = determinant();
+  if (det != 0) {
+    inverse = cofactorMatrix().transpose().multiplyScalar(1 / det).normalise();
+    return inverse;
+  } else
+    return null;
   }
 }
