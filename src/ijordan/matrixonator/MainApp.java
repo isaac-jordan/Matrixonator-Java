@@ -7,15 +7,14 @@ import ijordan.matrixonator.view.MatrixonatorIOException;
 
 import java.io.IOException;
 
-// TEMP IMPORT FOR MESSAGE BOX
-import javax.swing.JOptionPane;
-
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
@@ -38,15 +37,17 @@ public class MainApp extends Application {
     matrixData.add(new Matrix("Identity2", new double[][] { {1, 0}, {0, 1}}, null));
 
     /*
-     * Creates a working directory to save Matrices too. Works cross platform NB 1) IF YOU WANT TO
-     * TEST FAIL, CALL CHECKDIRECTORIES2 NB 2) USING SWING FOR SIMPLE MESSAGEBOX. ADD IN
-     * JAVAFX/CONTROLSFX ONE LATER NB 3) ONLY HERE FOR TESTING PURPOSES, PERHAPS MOVE TO INIT AND
+		 * NB: ONLY HERE FOR TESTING PURPOSES, PERHAPS MOVE TO INIT AND OUT OF CONSTRUCTOR?
      * OUT OF CONSTRUCTOR?
      */
     try {
       MatrixIO.checkDirectories();
     } catch (MatrixonatorIOException e) {
-      JOptionPane.showMessageDialog(null, e.getMessage());
+      Alert alert = new Alert(AlertType.WARNING);
+      alert.setHeaderText("Matrixonator working Directories");
+      alert.setTitle("Alert");
+      alert.setContentText(e.getMessage());
+      alert.showAndWait();
       MatrixIO.setSaveFlag();
     }
 
