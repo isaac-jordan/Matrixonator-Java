@@ -372,4 +372,13 @@ public class MatrixTest {
     assertTrue("Matrix getCol gives incorrect result",
         Arrays.equals(testMatrix.getCol(2), dataResult2));
   }
+  
+  @Test
+  public void testMatrixTrace() {
+    double[][] dataFirst = { {1, 2, -3}, {4, 8, 1}, {0, 3, 5}};
+    double dataResult = 14;
+    final Matrix testMatrix = new Matrix("Test", dataFirst, null);
+    assertTrue("Matrix trace gives incorrect result",
+        testMatrix.trace() == dataResult);
+  }
 }

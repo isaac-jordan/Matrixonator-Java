@@ -326,5 +326,14 @@ public class Matrix {
     } else
       return null;
   }
+  
+  public double trace() {
+    double total = 0;
+    double[][] data = getData();
+    for (int i = 0; i < getNumRows(); i++) {
+      total += data[i][i];
+    }
+    return total;
+  }
 
 }
