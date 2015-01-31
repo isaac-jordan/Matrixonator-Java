@@ -33,7 +33,7 @@ public class MainApp extends Application {
    */
   public MainApp() {
     // Add some sample data
-    matrixData.add(new Matrix("Hans", new double[][] { {5, 2}, {3, 0}}, null));
+    matrixData.add(new Matrix("Hans", new double[][] { {5, 2, 13}, {3, 2,-5}, {7, 0, 9}}, null));
     matrixData.add(new Matrix("Identity2", new double[][] { {1, 0}, {0, 1}}, null));
 
     /*

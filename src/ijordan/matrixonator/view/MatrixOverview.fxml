@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ijordan.matrixonator.view.MatrixOverviewController">
+<AnchorPane prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ijordan.matrixonator.view.MatrixOverviewController">
    <children>
       <SplitPane dividerPositions="0.29797979797979796" layoutX="200.0" layoutY="70.0" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
@@ -23,7 +23,7 @@
                   </TableView>
                </children>
             </AnchorPane>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="100.0">
                <children>
                   <Label layoutX="14.0" layoutY="14.0" text="Matrix Details" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
                   <GridPane layoutX="14.0" layoutY="20.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="30.0">
@@ -35,6 +35,10 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -52,6 +56,14 @@
                         <Button mnemonicParsing="false" onAction="#handleShowData" text="Show Data" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <Label text="Reduced Row Echelon Form" GridPane.rowIndex="5" />
                         <Button mnemonicParsing="false" onAction="#handleCalculateRREF" text="Calculate" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label text="Determinant" GridPane.rowIndex="6" />
+                        <Label text="Trace" GridPane.rowIndex="7" />
+                        <Label text="Inverse" GridPane.rowIndex="8" />
+                        <Label text="Cofactor Matrix" GridPane.rowIndex="9" />
+                        <Button mnemonicParsing="false" onAction="#handleCalculateDeterminant" text="Calculate" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Button mnemonicParsing="false" onAction="#handleCalculateTrace" text="Calculate" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Button mnemonicParsing="false" onAction="#handleCalculateInverse" text="Calculate" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <Button mnemonicParsing="false" onAction="#handleCalculateCofactor" text="Calculate" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                      </children>
                   </GridPane>
                   <HBox layoutX="216.0" layoutY="259.0" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0">

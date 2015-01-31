@@ -347,6 +347,80 @@ public class MatrixOverviewController {
     }
 
   }
+  
+  @FXML
+  private void handleCalculateDeterminant() {
+    int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
+    if (selectedIndex >= 0) {
+      Alert alert = new Alert(AlertType.INFORMATION);
+      alert.setTitle("Determinant of " + matrixTable.getSelectionModel().getSelectedItem().getName());
+      alert.setHeaderText("Value displayed below.");
+      alert.setContentText(String.valueOf(matrixTable.getSelectionModel().getSelectedItem().determinant()));
+      alert.showAndWait();
+    } else {
+      // Nothing is selected
+      Alert alert = new Alert(AlertType.ERROR);
+      alert.setTitle("No Selection");
+      alert.setHeaderText("No Matrix Selected");
+      alert.setContentText("Please select a matrix in the table.");
+
+      alert.showAndWait();
+    }
+  }
+    
+    @FXML
+    private void handleCalculateTrace() {
+      int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
+      if (selectedIndex >= 0) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Determinant of " + matrixTable.getSelectionModel().getSelectedItem().getName());
+        alert.setHeaderText("Value displayed below.");
+        alert.setContentText(String.valueOf(matrixTable.getSelectionModel().getSelectedItem().trace()));
+        alert.showAndWait();
+      } else {
+        // Nothing is selected
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("No Selection");
+        alert.setHeaderText("No Matrix Selected");
+        alert.setContentText("Please select a matrix in the table.");
+
+        alert.showAndWait();
+      }
+    }
+    
+    @FXML
+    private void handleCalculateInverse() {
+      int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
+      if (selectedIndex >= 0) {
+        alertMatrixData(matrixTable.getSelectionModel().getSelectedItem().inverse());
+      } else {
+        // Nothing is selected
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("No Selection");
+        alert.setHeaderText("No Matrix Selected");
+        alert.setContentText("Please select a matrix in the table.");
+
+        alert.showAndWait();
+      }
+
+    }
+    
+    @FXML
+    private void handleCalculateCofactor() {
+      int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
+      if (selectedIndex >= 0) {
+        alertMatrixData(matrixTable.getSelectionModel().getSelectedItem().cofactorMatrix());
+      } else {
+        // Nothing is selected
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("No Selection");
+        alert.setHeaderText("No Matrix Selected");
+        alert.setContentText("Please select a matrix in the table.");
+
+        alert.showAndWait();
+      }
+
+    }
 
   /**
    * A utility method for creating TextFields with specified id and width.
