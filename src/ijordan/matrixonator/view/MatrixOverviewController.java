@@ -11,9 +11,6 @@ import ijordan.matrixonator.model.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -45,7 +42,7 @@ public class MatrixOverviewController {
 
   // Reference to the main application.
   private MainApp mainApp;
-
+  
   /**
    * The constructor. The constructor is called before the initialise() method.
    */
@@ -152,13 +149,7 @@ public class MatrixOverviewController {
           numRows = Integer.parseInt((String) wizard.getSettings().get("numRows"));
           numCols = Integer.parseInt((String) wizard.getSettings().get("numCols"));
         } catch (NumberFormatException e) {
-          Alert alert = new Alert(AlertType.ERROR);
-          alert.setTitle("Error");
-          alert.setHeaderText("Invalid number of rows, or columns.");
-          alert
-              .setContentText("Please enter ONLY integers next time. Please cancel and try again.");
-
-          alert.showAndWait();
+          MatrixAlerts.invalidRowColAlert();
           return;
         }
 
@@ -192,13 +183,7 @@ public class MatrixOverviewController {
           numRows = Integer.parseInt((String) wizard.getSettings().get("numRows"));
           numCols = Integer.parseInt((String) wizard.getSettings().get("numCols"));
         } catch (NumberFormatException e) {
-          Alert alert = new Alert(AlertType.ERROR);
-          alert.setTitle("Error");
-          alert.setHeaderText("Invalid number of rows, or columns.");
-          alert
-              .setContentText("Please enter ONLY integers next time. Please Cancel and try again.");
-
-          alert.showAndWait();
+          MatrixAlerts.invalidRowColAlert();
           return;
         }
 
@@ -255,33 +240,24 @@ public class MatrixOverviewController {
 
     } else {
       // Nothing is selected
-      Alert alert = new Alert(AlertType.ERROR);
-      alert.setTitle("No Selection");
-      alert.setHeaderText("No Matrix Selected");
-      alert.setContentText("Please select a matrix in the table.");
-
-      alert.showAndWait();
+      MatrixAlerts.noSelectionAlert();
     }
 
   }
+  
 
   /**
    * Method is called when the "Delete" button is pressed. If a valid matrix is selected in the
    * table on the left, then it is deleted from the matrixTable.
    */
   @FXML
-  private void handleDeleteMatrix() {
+  public void handleDeleteMatrix() {
     int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
     if (selectedIndex >= 0) {
       matrixTable.getItems().remove(selectedIndex);
     } else {
       // Nothing is selected
-      Alert alert = new Alert(AlertType.ERROR);
-      alert.setTitle("No Selection");
-      alert.setHeaderText("No Matrix Selected");
-      alert.setContentText("Please select a matrix in the table.");
-
-      alert.showAndWait();
+      MatrixAlerts.noSelectionAlert();
     }
 
   }
@@ -290,60 +266,22 @@ public class MatrixOverviewController {
   private void handleShowData() {
     int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
     if (selectedIndex >= 0) {
-      alertMatrixData(matrixTable.getSelectionModel().getSelectedItem());
+      MatrixAlerts.dataAlert(matrixTable.getSelectionModel().getSelectedItem());
     } else {
       // Nothing is selected
-      Alert alert = new Alert(AlertType.ERROR);
-      alert.setTitle("No Selection");
-      alert.setHeaderText("No Matrix Selected");
-      alert.setContentText("Please select a matrix in the table.");
-
-      alert.showAndWait();
+      MatrixAlerts.noSelectionAlert();
     }
 
-  }
-
-  /**
-   * Creates and displays a pop-up (alert) that contains the data of the given matrix.
-   * 
-   * @param matrix
-   */
-  private void alertMatrixData(Matrix matrix) {
-    Dialog<Object> dialog = new Dialog<Object>();
-    dialog.setTitle(matrix.getName());
-    dialog.setHeaderText("Showing the data associated with " + matrix.getName());
-    ButtonType closeButtonType = new ButtonType("Close", ButtonData.OK_DONE);
-    dialog.getDialogPane().getButtonTypes().addAll(closeButtonType);
-
-    GridPane alertGrid = new GridPane();
-    alertGrid.setHgap(20);
-    alertGrid.setVgap(10);
-    for (int i = 0; i < matrix.getNumRows(); i++) {
-      for (int j = 0; j < matrix.getNumCols(); j++) {
-        Label label = new Label();
-        // Should probably use decimalFormat for clean formatting
-        label.setText(String.valueOf(matrix.getData()[i][j]));
-        alertGrid.add(label, j, i);
-
-      }
-    }
-    dialog.getDialogPane().setContent(alertGrid);
-    dialog.showAndWait();
   }
 
   @FXML
   private void handleCalculateRREF() {
     int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
     if (selectedIndex >= 0) {
-      alertMatrixData(new RREFMatrix(matrixTable.getSelectionModel().getSelectedItem()));
+      MatrixAlerts.dataAlert(new RREFMatrix(matrixTable.getSelectionModel().getSelectedItem()));
     } else {
       // Nothing is selected
-      Alert alert = new Alert(AlertType.ERROR);
-      alert.setTitle("No Selection");
-      alert.setHeaderText("No Matrix Selected");
-      alert.setContentText("Please select a matrix in the table.");
-
-      alert.showAndWait();
+      MatrixAlerts.noSelectionAlert();
     }
 
   }
@@ -359,12 +297,7 @@ public class MatrixOverviewController {
       alert.showAndWait();
     } else {
       // Nothing is selected
-      Alert alert = new Alert(AlertType.ERROR);
-      alert.setTitle("No Selection");
-      alert.setHeaderText("No Matrix Selected");
-      alert.setContentText("Please select a matrix in the table.");
-
-      alert.showAndWait();
+      MatrixAlerts.noSelectionAlert();
     }
   }
     
@@ -373,18 +306,12 @@ public class MatrixOverviewController {
       int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
       if (selectedIndex >= 0) {
         Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Determinant of " + matrixTable.getSelectionModel().getSelectedItem().getName());
+        alert.setTitle("Trace of " + matrixTable.getSelectionModel().getSelectedItem().getName());
         alert.setHeaderText("Value displayed below.");
         alert.setContentText(String.valueOf(matrixTable.getSelectionModel().getSelectedItem().trace()));
         alert.showAndWait();
       } else {
-        // Nothing is selected
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("No Selection");
-        alert.setHeaderText("No Matrix Selected");
-        alert.setContentText("Please select a matrix in the table.");
-
-        alert.showAndWait();
+        MatrixAlerts.noSelectionAlert();
       }
     }
     
@@ -392,15 +319,10 @@ public class MatrixOverviewController {
     private void handleCalculateInverse() {
       int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
       if (selectedIndex >= 0) {
-        alertMatrixData(matrixTable.getSelectionModel().getSelectedItem().inverse());
+        MatrixAlerts.dataAlert(matrixTable.getSelectionModel().getSelectedItem().inverse());
       } else {
         // Nothing is selected
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("No Selection");
-        alert.setHeaderText("No Matrix Selected");
-        alert.setContentText("Please select a matrix in the table.");
-
-        alert.showAndWait();
+        MatrixAlerts.noSelectionAlert();
       }
 
     }
@@ -409,15 +331,10 @@ public class MatrixOverviewController {
     private void handleCalculateCofactor() {
       int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
       if (selectedIndex >= 0) {
-        alertMatrixData(matrixTable.getSelectionModel().getSelectedItem().cofactorMatrix());
+        MatrixAlerts.dataAlert(matrixTable.getSelectionModel().getSelectedItem().cofactorMatrix());
       } else {
         // Nothing is selected
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("No Selection");
-        alert.setHeaderText("No Matrix Selected");
-        alert.setContentText("Please select a matrix in the table.");
-
-        alert.showAndWait();
+        MatrixAlerts.noSelectionAlert();
       }
 
     }
