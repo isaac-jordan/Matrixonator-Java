@@ -421,6 +421,7 @@ public class MatrixOverviewController {
       }
 
     }
+    
 
   /**
    * A utility method for creating TextFields with specified id and width.
