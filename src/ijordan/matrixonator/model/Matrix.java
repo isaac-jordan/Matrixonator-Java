@@ -25,7 +25,7 @@ public class Matrix {
   private Matrix cofactor;
 
   /**
-   * Default constructor. Creates an empty, unnamed matrix.
+   * Default constructor. Creates an empty, unnamed matrix, with current date.
    * 
    * @throws Exception
    */
@@ -154,6 +154,7 @@ public class Matrix {
 
   /**
    * Uses naive method to calculate the product of two matrices.
+   * Throws IllegalArgumentException if the matrices are not compatible.
    * 
    * @param A
    * @param B
@@ -182,6 +183,11 @@ public class Matrix {
     throw new IllegalArgumentException("Matrices are not compatible");
   }
 
+  /**
+   * Multiples a matrix by a scalar.
+   * @param c - A double value to multiple all entries of the matrix by.
+   * @return
+   */
   public Matrix multiplyScalar(double c) {
     for (int i = 0; i < getNumRows(); i++)
       for (int j = 0; j < getNumCols(); j++)
@@ -189,6 +195,12 @@ public class Matrix {
     return this;
   }
 
+  /**
+   * Raises matrix to the power n using naive method.
+   * Can use a lot of resources if matrix, or n, is large.
+   * @param n
+   * @return
+   */
   public Matrix toPower(int n) {
     Matrix resultMatrix = new Matrix(null, cloneData(), null);
     for (int i = 1; i < n; i++)
@@ -216,8 +228,17 @@ public class Matrix {
       throw new IllegalArgumentException("Matrices are not compatible.");
   }
 
-
-  // http://en.wikipedia.org/wiki/Minor_(linear_algebra)
+  /**
+   * Returns the nested array after having removed the values in the given row, and column.
+   * http://en.wikipedia.org/wiki/Minor_(linear_algebra)
+   * 
+   * @param initialData
+   * @param returnData - The object to fill with the result.
+   * @param row - Which row's data to remove
+   * @param column - Which column's data to remove.
+   * @param numRows - How many rows initialData has.
+   * @return
+   */
   private static double[][] reduce(double[][] initialData, double[][] returnData, int row,
       int column, int numRows) {
     for (int h = 0, j = 0; h < numRows; h++) {
@@ -234,6 +255,11 @@ public class Matrix {
     return returnData;
   }
 
+  /**
+   * Returns the full cofactor matrix of this matrix.
+   * Warning: This is very computationally heavy.
+   * @return
+   */
   public Matrix cofactorMatrix() {
     if (cofactor != null) {
       return cofactor;
@@ -308,30 +334,53 @@ public class Matrix {
     return determinant;
   }
 
+  /**
+   * Swaps row1 and row2
+   * @param A
+   * @param row1
+   * @param row2
+   * @return
+   */
   public static Matrix ERO1(Matrix A, int row1, int row2) {
-    // Swaps row1 and row2
     double[] temp = A.getData()[row1];
     A.getData()[row1] = A.getData()[row2];
     A.getData()[row2] = temp;
     return A;
   }
 
+  /**
+   * Multiply every element of row by scalar
+   * @param A
+   * @param row
+   * @param scalar
+   * @return
+   */
   public static Matrix ERO2(Matrix A, int row, double scalar) {
-    // Multiply every element of row by scalar
     for (int i = 0; i < A.getNumCols(); i++) {
       A.getData()[row][i] *= scalar;
     }
     return A;
   }
 
+  /**
+   * Executes: row1 = row1 + scalar*row2
+   * @param A
+   * @param row1
+   * @param row2
+   * @param scalar
+   * @return
+   */
   public static Matrix ERO3(Matrix A, int row1, int row2, double scalar) {
-    // row1 = row1 + scalar*row2
     for (int i = 0; i < A.getNumCols(); i++) {
       A.getData()[row1][i] += scalar * A.getData()[row2][i];
     }
     return A;
   }
 
+  /**
+   * Returns the transpose of this matrix in a new Matrix object.
+   * @return
+   */
   public Matrix transpose() {
     double[][] data = new double[this.getNumCols()][this.getNumRows()];
     for (int i = 0; i < this.getNumRows(); i++) {
@@ -340,6 +389,12 @@ public class Matrix {
     return new Matrix(null, data, null);
   }
 
+  /**
+   * Returns the inverse of this matrix in a new matrix object.
+   * The inverse is only calculated the first time this method is called,
+   * and stored for subsequent calls.
+   * @return
+   */
   public Matrix inverse() {
     if (inverse != null) {
       return inverse;
@@ -352,6 +407,10 @@ public class Matrix {
     return null;
   }
   
+  /**
+   * Returns the sum of all values on the main diagonal of this matrix.
+   * @return
+   */
   public double trace() {
     double total = 0;
     double[][] data = getData();

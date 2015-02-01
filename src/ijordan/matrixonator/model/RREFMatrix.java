@@ -9,6 +9,10 @@ public class RREFMatrix extends Matrix {
 
   private final ObjectProperty<Matrix> parent;
 
+  /**
+   * Creates the reduced row echelon form of the parent matrix.
+   * @param parent
+   */
   public RREFMatrix(Matrix parent) {
     super("RREF " + parent.getName(), new double[parent.getNumRows()][parent.getNumCols()],
         LocalDate.now());

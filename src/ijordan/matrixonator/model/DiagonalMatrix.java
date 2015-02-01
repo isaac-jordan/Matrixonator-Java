@@ -4,6 +4,12 @@ import java.time.LocalDate;
 
 public class DiagonalMatrix extends Matrix {
 
+  /**
+   * Creates a diagonal matrix with the values given along the main diagonal.
+   * @param name
+   * @param values An array of values to put on the main diagonal. The length of this determines how many rows the diagonal matrix will have.
+   * @param date Set creation date to this date. Can be null for today.
+   */
   public DiagonalMatrix(String name, double[] values, LocalDate date) {
     super(name, new double[values.length][values.length], date);
     double[][] data = this.getData();
@@ -25,6 +31,7 @@ public class DiagonalMatrix extends Matrix {
     return this;
   }
 
+  @Override
   public double determinant() {
     double result = 1;
     for (int i = 0; i < this.getNumRows(); i++) {
