@@ -21,10 +21,19 @@ public class MatrixAlerts {
    * 
    * @param matrix
    */
-  public static void dataAlert(Matrix matrix) {
+  public static void dataAlert(Matrix matrix, String matrixName) {
     Dialog<Object> dialog = new Dialog<Object>();
-    dialog.setTitle(matrix.getName());
-    dialog.setHeaderText("Showing the data associated with " + matrix.getName());
+    
+    if (matrixName == null)
+    {
+      dialog.setTitle(matrix.getName());
+      dialog.setHeaderText("Showing the data associated with " + matrix.getName());
+    }
+    else
+    {
+      dialog.setTitle(matrixName);
+      dialog.setHeaderText("Showing the data associated with " + matrixName);
+    }
     ButtonType closeButtonType = new ButtonType("Close", ButtonData.OK_DONE);
     dialog.getDialogPane().getButtonTypes().addAll(closeButtonType);
 

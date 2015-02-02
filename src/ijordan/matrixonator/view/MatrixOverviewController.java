@@ -266,7 +266,7 @@ public class MatrixOverviewController {
   private void handleShowData() {
     int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
     if (selectedIndex >= 0) {
-      MatrixAlerts.dataAlert(matrixTable.getSelectionModel().getSelectedItem());
+      MatrixAlerts.dataAlert(matrixTable.getSelectionModel().getSelectedItem(), null);
     } else {
       // Nothing is selected
       MatrixAlerts.noSelectionAlert();
@@ -278,7 +278,7 @@ public class MatrixOverviewController {
   private void handleCalculateRREF() {
     int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
     if (selectedIndex >= 0) {
-      MatrixAlerts.dataAlert(new RREFMatrix(matrixTable.getSelectionModel().getSelectedItem()));
+      MatrixAlerts.dataAlert(new RREFMatrix(matrixTable.getSelectionModel().getSelectedItem()), null);
     } else {
       // Nothing is selected
       MatrixAlerts.noSelectionAlert();
@@ -319,7 +319,7 @@ public class MatrixOverviewController {
     private void handleCalculateInverse() {
       int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
       if (selectedIndex >= 0) {
-        MatrixAlerts.dataAlert(matrixTable.getSelectionModel().getSelectedItem().inverse());
+        MatrixAlerts.dataAlert(matrixTable.getSelectionModel().getSelectedItem().inverse(), matrixTable.getSelectionModel().getSelectedItem().getName());
       } else {
         // Nothing is selected
         MatrixAlerts.noSelectionAlert();
@@ -331,7 +331,7 @@ public class MatrixOverviewController {
     private void handleCalculateCofactor() {
       int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
       if (selectedIndex >= 0) {
-        MatrixAlerts.dataAlert(matrixTable.getSelectionModel().getSelectedItem().cofactorMatrix());
+        MatrixAlerts.dataAlert(matrixTable.getSelectionModel().getSelectedItem().cofactorMatrix(), matrixTable.getSelectionModel().getSelectedItem().getName());
       } else {
         // Nothing is selected
         MatrixAlerts.noSelectionAlert();
