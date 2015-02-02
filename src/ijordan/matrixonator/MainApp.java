@@ -6,12 +6,12 @@ import ijordan.matrixonator.view.MatrixOverviewController;
 import ijordan.matrixonator.view.MatrixonatorIOException;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -34,8 +34,8 @@ public class MainApp extends Application {
    */
   public MainApp() {
     // Add some sample data
-    matrixData.add(new Matrix("Example", new double[][] { {5, 2, 13}, {3, 2,-5}, {7, 0, 9}}, null));
-    matrixData.add(new Matrix("Identity2", new double[][] { {1, 0}, {0, 1}}, null));
+    matrixData.add(new Matrix("Example", new double[][] { {5, 2, 13}, {3, 2,-5}, {7, 0, 9}}, LocalDate.now()));
+    matrixData.add(new Matrix("Identity2", new double[][] { {1, 0}, {0, 1}}, LocalDate.now()));
 
     /*
 		 * NB: ONLY HERE FOR TESTING PURPOSES, PERHAPS MOVE TO INIT AND OUT OF CONSTRUCTOR?

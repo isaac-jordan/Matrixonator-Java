@@ -3,7 +3,6 @@ package ijordan.matrixonator.view;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -51,6 +50,12 @@ public class TopMenuController {
     alert.setContentText("Click 'Show Details' for more information");
     alert.getDialogPane().setExpandableContent(aboutContent);
     alert.showAndWait();
+  }
+  
+  @FXML
+  public void handleMenuDelete()
+  {
+    System.out.println("BERSTY");
   }
   
   
