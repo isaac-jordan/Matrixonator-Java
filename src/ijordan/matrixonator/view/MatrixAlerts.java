@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 
 /**
  * Provides basic alert templates for Matrixonator.
+ * 
  * @author BigE
  *
  */
@@ -24,14 +25,11 @@ public class MatrixAlerts {
    */
   public static void dataAlert(Matrix matrix, String matrixName) {
     Dialog<Object> dialog = new Dialog<Object>();
-    
-    if (matrixName == null)
-    {
+
+    if (matrixName == null) {
       dialog.setTitle(matrix.getName());
       dialog.setHeaderText("Showing the data associated with " + matrix.getName());
-    }
-    else
-    {
+    } else {
       dialog.setTitle(matrixName);
       dialog.setHeaderText("Showing the data associated with " + matrixName);
     }
@@ -53,46 +51,41 @@ public class MatrixAlerts {
     dialog.getDialogPane().setContent(alertGrid);
     dialog.showAndWait();
   }
-  
-  /** 
+
+  /**
    * Shows a no-selection alert to the user
    */
-  public static void noSelectionAlert()
-  {
+  public static void noSelectionAlert() {
     Alert alert = new Alert(AlertType.ERROR);
     alert.setTitle("No Selection");
     alert.setHeaderText("No Matrix Selected");
     alert.setContentText("Please select a matrix in the table.");
 
-    alert.showAndWait(); 
+    alert.showAndWait();
   }
-  
+
   /**
    * Shows an invalid Row & Column alert when creating a Matrix
    */
-  public static void invalidRowColAlert()
-  {
+  public static void invalidRowColAlert() {
     Alert alert = new Alert(AlertType.ERROR);
     alert.setTitle("Error");
     alert.setHeaderText("Invalid number of rows, or columns.");
-    alert
-        .setContentText("Please enter ONLY integers next time. Please cancel and try again.");
+    alert.setContentText("Please enter ONLY integers next time. Please cancel and try again.");
 
-    alert.showAndWait(); 
+    alert.showAndWait();
   }
-  
+
   /**
    * Displays confirmation that the matrix has been saved to file!
    */
-  public static void onSave()
-  {
+  public static void onSave() {
     Alert alert = new Alert(AlertType.INFORMATION);
     alert.setTitle("Matrix Saved!");
     alert.setHeaderText("Matrix has been saved properly");
-    alert
-        .setContentText("It should appear again when you next load the program!");
+    alert.setContentText("It should appear again when you next load the program!");
 
-    alert.showAndWait(); 
-    
+    alert.showAndWait();
+
   }
 }
