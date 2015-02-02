@@ -324,7 +324,6 @@ public class MatrixOverviewController {
         // Nothing is selected
         MatrixAlerts.noSelectionAlert();
       }
-
     }
     
     @FXML
@@ -337,6 +336,31 @@ public class MatrixOverviewController {
         MatrixAlerts.noSelectionAlert();
       }
 
+    }
+    
+    @FXML
+    private void handleSaveMatrix()
+    {
+      int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
+      if (selectedIndex >= 0) {
+        //Do the save command
+        Matrix data = matrixTable.getSelectionModel().getSelectedItem();
+        
+        //Don't allow the 2 constants to be saved (FOR NOW)
+        if (data.getName() != "Example" && data.getName() != "Identity2")
+        {
+          //TODO Add proper message if save fails. (Which it should not)
+          boolean result = MatrixIO.save(data);
+          if (result) { MatrixAlerts.onSave();}
+        }
+        else {
+          //TODO Fix this horrid catch
+          System.out.println("I really should handle properly, but I've not been impliemented properly...");
+        }
+      } else {
+        // Nothing is selected
+        MatrixAlerts.noSelectionAlert();
+      }
     }
     
 

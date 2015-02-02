@@ -19,7 +19,8 @@ public class MatrixAlerts {
   /**
    * Creates and displays a pop-up (alert) that contains the data of the given matrix.
    * 
-   * @param matrix
+   * @param matrix - Matrix data to display
+   * @param matrixName - The name of the matrix. Use null if data can be got from passed in matrix
    */
   public static void dataAlert(Matrix matrix, String matrixName) {
     Dialog<Object> dialog = new Dialog<Object>();
@@ -80,4 +81,18 @@ public class MatrixAlerts {
     alert.showAndWait(); 
   }
   
+  /**
+   * Displays confirmation that the matrix has been saved to file!
+   */
+  public static void onSave()
+  {
+    Alert alert = new Alert(AlertType.INFORMATION);
+    alert.setTitle("Matrix Saved!");
+    alert.setHeaderText("Matrix has been saved properly");
+    alert
+        .setContentText("It should appear again when you next load the program!");
+
+    alert.showAndWait(); 
+    
+  }
 }

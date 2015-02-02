@@ -7,6 +7,7 @@ import ijordan.matrixonator.view.MatrixonatorIOException;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -51,7 +52,10 @@ public class MainApp extends Application {
       alert.showAndWait();
       MatrixIO.setSaveFlag();
     }
-
+    
+    //Load in all saved matrices for display
+    ArrayList<Matrix> result = MatrixIO.loadAll();
+    for(Matrix m : result) { matrixData.add(m); }
   }
 
   /**
