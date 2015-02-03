@@ -23,7 +23,7 @@ public class MatrixIO {
   // Flag if there has been an error when creating directories
   private static boolean dontSave = false;
 
-  // Store OS Path Seperator
+  // Store OS Path Seperator, default is Linux/OSX
   private static char pathSep = '/';
 
   /**
@@ -33,14 +33,20 @@ public class MatrixIO {
     dontSave = true;
   }
 
-  /*
-   * RESET METHOD FROM TESTS. DO NOT CALL FROM APPLICATION
+  /**
+   * RESET METHOD FOR JUNIT TESTS. DO NOT USE IN APPLICATION
    */
   public static void resetSaveFlag() {
     dontSave = false;
   }
 
-  // Load method to load any Matrix
+  /**
+   * Performs the load operation on a matrix file
+   * 
+   * @param matrixFile File object to load
+   * @return the loaded matrix is sucsessful
+   * @throws Exception
+   */
   private static Matrix load(File matrixFile) throws Exception {
     // Properties from file
     String name = "";
@@ -193,7 +199,6 @@ public class MatrixIO {
 
     // Actual IO Operation in try
     try {
-      // "./" means to save in the local application directory
       File matrixFile = new File(getWorkingDir() + MATRIXDIR + pathSep + buffer[0] + ".matrix");
 
       if (!matrixFile.exists()) {
@@ -253,8 +258,13 @@ public class MatrixIO {
     return System.getProperty("user.dir");
   }
 
-  // Checks both directories are there and attempts to make them. Throw the
-  // non-critical exception
+  /**
+   * Performs IO startup checks and defines path separators for running OS If an error occurs, will
+   * save a noSave flag where any IO operation is blocked. Application can still perform
+   * calculations
+   * 
+   * @throws MatrixonatorIOException
+   */
   public static void checkDirectories() throws MatrixonatorIOException {
 
     // Additional check to create proper path seperators per OS
@@ -272,6 +282,7 @@ public class MatrixIO {
     MATRIXDIR = tempMDir.replace('%', pathSep);
 
 
+    // Checking for a working directory
     File BaseDirectory = new File(getWorkingDir() + LOCALDIR);
     if (!BaseDirectory.exists()) {
 
@@ -287,6 +298,7 @@ public class MatrixIO {
       }
     }
 
+    // Check for a directory to save matrix files to
     File MatrixDirectory = new File(getWorkingDir() + MATRIXDIR);
     if (!MatrixDirectory.exists()) {
 

@@ -345,6 +345,7 @@ public class MatrixOverviewController {
   }
 
   @FXML
+  //Handles when a save operation is requested. DOES NOT SAVE THE DEFAULT MATRICES
   private void handleSaveMatrix() {
     int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
     if (selectedIndex >= 0) {
@@ -358,6 +359,7 @@ public class MatrixOverviewController {
         if (result) {
           MatrixAlerts.onSave();
         }
+        else { System.out.println("Matrix file was not saved correctly"); } 
       } else {
         // TODO Fix this horrid catch
         System.out
