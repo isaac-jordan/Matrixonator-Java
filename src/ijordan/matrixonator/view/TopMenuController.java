@@ -9,32 +9,29 @@ import javafx.scene.layout.Priority;
 
 
 public class TopMenuController {
-  
+
   @FXML
-  public void handleMenuClose(){ 
-    /**@TODO Add save logic for all Matrices here **/
+  public void handleMenuClose() {
+    /** @TODO Add save logic for all Matrices here **/
     System.exit(0);
   }
-  
+
   @FXML
-  public void initialize()
-  {
-  }
-  
+  public void initialize() {}
+
   @FXML
-  public void handleMenuAbout()
-  {
+  public void handleMenuAbout() {
     StringBuilder aboutInfo = new StringBuilder("WRITTEN BY: Isaac Jordan (Sheepzez)");
     aboutInfo.append("\n\nWITH THANKS:");
     aboutInfo.append("\nBen Jackson (ExogenesisBen)\nEwan McCartney (projectgoav)\n\n");
     aboutInfo.append("\nAny issues, please visit https://github.com/Sheepzez/Matrixonator-Java");
-    
+
     String aboutText = aboutInfo.toString();
-    
+
     TextArea aboutArea = new TextArea(aboutText);
     aboutArea.setEditable(false);
     aboutArea.setWrapText(true);
-    
+
     aboutArea.setMaxWidth(Double.MAX_VALUE);
     aboutArea.setMaxHeight(Double.MAX_VALUE);
     GridPane.setVgrow(aboutArea, Priority.ALWAYS);
@@ -43,7 +40,7 @@ public class TopMenuController {
     GridPane aboutContent = new GridPane();
     aboutContent.setMaxWidth(Double.MAX_VALUE);
     aboutContent.add(aboutArea, 0, 0);
-    
+
     Alert alert = new Alert(AlertType.INFORMATION);
     alert.setTitle("About: Matrixonator - Java");
     alert.setHeaderText("Matrixonator-Java: [VERSION NO]");
@@ -51,12 +48,14 @@ public class TopMenuController {
     alert.getDialogPane().setExpandableContent(aboutContent);
     alert.showAndWait();
   }
-  
+
   @FXML
-  public void handleMenuDelete()
-  {
+  public void handleMenuDelete() {
     System.out.println("BERSTY");
   }
-  
-  
+
+  @FXML
+  public void handleMenuSaveAll() {
+
+  }
 }

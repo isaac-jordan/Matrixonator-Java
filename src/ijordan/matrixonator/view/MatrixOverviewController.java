@@ -42,7 +42,7 @@ public class MatrixOverviewController {
 
   // Reference to the main application.
   private MainApp mainApp;
-  
+
   /**
    * The constructor. The constructor is called before the initialise() method.
    */
@@ -244,7 +244,7 @@ public class MatrixOverviewController {
     }
 
   }
-  
+
 
   /**
    * Method is called when the "Delete" button is pressed. If a valid matrix is selected in the
@@ -266,7 +266,7 @@ public class MatrixOverviewController {
   private void handleShowData() {
     int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
     if (selectedIndex >= 0) {
-      MatrixAlerts.dataAlert(matrixTable.getSelectionModel().getSelectedItem());
+      MatrixAlerts.dataAlert(matrixTable.getSelectionModel().getSelectedItem(), null);
     } else {
       // Nothing is selected
       MatrixAlerts.noSelectionAlert();
@@ -278,67 +278,99 @@ public class MatrixOverviewController {
   private void handleCalculateRREF() {
     int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
     if (selectedIndex >= 0) {
-      MatrixAlerts.dataAlert(new RREFMatrix(matrixTable.getSelectionModel().getSelectedItem()));
+      MatrixAlerts.dataAlert(new RREFMatrix(matrixTable.getSelectionModel().getSelectedItem()),
+          null);
     } else {
       // Nothing is selected
       MatrixAlerts.noSelectionAlert();
     }
 
   }
-  
+
   @FXML
   private void handleCalculateDeterminant() {
     int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
     if (selectedIndex >= 0) {
       Alert alert = new Alert(AlertType.INFORMATION);
-      alert.setTitle("Determinant of " + matrixTable.getSelectionModel().getSelectedItem().getName());
+      alert.setTitle("Determinant of "
+          + matrixTable.getSelectionModel().getSelectedItem().getName());
       alert.setHeaderText("Value displayed below.");
-      alert.setContentText(String.valueOf(matrixTable.getSelectionModel().getSelectedItem().determinant()));
+      alert.setContentText(String.valueOf(matrixTable.getSelectionModel().getSelectedItem()
+          .determinant()));
       alert.showAndWait();
     } else {
       // Nothing is selected
       MatrixAlerts.noSelectionAlert();
     }
   }
-    
-    @FXML
-    private void handleCalculateTrace() {
-      int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
-      if (selectedIndex >= 0) {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Trace of " + matrixTable.getSelectionModel().getSelectedItem().getName());
-        alert.setHeaderText("Value displayed below.");
-        alert.setContentText(String.valueOf(matrixTable.getSelectionModel().getSelectedItem().trace()));
-        alert.showAndWait();
-      } else {
-        MatrixAlerts.noSelectionAlert();
-      }
-    }
-    
-    @FXML
-    private void handleCalculateInverse() {
-      int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
-      if (selectedIndex >= 0) {
-        MatrixAlerts.dataAlert(matrixTable.getSelectionModel().getSelectedItem().inverse());
-      } else {
-        // Nothing is selected
-        MatrixAlerts.noSelectionAlert();
-      }
 
+  @FXML
+  private void handleCalculateTrace() {
+    int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
+    if (selectedIndex >= 0) {
+      Alert alert = new Alert(AlertType.INFORMATION);
+      alert.setTitle("Trace of " + matrixTable.getSelectionModel().getSelectedItem().getName());
+      alert.setHeaderText("Value displayed below.");
+      alert.setContentText(String
+          .valueOf(matrixTable.getSelectionModel().getSelectedItem().trace()));
+      alert.showAndWait();
+    } else {
+      MatrixAlerts.noSelectionAlert();
     }
-    
-    @FXML
-    private void handleCalculateCofactor() {
-      int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
-      if (selectedIndex >= 0) {
-        MatrixAlerts.dataAlert(matrixTable.getSelectionModel().getSelectedItem().cofactorMatrix());
-      } else {
-        // Nothing is selected
-        MatrixAlerts.noSelectionAlert();
-      }
+  }
 
+  @FXML
+  private void handleCalculateInverse() {
+    int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
+    if (selectedIndex >= 0) {
+      MatrixAlerts.dataAlert(matrixTable.getSelectionModel().getSelectedItem().inverse(),
+          matrixTable.getSelectionModel().getSelectedItem().getName());
+    } else {
+      // Nothing is selected
+      MatrixAlerts.noSelectionAlert();
     }
-    
+  }
+
+  @FXML
+  private void handleCalculateCofactor() {
+    int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
+    if (selectedIndex >= 0) {
+      MatrixAlerts.dataAlert(matrixTable.getSelectionModel().getSelectedItem().cofactorMatrix(),
+          matrixTable.getSelectionModel().getSelectedItem().getName());
+    } else {
+      // Nothing is selected
+      MatrixAlerts.noSelectionAlert();
+    }
+
+  }
+
+  @FXML
+  //Handles when a save operation is requested. DOES NOT SAVE THE DEFAULT MATRICES
+  private void handleSaveMatrix() {
+    int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
+    if (selectedIndex >= 0) {
+      // Do the save command
+      Matrix data = matrixTable.getSelectionModel().getSelectedItem();
+
+      // Don't allow the 2 constants to be saved (FOR NOW)
+      if (data.getName() != "Example" && data.getName() != "Identity2") {
+        // TODO Add proper message if save fails. (Which it should not)
+        boolean result = MatrixIO.save(data);
+        if (result) {
+          MatrixAlerts.onSave();
+        }
+        else { System.out.println("Matrix file was not saved correctly"); } 
+      } else {
+        // TODO Fix this horrid catch
+        System.out
+            .println("I really should handle properly, but I've not been impliemented properly...");
+      }
+    } else {
+      // Nothing is selected
+      MatrixAlerts.noSelectionAlert();
+    }
+  }
+
 
   /**
    * A utility method for creating TextFields with specified id and width.

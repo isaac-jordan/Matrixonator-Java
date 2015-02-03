@@ -6,7 +6,7 @@ import ijordan.matrixonator.view.MatrixOverviewController;
 import ijordan.matrixonator.view.MatrixonatorIOException;
 
 import java.io.IOException;
-import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -34,12 +34,13 @@ public class MainApp extends Application {
    */
   public MainApp() {
     // Add some sample data
-    matrixData.add(new Matrix("Example", new double[][] { {5, 2, 13}, {3, 2,-5}, {7, 0, 9}}, LocalDate.now()));
-    matrixData.add(new Matrix("Identity2", new double[][] { {1, 0}, {0, 1}}, LocalDate.now()));
+    matrixData
+        .add(new Matrix("Example", new double[][] { {5, 2, 13}, {3, 2, -5}, {7, 0, 9}}, null));
+    matrixData.add(new Matrix("Identity2", new double[][] { {1, 0}, {0, 1}}, null));
 
     /*
-		 * NB: ONLY HERE FOR TESTING PURPOSES, PERHAPS MOVE TO INIT AND OUT OF CONSTRUCTOR?
-     * OUT OF CONSTRUCTOR?
+     * NB: ONLY HERE FOR TESTING PURPOSES, PERHAPS MOVE TO INIT AND OUT OF CONSTRUCTOR? OUT OF
+     * CONSTRUCTOR?
      */
     try {
       MatrixIO.checkDirectories();
@@ -52,6 +53,11 @@ public class MainApp extends Application {
       MatrixIO.setSaveFlag();
     }
 
+    // Load in all saved matrices for display
+    ArrayList<Matrix> result = MatrixIO.loadAll();
+    for (Matrix m : result) {
+      matrixData.add(m);
+    }
   }
 
   /**
@@ -128,6 +134,6 @@ public class MainApp extends Application {
   public static void main(String[] args) {
     launch(args);
   }
-  
-  
+
+
 }

@@ -1,5 +1,6 @@
 package ijordan.matrixonator.view;
 
+import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -22,6 +23,9 @@ public class MatrixIO {
   // Flag if there has been an error when creating directories
   private static boolean dontSave = false;
 
+  // Store OS Path Seperator, default is Linux/OSX
+  private static char pathSep = '/';
+
   /**
    * Called from startup check to stop IO operations if no directory structure
    */
@@ -29,14 +33,20 @@ public class MatrixIO {
     dontSave = true;
   }
 
-  /*
-   * RESET METHOD FROM TESTS. DO NOT CALL FROM APPLICATION
+  /**
+   * RESET METHOD FOR JUNIT TESTS. DO NOT USE IN APPLICATION
    */
   public static void resetSaveFlag() {
     dontSave = false;
   }
 
-  // Load method to load any Matrix
+  /**
+   * Performs the load operation on a matrix file
+   * 
+   * @param matrixFile File object to load
+   * @return the loaded matrix is sucsessful
+   * @throws Exception
+   */
   private static Matrix load(File matrixFile) throws Exception {
     // Properties from file
     String name = "";
@@ -93,7 +103,7 @@ public class MatrixIO {
           "Save is currently disabled due to Matrixonator not having working directories. Please contact system administor for directory create rights.");
     } // Checking incase the working directories haven't worked properly
 
-    filename = getWorkingDir() + MatrixDir + "/" + filename;
+    filename = getWorkingDir() + MATRIXDIR + pathSep + filename;
 
     File matrixFile = new File(filename);
 
@@ -128,7 +138,7 @@ public class MatrixIO {
           "Invalid RREF Matrix file given. If loading a non-RREF Matrix, use loadMatrix()");
     }
 
-    filename = getWorkingDir() + MatrixDir + "/" + filename;
+    filename = getWorkingDir() + MATRIXDIR + pathSep + filename;
 
     File matrixFile = new File(filename);
 
@@ -159,7 +169,6 @@ public class MatrixIO {
    * File Format: - Matrix Name - Matrix Date - Matrix NumRows/Cols - Matrix Data (Row per line,
    * Cols split with ,)
    */
-
   public static boolean save(Matrix matrix) {
 
     if (dontSave) {
@@ -190,8 +199,7 @@ public class MatrixIO {
 
     // Actual IO Operation in try
     try {
-      // "./" means to save in the local application directory
-      File matrixFile = new File(getWorkingDir() + MatrixDir + "/" + buffer[0] + ".matrix");
+      File matrixFile = new File(getWorkingDir() + MATRIXDIR + pathSep + buffer[0] + ".matrix");
 
       if (!matrixFile.exists()) {
         matrixFile.createNewFile();
@@ -212,11 +220,36 @@ public class MatrixIO {
     }
   }
 
+  /**
+   * Gets all the saved Matrices saved previously
+   * 
+   * @return List of loaded Matrices
+   */
+  public static ArrayList<Matrix> loadAll() {
+    File searchDir = new File(getWorkingDir() + MATRIXDIR);
+    String[] matrixNames = searchDir.list();
+    ArrayList<Matrix> loadedMatrices = new ArrayList<Matrix>();
+
+    if (matrixNames != null) {
+      for (String name : matrixNames) {
+        try {
+          String filename = getWorkingDir() + MATRIXDIR + pathSep + name;
+          File m = new File(filename);
+          loadedMatrices.add(load(m));
+        } catch (Exception e) {
+          System.out.println("Error loading a saved matrix into the application: " + name);
+        }
+
+      }
+    }
+    return loadedMatrices;
+  }
+
   /*
    * IO Helper Methods
    */
-  private static final String MatrixDir = "/Matrixonator/Matrix";
-  private static final String LocalDir = "/Matrixonator";
+  private static String MATRIXDIR = null;
+  private static String LOCALDIR = null;
 
   /**
    * @return The path to application working directory
@@ -225,10 +258,32 @@ public class MatrixIO {
     return System.getProperty("user.dir");
   }
 
-  // Checks both directories are there and attempts to make them. Throw the
-  // non-critical exception
+  /**
+   * Performs IO startup checks and defines path separators for running OS If an error occurs, will
+   * save a noSave flag where any IO operation is blocked. Application can still perform
+   * calculations
+   * 
+   * @throws MatrixonatorIOException
+   */
   public static void checkDirectories() throws MatrixonatorIOException {
-    File BaseDirectory = new File(getWorkingDir() + LocalDir);
+
+    // Additional check to create proper path seperators per OS
+    // WE MUST DO THIS FIRST. WONDER WHY THE HELL THIS EVEN WORKED ON LINUX BEFORE?!
+    String tempLDir = "%Matrixonator";
+    String tempMDir = "%Matrixonator%Matrix";
+    String osName = System.getProperty("os.name");
+
+    // Update Path Sep
+    if (osName.startsWith("Windows")) {
+      pathSep = '\\';
+    }
+
+    LOCALDIR = tempLDir.replace('%', pathSep);
+    MATRIXDIR = tempMDir.replace('%', pathSep);
+
+
+    // Checking for a working directory
+    File BaseDirectory = new File(getWorkingDir() + LOCALDIR);
     if (!BaseDirectory.exists()) {
 
       try {
@@ -243,7 +298,8 @@ public class MatrixIO {
       }
     }
 
-    File MatrixDirectory = new File(getWorkingDir() + MatrixDir);
+    // Check for a directory to save matrix files to
+    File MatrixDirectory = new File(getWorkingDir() + MATRIXDIR);
     if (!MatrixDirectory.exists()) {
 
       try {
