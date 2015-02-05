@@ -2,12 +2,7 @@ package ijordan.matrixonator.model;
 
 import java.time.LocalDate;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-
 public class RREFMatrix extends Matrix {
-
-  private final ObjectProperty<Matrix> parent;
 
   /**
    * Creates the reduced row echelon form of the parent matrix.
@@ -16,7 +11,6 @@ public class RREFMatrix extends Matrix {
   public RREFMatrix(Matrix parent) {
     super("RREF " + parent.getName(), new double[parent.getNumRows()][parent.getNumCols()],
         LocalDate.now());
-    this.parent = new SimpleObjectProperty<Matrix>(parent);
     double[][] data = parent.cloneData();
 
     Matrix localMatrix = new Matrix(null, data, null);

@@ -419,5 +419,13 @@ public class Matrix {
     }
     return total;
   }
+  
+  public RREFMatrix reducedEchelonForm() {
+    if (RREForm != null) {
+      return RREForm;
+    }
+    RREForm = new RREFMatrix(this);
+    return RREForm;
+  }
 
 }
