@@ -21,18 +21,17 @@ public class MatrixAlerts {
    * Creates and displays a pop-up (alert) that contains the data of the given matrix.
    * 
    * @param matrix - Matrix data to display
-   * @param matrixName - The name of the matrix. Use null if data can be got from passed in matrix
+   * @param matrixName - The name of the matrix. Use null if data can be retrieved from matrix parameter.
    */
   public static void dataAlert(Matrix matrix, String matrixName) {
     Dialog<Object> dialog = new Dialog<Object>();
 
     if (matrixName == null) {
-      dialog.setTitle(matrix.getName());
-      dialog.setHeaderText("Showing the data associated with " + matrix.getName());
-    } else {
-      dialog.setTitle(matrixName);
-      dialog.setHeaderText("Showing the data associated with " + matrixName);
+      matrixName = matrix.getName();
     }
+    dialog.setTitle(matrixName);
+    dialog.setHeaderText("Showing the data associated with " + matrixName);
+    
     ButtonType closeButtonType = new ButtonType("Close", ButtonData.OK_DONE);
     dialog.getDialogPane().getButtonTypes().addAll(closeButtonType);
 
