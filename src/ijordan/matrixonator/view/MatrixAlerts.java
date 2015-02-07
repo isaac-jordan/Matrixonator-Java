@@ -1,5 +1,7 @@
 package ijordan.matrixonator.view;
 
+import java.util.Optional;
+
 import ijordan.matrixonator.model.Matrix;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -89,5 +91,45 @@ public class MatrixAlerts {
 
     alert.showAndWait();
 
+  }
+  
+  public static void handleDeleteRequest(Matrix matrix)
+  {
+    if (MatrixIO.isMatrixSaved(matrix.getName() + ".matrix"))
+    {
+      Alert alert = new Alert(AlertType.WARNING);
+      alert.setTitle("Warning : Delete");
+      alert.setHeaderText("Delete " + matrix.getName());
+      alert.setContentText(matrix.getName() + " is saved on your system. Do you wish to remove this?\nIf not, " + matrix.getName() + " will appear when you restart Matrixonator");
+    
+      ButtonType yesButton = new ButtonType("Yes", ButtonData.YES);
+      ButtonType noButton = new ButtonType("No", ButtonData.NO);
+      
+      alert.getButtonTypes().setAll(yesButton, noButton);
+      
+      Optional<ButtonType> result = alert.showAndWait();
+      
+      if (result.get().getButtonData() == ButtonData.YES) {
+        System.out.println("Received confirmation to delete matrix from disk!");
+        System.out.println("Attempting to delete: " + matrix.getName() + " from file..." + MatrixIO.deleteFile(matrix.getName()+ ".matrix"));
+        
+        Alert newAlert = new Alert(AlertType.INFORMATION);
+        newAlert.setTitle("Matrix deleted!");
+        newAlert.setHeaderText(matrix.getName() + "deleted!");
+        newAlert.setContentText("The matrix has gone for ever :( RIP");  
+        newAlert.showAndWait();
+      }
+      else{       
+        Alert newAlert = new Alert(AlertType.INFORMATION);
+        newAlert.setTitle("Matrix removed!");
+        newAlert.setHeaderText(matrix.getName() + "removed!");
+        newAlert.setContentText("The next time you start Matrixonator, it will be back!");  
+        newAlert.showAndWait();
+      }
+    }
+    
+    
+    
+    
   }
 }
