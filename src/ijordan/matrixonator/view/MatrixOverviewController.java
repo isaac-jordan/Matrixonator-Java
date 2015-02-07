@@ -252,12 +252,13 @@ public class MatrixOverviewController {
   public void handleDeleteMatrix() {
     int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
     if (selectedIndex >= 0) {
+      Matrix m = matrixTable.getSelectionModel().getSelectedItem();
+      System.out.println("Attempting to delete: " + m.getName() + " from file..." + MatrixIO.deleteFile(m.getName()+ ".matrix"));
       matrixTable.getItems().remove(selectedIndex);
     } else {
       // Nothing is selected
       MatrixAlerts.noSelectionAlert();
     }
-
   }
 
   @FXML

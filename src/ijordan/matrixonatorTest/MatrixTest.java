@@ -7,7 +7,9 @@ import java.util.Arrays;
 
 import ijordan.matrixonator.model.*;
 import ijordan.matrixonator.view.MatrixIO;
+import ijordan.matrixonator.view.MatrixonatorIOException;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -19,8 +21,14 @@ public class MatrixTest {
 
   @BeforeClass
   // Fix for Issue #26 - Makes sure Path seperators have been set before running tests
-  public static void setUp() throws Exception {
+  public static void setUp() throws MatrixonatorIOException {
     MatrixIO.checkDirectories();
+  }
+  
+  @AfterClass
+  // Removes the Test file, s wont appear on startup of main application
+  public static void tearDown() {
+    MatrixIO.deleteFile("testMatrixSave.matrix");  
   }
 
 

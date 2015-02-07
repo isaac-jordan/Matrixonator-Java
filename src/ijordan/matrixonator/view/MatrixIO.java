@@ -87,6 +87,28 @@ public class MatrixIO {
   }
 
 
+  /**
+   * Deletes stored matrix data if the file exists
+   * @param filename
+   * @return True on success (or if no data was found). False if something went wrong
+   */
+  public static boolean deleteFile(String filename)
+  {
+    File oldData = new File(getWorkingDir() + MATRIXDIR + pathSep + filename);
+    
+    if (oldData.exists()) { return oldData.delete(); }
+    else { return true; }
+  }
+  
+  /**
+   * Check to see if the given Matrix has its data stored to file
+   * @param filename
+   * @return True if exists
+   */
+  public static boolean isMatrixSaved(String filename) {
+    File toCheck = new File(getWorkingDir() + MATRIXDIR + pathSep + filename);
+    return toCheck.exists();
+  }
 
   /**
    * Load Matrix from File
