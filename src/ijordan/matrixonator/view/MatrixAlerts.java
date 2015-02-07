@@ -100,7 +100,8 @@ public class MatrixAlerts {
    * @param matrix to be deleted
    */
   public static boolean handleDeleteRequest(String name) {
-    // Need to check if there is a file of given name there. If not we just return true anyway
+    // Need to check if there is a file of given name there. If not we just return false, so no
+    // delete occurs
     if (MatrixIO.isMatrixSaved(name + ".matrix")) {
       Alert alert = new Alert(AlertType.WARNING);
       alert.setTitle("Warning : Delete");
@@ -124,7 +125,7 @@ public class MatrixAlerts {
     }
 
     else {
-      return true;
+      return false;
     }
   }
 
@@ -137,7 +138,7 @@ public class MatrixAlerts {
     Alert alert = new Alert(AlertType.INFORMATION);
     alert.setTitle("Matrix deleted!");
     alert.setHeaderText(name + " Deleted");
-    alert.setContentText("The matrix " + name + " has be removed for ever");
+    alert.setContentText("The matrix " + name + " has be removed completely.");
     alert.showAndWait();
   }
 

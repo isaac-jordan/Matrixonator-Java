@@ -11,6 +11,7 @@ import ijordan.matrixonator.model.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -39,6 +40,15 @@ public class MatrixOverviewController {
   private Label numColsLabel;
   @FXML
   private Label createdDateLabel;
+
+  //Used in Visibility Testing
+  @FXML
+  private Button saveMatrixButton;
+  @FXML
+  private Button editMatrixButton;
+  @FXML
+  private Button deleteMatrixButton;
+  
 
   // Reference to the main application.
   private MainApp mainApp;
@@ -94,6 +104,15 @@ public class MatrixOverviewController {
       numRowsLabel.setText(Integer.toString(matrix.getNumRows()));
       numColsLabel.setText(Integer.toString(matrix.getNumCols()));
       createdDateLabel.setText(matrix.getCreatedDate().toString());
+
+      // Extra check to disable options on 'protected matrices'
+      if (matrix.getName() == "Example" || matrix.getName() == "Identity2") {
+        setVisibility(false);
+      } else {
+        setVisibility(true);
+      }
+
+
     } else {
       nameLabel.setText("");
       numRowsLabel.setText("");
@@ -360,19 +379,12 @@ public class MatrixOverviewController {
       // Do the save command
       Matrix data = matrixTable.getSelectionModel().getSelectedItem();
 
-      // Don't allow the 2 constants to be saved (FOR NOW)
-      if (data.getName() != "Example" && data.getName() != "Identity2") {
-        // TODO Add proper message if save fails. (Which it should not)
-        boolean result = MatrixIO.save(data);
-        if (result) {
-          MatrixAlerts.onSave();
-        } else {
-          System.out.println("Matrix file was not saved correctly");
-        }
+      // TODO Add proper message if save fails. (Which it should not)
+      boolean result = MatrixIO.save(data);
+      if (result) {
+        MatrixAlerts.onSave();
       } else {
-        // TODO Fix this horrid catch
-        System.out
-            .println("I really should handle properly, but I've not been impliemented properly...");
+        System.out.println("Matrix file was not saved correctly");
       }
     } else {
       // Nothing is selected
@@ -395,4 +407,15 @@ public class MatrixOverviewController {
     GridPane.setHgrow(textField, Priority.ALWAYS);
     return textField;
   }
+  
+  /**
+   * Small utility method to set the visibility values of desired objects to the given value
+   * @param isVisible
+   */
+  private void setVisibility(boolean isVisible) {
+    saveMatrixButton.setVisible(isVisible);
+    editMatrixButton.setVisible(isVisible);
+    deleteMatrixButton.setVisible(isVisible);
+  }
+  
 }
