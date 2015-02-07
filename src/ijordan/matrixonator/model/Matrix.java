@@ -83,7 +83,7 @@ public class Matrix {
     return numCols;
   }
 
-  // createdDate
+  // createdDateget
   public LocalDate getCreatedDate() {
     return createdDate.get();
   }
@@ -109,6 +109,7 @@ public class Matrix {
   }
 
   public double getCell(int row, int col) {
+    
     return data.get()[row][col];
   }
 

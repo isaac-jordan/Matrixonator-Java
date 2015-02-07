@@ -8,6 +8,7 @@ import java.util.Arrays;
 import ijordan.matrixonator.model.*;
 import ijordan.matrixonator.view.MatrixIO;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class MatrixTest {
@@ -16,6 +17,13 @@ public class MatrixTest {
    * -------------------------- Matrix Creation and Methods Tests ---
    */
 
+  @BeforeClass
+  //Fix for Issue #26 - Makes sure Path seperators have been set before running tests
+  public static void setUp() throws Exception{
+      MatrixIO.checkDirectories();
+  }
+  
+  
   @Test
   // Checks to see if a Matrix is created properly
   // Revision 1: Changed how to test for data
