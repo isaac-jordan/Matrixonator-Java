@@ -253,12 +253,16 @@ public class MatrixOverviewController {
     int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
     if (selectedIndex >= 0) {
       Matrix m = matrixTable.getSelectionModel().getSelectedItem();
-      
-      
-      MatrixAlerts.handleDeleteRequest(m);
-      
-      
-      
+
+      // Prompt user if they want it removed completely
+      boolean shallDelete = MatrixAlerts.handleDeleteRequest(m.getName());
+      if (shallDelete) {
+        MatrixIO.deleteFile(m.getName() + ".matrix");
+        MatrixAlerts.showDelComplete(m.getName());
+      } else {
+        MatrixAlerts.showRemComplete(m.getName());
+      }
+
       matrixTable.getItems().remove(selectedIndex);
     } else {
       // Nothing is selected
@@ -282,8 +286,8 @@ public class MatrixOverviewController {
   private void handleCalculateRREF() {
     int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
     if (selectedIndex >= 0) {
-      MatrixAlerts.dataAlert(matrixTable.getSelectionModel().getSelectedItem().reducedEchelonForm(),
-          null);
+      MatrixAlerts.dataAlert(
+          matrixTable.getSelectionModel().getSelectedItem().reducedEchelonForm(), null);
     } else {
       // Nothing is selected
       MatrixAlerts.noSelectionAlert();
@@ -349,7 +353,7 @@ public class MatrixOverviewController {
   }
 
   @FXML
-  //Handles when a save operation is requested. DOES NOT SAVE THE DEFAULT MATRICES
+  // Handles when a save operation is requested. DOES NOT SAVE THE DEFAULT MATRICES
   private void handleSaveMatrix() {
     int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
     if (selectedIndex >= 0) {
@@ -362,8 +366,9 @@ public class MatrixOverviewController {
         boolean result = MatrixIO.save(data);
         if (result) {
           MatrixAlerts.onSave();
+        } else {
+          System.out.println("Matrix file was not saved correctly");
         }
-        else { System.out.println("Matrix file was not saved correctly"); } 
       } else {
         // TODO Fix this horrid catch
         System.out

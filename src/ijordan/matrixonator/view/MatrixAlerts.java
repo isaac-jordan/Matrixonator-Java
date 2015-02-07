@@ -23,7 +23,8 @@ public class MatrixAlerts {
    * Creates and displays a pop-up (alert) that contains the data of the given matrix.
    * 
    * @param matrix - Matrix data to display
-   * @param matrixName - The name of the matrix. Use null if data can be retrieved from matrix parameter.
+   * @param matrixName - The name of the matrix. Use null if data can be retrieved from matrix
+   *        parameter.
    */
   public static void dataAlert(Matrix matrix, String matrixName) {
     Dialog<Object> dialog = new Dialog<Object>();
@@ -33,7 +34,7 @@ public class MatrixAlerts {
     }
     dialog.setTitle(matrixName);
     dialog.setHeaderText("Showing the data associated with " + matrixName);
-    
+
     ButtonType closeButtonType = new ButtonType("Close", ButtonData.OK_DONE);
     dialog.getDialogPane().getButtonTypes().addAll(closeButtonType);
 
@@ -44,7 +45,7 @@ public class MatrixAlerts {
       for (int j = 0; j < matrix.getNumCols(); j++) {
         Label label = new Label();
         double value = matrix.getData()[i][j];
-        
+
         // Ternary 'if' to remove '.0' from a value like '5.0'.
         label.setText((long) value == value ? "" + (long) value : "" + value);
         alertGrid.add(label, j, i);
@@ -92,44 +93,65 @@ public class MatrixAlerts {
     alert.showAndWait();
 
   }
-  
-  public static void handleDeleteRequest(Matrix matrix)
-  {
-    if (MatrixIO.isMatrixSaved(matrix.getName() + ".matrix"))
-    {
+
+  /**
+   * Performs checks when User asks for a Matrix to be removed
+   * 
+   * @param matrix to be deleted
+   */
+  public static boolean handleDeleteRequest(String name) {
+    // Need to check if there is a file of given name there. If not we just return true anyway
+    if (MatrixIO.isMatrixSaved(name + ".matrix")) {
       Alert alert = new Alert(AlertType.WARNING);
       alert.setTitle("Warning : Delete");
-      alert.setHeaderText("Delete " + matrix.getName());
-      alert.setContentText(matrix.getName() + " is saved on your system. Do you wish to remove this?\nIf not, " + matrix.getName() + " will appear when you restart Matrixonator");
-    
+      alert.setHeaderText("Delete " + name);
+      alert
+          .setContentText(name
+              + " is saved on your system. Do you wish to remove this? (This operation can't be undone)");
+
       ButtonType yesButton = new ButtonType("Yes", ButtonData.YES);
       ButtonType noButton = new ButtonType("No", ButtonData.NO);
-      
       alert.getButtonTypes().setAll(yesButton, noButton);
-      
+
       Optional<ButtonType> result = alert.showAndWait();
-      
+
+      // Only return true if the user wants the stuff to be removed
       if (result.get().getButtonData() == ButtonData.YES) {
-        System.out.println("Received confirmation to delete matrix from disk!");
-        System.out.println("Attempting to delete: " + matrix.getName() + " from file..." + MatrixIO.deleteFile(matrix.getName()+ ".matrix"));
-        
-        Alert newAlert = new Alert(AlertType.INFORMATION);
-        newAlert.setTitle("Matrix deleted!");
-        newAlert.setHeaderText(matrix.getName() + "deleted!");
-        newAlert.setContentText("The matrix has gone for ever :( RIP");  
-        newAlert.showAndWait();
-      }
-      else{       
-        Alert newAlert = new Alert(AlertType.INFORMATION);
-        newAlert.setTitle("Matrix removed!");
-        newAlert.setHeaderText(matrix.getName() + "removed!");
-        newAlert.setContentText("The next time you start Matrixonator, it will be back!");  
-        newAlert.showAndWait();
+        return true;
+      } else {
+        return false;
       }
     }
-    
-    
-    
-    
+
+    else {
+      return true;
+    }
   }
+
+  /**
+   * Notifies user that delete operation has worked successfully.
+   * 
+   * @param Deleted matrix's name
+   */
+  public static void showDelComplete(String name) {
+    Alert alert = new Alert(AlertType.INFORMATION);
+    alert.setTitle("Matrix deleted!");
+    alert.setHeaderText(name + " Deleted");
+    alert.setContentText("The matrix " + name + " has be removed for ever");
+    alert.showAndWait();
+  }
+
+  /**
+   * Notifies user that remove operation has worked successfully
+   * 
+   * @param Removed matrix's name
+   */
+  public static void showRemComplete(String name) {
+    Alert alert = new Alert(AlertType.INFORMATION);
+    alert.setTitle("Matrix removed!");
+    alert.setHeaderText(name + " Removed");
+    alert.setContentText("The next time you start Matrixonator, it will be back!");
+    alert.showAndWait();
+  }
+
 }
