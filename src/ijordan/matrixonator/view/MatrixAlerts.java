@@ -21,18 +21,17 @@ public class MatrixAlerts {
    * Creates and displays a pop-up (alert) that contains the data of the given matrix.
    * 
    * @param matrix - Matrix data to display
-   * @param matrixName - The name of the matrix. Use null if data can be got from passed in matrix
+   * @param matrixName - The name of the matrix. Use null if data can be retrieved from matrix parameter.
    */
   public static void dataAlert(Matrix matrix, String matrixName) {
     Dialog<Object> dialog = new Dialog<Object>();
 
     if (matrixName == null) {
-      dialog.setTitle(matrix.getName());
-      dialog.setHeaderText("Showing the data associated with " + matrix.getName());
-    } else {
-      dialog.setTitle(matrixName);
-      dialog.setHeaderText("Showing the data associated with " + matrixName);
+      matrixName = matrix.getName();
     }
+    dialog.setTitle(matrixName);
+    dialog.setHeaderText("Showing the data associated with " + matrixName);
+    
     ButtonType closeButtonType = new ButtonType("Close", ButtonData.OK_DONE);
     dialog.getDialogPane().getButtonTypes().addAll(closeButtonType);
 
@@ -42,9 +41,12 @@ public class MatrixAlerts {
     for (int i = 0; i < matrix.getNumRows(); i++) {
       for (int j = 0; j < matrix.getNumCols(); j++) {
         Label label = new Label();
-        // Should probably use decimalFormat for clean formatting
-        label.setText(String.valueOf(matrix.getData()[i][j]));
+        double value = matrix.getData()[i][j];
+        
+        // Ternary 'if' to remove '.0' from a value like '5.0'.
+        label.setText((long) value == value ? "" + (long) value : "" + value);
         alertGrid.add(label, j, i);
+        System.out.println((long) value + " " + value);
 
       }
     }

@@ -1,8 +1,6 @@
 package ijordan.matrixonator.model;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Optional;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -419,6 +417,14 @@ public class Matrix {
       total += data[i][i];
     }
     return total;
+  }
+  
+  public RREFMatrix reducedEchelonForm() {
+    if (RREForm != null) {
+      return RREForm;
+    }
+    RREForm = new RREFMatrix(this);
+    return RREForm;
   }
 
 }
