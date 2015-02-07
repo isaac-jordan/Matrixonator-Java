@@ -18,12 +18,12 @@ public class MatrixTest {
    */
 
   @BeforeClass
-  //Fix for Issue #26 - Makes sure Path seperators have been set before running tests
-  public static void setUp() throws Exception{
-      MatrixIO.checkDirectories();
+  // Fix for Issue #26 - Makes sure Path seperators have been set before running tests
+  public static void setUp() throws Exception {
+    MatrixIO.checkDirectories();
   }
-  
-  
+
+
   @Test
   // Checks to see if a Matrix is created properly
   // Revision 1: Changed how to test for data
@@ -126,32 +126,6 @@ public class MatrixTest {
 
     // Resetting the flag for testing purposed
     MatrixIO.resetSaveFlag();
-  }
-
-  @Test
-  // Checks we can load and save RREF matrices with the same code
-  public void testSaveLoadRREF() {
-    double[][] data = { {1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}};
-    RREFMatrix testMatrix = new RREFMatrix(new Matrix("testMatrixSave", data, LocalDate.now()));
-    assertTrue("Matrix did not save successfully", MatrixIO.save(testMatrix));
-
-    RREFMatrix testMatrixL = null;
-
-    // We fail in the try incase this can't load. Adds extra catch if the
-    // save isn't working
-    try {
-      testMatrixL = MatrixIO.loadRREFMatrix("RREFtestMatrixSave.matrix");
-    } catch (Exception e) {
-      e.printStackTrace();
-      fail("Exception was thrown");
-    }
-    assertTrue("Matrix name data was invalid", testMatrixL.getName().equals("RREF testMatrixSave"));
-    assertTrue("Matrix creation date was wrong",
-        testMatrixL.getCreatedDate().equals(LocalDate.now()));
-    assertTrue("Matrix row count is wrong", testMatrixL.getNumRows() == 2);
-    assertTrue("Matrix col count is wrong", testMatrixL.getNumCols() == 5);
-    assertTrue("Matrix data in invalid",
-        Arrays.deepEquals(testMatrix.getData(), testMatrixL.getData()));
   }
 
   /*
@@ -382,17 +356,16 @@ public class MatrixTest {
     assertTrue("Matrix getCol gives incorrect result",
         Arrays.equals(testMatrix.getCol(2), dataResult2));
   }
-  
+
   @Test
   public void testMatrixTrace() {
     double[][] dataFirst = { {1, 2, -3}, {4, 8, 1}, {0, 3, 5}};
     double dataResult = 14;
     final Matrix testMatrix = new Matrix("Test", dataFirst, null);
-    assertTrue("Matrix trace gives incorrect result",
-        testMatrix.trace() == dataResult);
+    assertTrue("Matrix trace gives incorrect result", testMatrix.trace() == dataResult);
   }
-  
-  @Test        
+
+  @Test
   public void testERO1() {
     double[][] data = { {1, 2, 1}, {-2, -3, 1}, {3, 5, 0}};
     double[][] dataResult = { {1, 2, 1}, {3, 5, 0}, {-2, -3, 1}};
@@ -409,6 +382,7 @@ public class MatrixTest {
     assertTrue("Matrix ERO2 gives incorrect result",
         Arrays.deepEquals(dataResult, Matrix.ERO2(testMatrix, 2, 5).getData()));
   }
+
   @Test
   public void testERO2Negative() {
     double[][] data = { {1, 2, 1}, {-2, -3, 1}, {3, 5, 0}};
@@ -426,7 +400,7 @@ public class MatrixTest {
     assertTrue("Matrix ERO3 gives incorrect result",
         Arrays.deepEquals(dataResult, Matrix.ERO3(testMatrix, 0, 1, 1).getData()));
   }
-  
+
   @Test
   public void testERO3Negative() {
     double[][] data = { {1, 2, 1}, {-2, -3, 1}, {3, 5, 0}};
