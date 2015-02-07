@@ -13,9 +13,7 @@ import javafx.scene.layout.GridPane;
 
 /**
  * Provides basic alert templates for Matrixonator.
- * 
  * @author BigE
- *
  */
 public class MatrixAlerts {
 

@@ -69,9 +69,9 @@
                   <HBox layoutX="216.0" layoutY="259.0" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0">
                      <children>
                         <Button layoutX="216.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNewMatrix" text="New..." />
-                        <Button fx:id="editMatrixButton" layoutX="278.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleEditMatrix" text="Edit..." />
-                        <Button fx:id="deleteMatrixButton" layoutX="340.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDeleteMatrix" text="Delete" />
-                        <Button fx:id="saveMatrixButton" layoutX="400.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleSaveMatrix" text="Save" />
+                        <Button layoutX="278.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleEditMatrix" text="Edit..." />
+                        <Button layoutX="340.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDeleteMatrix" text="Delete" />
+                        <Button layoutX="400.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleSaveMatrix" text="Save" />
                      </children>
                   </HBox>
                </children></AnchorPane>

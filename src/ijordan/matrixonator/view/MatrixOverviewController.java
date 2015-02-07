@@ -41,15 +41,6 @@ public class MatrixOverviewController {
   @FXML
   private Label createdDateLabel;
 
-  //Used in Visibility Testing
-  @FXML
-  private Button saveMatrixButton;
-  @FXML
-  private Button editMatrixButton;
-  @FXML
-  private Button deleteMatrixButton;
-  
-
   // Reference to the main application.
   private MainApp mainApp;
 
@@ -104,15 +95,6 @@ public class MatrixOverviewController {
       numRowsLabel.setText(Integer.toString(matrix.getNumRows()));
       numColsLabel.setText(Integer.toString(matrix.getNumCols()));
       createdDateLabel.setText(matrix.getCreatedDate().toString());
-
-      // Extra check to disable options on 'protected matrices'
-      if (matrix.getName() == "Example" || matrix.getName() == "Identity2") {
-        setVisibility(false);
-      } else {
-        setVisibility(true);
-      }
-
-
     } else {
       nameLabel.setText("");
       numRowsLabel.setText("");
@@ -407,15 +389,4 @@ public class MatrixOverviewController {
     GridPane.setHgrow(textField, Priority.ALWAYS);
     return textField;
   }
-  
-  /**
-   * Small utility method to set the visibility values of desired objects to the given value
-   * @param isVisible
-   */
-  private void setVisibility(boolean isVisible) {
-    saveMatrixButton.setVisible(isVisible);
-    editMatrixButton.setVisible(isVisible);
-    deleteMatrixButton.setVisible(isVisible);
-  }
-  
 }
