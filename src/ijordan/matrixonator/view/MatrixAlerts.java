@@ -41,9 +41,12 @@ public class MatrixAlerts {
     for (int i = 0; i < matrix.getNumRows(); i++) {
       for (int j = 0; j < matrix.getNumCols(); j++) {
         Label label = new Label();
-        // Should probably use decimalFormat for clean formatting
-        label.setText(String.valueOf(matrix.getData()[i][j]));
+        double value = matrix.getData()[i][j];
+        
+        // Ternary 'if' to remove '.0' from a value like '5.0'.
+        label.setText((long) value == value ? "" + (long) value : "" + value);
         alertGrid.add(label, j, i);
+        System.out.println((long) value + " " + value);
 
       }
     }

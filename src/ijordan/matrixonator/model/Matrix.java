@@ -1,8 +1,6 @@
 package ijordan.matrixonator.model;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Optional;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;

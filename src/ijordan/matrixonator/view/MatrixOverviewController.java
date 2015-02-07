@@ -141,8 +141,6 @@ public class MatrixOverviewController {
     final WizardPane page2 = new WizardPane() {
       @Override
       public void onEnteringPage(Wizard wizard) {
-        String name = (String) wizard.getSettings().get("name");
-
         int numRows = 0;
         int numCols = 0;
         try {
@@ -266,7 +264,7 @@ public class MatrixOverviewController {
   private void handleShowData() {
     int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
     if (selectedIndex >= 0) {
-      MatrixAlerts.dataAlert(matrixTable.getSelectionModel().getSelectedItem(), null);
+      MatrixAlerts.dataAlert(matrixTable.getSelectionModel().getSelectedItem().normalise(), null);
     } else {
       // Nothing is selected
       MatrixAlerts.noSelectionAlert();
