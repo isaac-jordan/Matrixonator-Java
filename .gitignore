@@ -43,3 +43,6 @@ Thumbs.db
 .settings/
 /bin/
 *.matrix
+/doc/
+/build/
+/.gradle/
