@@ -1,13 +1,13 @@
-package ijordan.matrixonatorTest;
+package test.model;
 
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
 import java.util.Arrays;
 
-import ijordan.matrixonator.model.*;
-import ijordan.matrixonator.view.MatrixIO;
-import ijordan.matrixonator.view.MatrixonatorIOException;
+import main.java.model.*;
+import main.java.view.MatrixIO;
+import main.java.view.MatrixonatorIOException;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

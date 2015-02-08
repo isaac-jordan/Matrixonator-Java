@@ -1,11 +1,11 @@
-package ijordan.matrixonatorTest;
+package test.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 
-import ijordan.matrixonator.model.*;
+import main.java.model.*;
 
 import org.junit.Test;
 

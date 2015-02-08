@@ -1,8 +1,8 @@
-package ijordan.matrixonator.view;
+package main.java.view;
 
 import java.util.Optional;
 
-import ijordan.matrixonator.model.Matrix;
+import main.java.model.Matrix;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;

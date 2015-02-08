@@ -1,4 +1,4 @@
-package ijordan.matrixonator.model;
+package main.java.model;
 
 import java.time.LocalDate;
 

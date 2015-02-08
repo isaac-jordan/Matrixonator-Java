@@ -1,4 +1,4 @@
-package ijordan.matrixonator.view;
+package main.java.view;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

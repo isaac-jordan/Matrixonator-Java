@@ -1,4 +1,4 @@
-package ijordan.matrixonator.view;
+package main.java.view;
 
 import java.util.Optional;
 
@@ -6,12 +6,11 @@ import org.controlsfx.dialog.Wizard;
 import org.controlsfx.dialog.Wizard.WizardPane;
 import org.controlsfx.dialog.Wizard.LinearFlow;
 
-import ijordan.matrixonator.MainApp;
-import ijordan.matrixonator.model.*;
+import main.java.MainApp;
+import main.java.model.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;

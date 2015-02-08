@@ -1,9 +1,9 @@
-package ijordan.matrixonator;
+package main.java;
 
-import ijordan.matrixonator.model.Matrix;
-import ijordan.matrixonator.view.MatrixIO;
-import ijordan.matrixonator.view.MatrixOverviewController;
-import ijordan.matrixonator.view.MatrixonatorIOException;
+import main.java.model.Matrix;
+import main.java.view.MatrixIO;
+import main.java.view.MatrixOverviewController;
+import main.java.view.MatrixonatorIOException;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package ijordan.matrixonator.view;
+package main.java.view;
 
 import java.util.ArrayList;
 import java.io.BufferedReader;
@@ -10,7 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 
-import ijordan.matrixonator.model.Matrix;
+import main.java.model.Matrix;
 
 /*
  * MatrixIO -------- Provides static methods to deal with load and saving of matrices

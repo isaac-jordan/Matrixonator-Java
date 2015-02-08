@@ -1,4 +1,4 @@
-package ijordan.matrixonator.view;
+package main.java.view;
 
 /**
  * General IO Exception for Matrixonator NON-CRITICAL

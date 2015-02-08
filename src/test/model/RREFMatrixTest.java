@@ -1,11 +1,11 @@
-package ijordan.matrixonatorTest;
+package test.model;
 
 import static org.junit.Assert.*;
 
 import java.util.Arrays;
 
-import ijordan.matrixonator.model.Matrix;
-import ijordan.matrixonator.model.RREFMatrix;
+import main.java.model.Matrix;
+import main.java.model.RREFMatrix;
 
 import org.junit.Test;
 

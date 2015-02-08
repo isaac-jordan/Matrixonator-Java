@@ -1,0 +1,31 @@
+apply plugin: 'java'
+/*dependencies {
+    testCompile 'junit:junit:[4,)'
+}*/
+test {
+    testLogging {
+        // Show that tests are run in the command-line output
+        events 'started', 'passed'
+    }
+}
+jar {
+    manifest {
+        attributes 'Main-Class': 'ijordan.matrixonator.MainApp'
+    }
+}
+/*sourceSets {
+    main {
+        java {
+            srcDirs ['src/ijordan/matrixonatorTest']
+        }
+        resources {
+            srcDir 'lib'
+        }
+    }
+
+    test {
+        java {
+            srcDirs ['src/ijordan/matrixonatorTest/']
+        }
+    }
+}*/
