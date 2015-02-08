@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 import ijordan.matrixonator.model.Matrix;
-import ijordan.matrixonator.model.RREFMatrix;
 
 /*
  * MatrixIO -------- Provides static methods to deal with load and saving of matrices
@@ -88,6 +87,28 @@ public class MatrixIO {
   }
 
 
+  /**
+   * Deletes stored matrix data if the file exists
+   * @param filename
+   * @return True on success (or if no data was found). False if something went wrong
+   */
+  public static boolean deleteFile(String filename)
+  {
+    File oldData = new File(getWorkingDir() + MATRIXDIR + pathSep + filename);
+    
+    if (oldData.exists()) { return oldData.delete(); }
+    else { return true; }
+  }
+  
+  /**
+   * Check to see if the given Matrix has its data stored to file
+   * @param filename
+   * @return True if exists
+   */
+  public static boolean isMatrixSaved(String filename) {
+    File toCheck = new File(getWorkingDir() + MATRIXDIR + pathSep + filename);
+    return toCheck.exists();
+  }
 
   /**
    * Load Matrix from File
@@ -114,43 +135,6 @@ public class MatrixIO {
     // Load Matrix and return it
     try {
       return load(matrixFile);
-    } catch (Exception e) {
-      throw e;
-    }
-  }
-
-  /**
-   * Loads a RREF Matrix
-   * 
-   * @param filename, RREF file to load.
-   * @return Matrix from file
-   * @throws FileNotFoundException, IOException, MatrixonatorIOException
-   */
-  public static RREFMatrix loadRREFMatrix(String filename) throws Exception {
-
-    if (dontSave) {
-      throw new MatrixonatorIOException(
-          "Save is currently disabled due to Matrixonator not having working directories. Please contact system administor for directory create rights.");
-    } // Checking incase the working directories haven't worked properly
-
-    if (!filename.contains("RREF")) {
-      throw new MatrixonatorIOException(
-          "Invalid RREF Matrix file given. If loading a non-RREF Matrix, use loadMatrix()");
-    }
-
-    filename = getWorkingDir() + MATRIXDIR + pathSep + filename;
-
-    File matrixFile = new File(filename);
-
-    if (!matrixFile.exists()) {
-      throw new FileNotFoundException();
-    }
-
-    // Load RREF matrix, format filename and then return RREF matrix
-    try {
-      Matrix data = load(matrixFile);
-      data.setName(data.getName().replace("RREF", ""));
-      return new RREFMatrix(data);
     } catch (Exception e) {
       throw e;
     }

@@ -11,6 +11,7 @@ import ijordan.matrixonator.model.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -252,12 +253,22 @@ public class MatrixOverviewController {
   public void handleDeleteMatrix() {
     int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
     if (selectedIndex >= 0) {
+      Matrix m = matrixTable.getSelectionModel().getSelectedItem();
+
+      // Prompt user if they want it removed completely
+      boolean shallDelete = MatrixAlerts.handleDeleteRequest(m.getName());
+      if (shallDelete) {
+        MatrixIO.deleteFile(m.getName() + ".matrix");
+        MatrixAlerts.showDelComplete(m.getName());
+      } else {
+        MatrixAlerts.showRemComplete(m.getName());
+      }
+
       matrixTable.getItems().remove(selectedIndex);
     } else {
       // Nothing is selected
       MatrixAlerts.noSelectionAlert();
     }
-
   }
 
   @FXML
@@ -276,8 +287,8 @@ public class MatrixOverviewController {
   private void handleCalculateRREF() {
     int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
     if (selectedIndex >= 0) {
-      MatrixAlerts.dataAlert(matrixTable.getSelectionModel().getSelectedItem().reducedEchelonForm(),
-          null);
+      MatrixAlerts.dataAlert(
+          matrixTable.getSelectionModel().getSelectedItem().reducedEchelonForm(), null);
     } else {
       // Nothing is selected
       MatrixAlerts.noSelectionAlert();
@@ -343,25 +354,19 @@ public class MatrixOverviewController {
   }
 
   @FXML
-  //Handles when a save operation is requested. DOES NOT SAVE THE DEFAULT MATRICES
+  // Handles when a save operation is requested. DOES NOT SAVE THE DEFAULT MATRICES
   private void handleSaveMatrix() {
     int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
     if (selectedIndex >= 0) {
       // Do the save command
       Matrix data = matrixTable.getSelectionModel().getSelectedItem();
 
-      // Don't allow the 2 constants to be saved (FOR NOW)
-      if (data.getName() != "Example" && data.getName() != "Identity2") {
-        // TODO Add proper message if save fails. (Which it should not)
-        boolean result = MatrixIO.save(data);
-        if (result) {
-          MatrixAlerts.onSave();
-        }
-        else { System.out.println("Matrix file was not saved correctly"); } 
+      // TODO Add proper message if save fails. (Which it should not)
+      boolean result = MatrixIO.save(data);
+      if (result) {
+        MatrixAlerts.onSave();
       } else {
-        // TODO Fix this horrid catch
-        System.out
-            .println("I really should handle properly, but I've not been impliemented properly...");
+        System.out.println("Matrix file was not saved correctly");
       }
     } else {
       // Nothing is selected
