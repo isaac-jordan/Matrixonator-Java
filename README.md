@@ -7,6 +7,8 @@ Currently uses JavaFX (a built-in to Java 8 GUI API that replaces AWT), and [Con
 Project tries to use Google Java style throughout.
 [Link to Eclipse style file](https://code.google.com/p/google-styleguide/source/browse/trunk/eclipse-java-google-style.xml)
 
+View the [JavaDocs](http://sheepzez.github.io/Matrixonator-Java/doc/index.html) for the project.
+
 To Do:
 ======
 See the issue tracker for feature/bugfix requests. Feel free to create some too!
