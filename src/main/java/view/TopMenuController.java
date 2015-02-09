@@ -1,11 +1,15 @@
 package main.java.view;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.stage.Stage;
 
 
 public class TopMenuController {
@@ -52,6 +56,20 @@ public class TopMenuController {
   @FXML
   public void handleMenuDelete() {
     System.out.println("BERSTY");
+  }
+
+  @FXML
+  public void handleMenuHelp() {
+    System.out.println("I'll show help sometime soon");
+    try {
+      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HelpViewer.fxml"));
+      Parent helpPage = (Parent) fxmlLoader.load();
+      Stage stage = new Stage();
+      stage.setScene(new Scene(helpPage));
+      stage.show();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   @FXML
