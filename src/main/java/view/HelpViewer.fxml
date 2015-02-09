@@ -31,21 +31,6 @@
             </MenuBar>
          </top>
       </BorderPane>
-      <GridPane layoutX="3.0" layoutY="25.0" prefHeight="476.0" prefWidth="494.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <ComboBox fx:id="ewan" prefWidth="150.0" />
-            <WebView fx:id="lindsey" prefHeight="360.0" prefWidth="328.0" />
-            <Label text="Lindsey is smelly." />
-         </children>
-      </GridPane>
+      <WebView fx:id="lewis" layoutX="69.0" layoutY="83.0" prefHeight="360.0" prefWidth="328.0" />
    </children>
 </AnchorPane>
