@@ -437,5 +437,23 @@ public class MatrixTest {
     assertTrue("Matrix stepOne gives incorrect result",
         Arrays.deepEquals(dataResult, testMatrix.getData()));
   }
+  
+  @Test
+  public void testEigenvalues2x2() {
+    double[][] data = {{1.0, 0.0}, {6.0, 8.0}};
+    double[] dataResult = {8, 1};
+    final Matrix testMatrix = new Matrix("Test", data, null);
+    assertTrue("Matrix eigenvalue calculation gives incorrect result",
+        Arrays.equals(dataResult, testMatrix.eigenvalues()));
+  }
+  
+  @Test
+  public void testEigenvalues2x2Extra() {
+    double[][] data = {{42, -70}, {62, 532}};
+    double[] dataResult = {287+Math.sqrt(55685), 287-Math.sqrt(55685)};
+    final Matrix testMatrix = new Matrix("Test", data, null);
+    assertTrue("Matrix eigenvalue calculation gives incorrect result",
+        Arrays.equals(dataResult, testMatrix.eigenvalues()));
+  }
 
 }

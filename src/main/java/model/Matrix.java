@@ -426,5 +426,21 @@ public class Matrix {
     RREForm = new RREFMatrix(this);
     return RREForm;
   }
+  
+  /**
+   * Currently only works for 2x2 matrices.
+   * http://en.wikipedia.org/wiki/Eigenvalue_algorithm#Direct_calculation
+   * @return
+   */
+  public double[] eigenvalues() {
+    if (getNumRows() == 2 && getNumCols() == 2){
+      double lambda1 = (this.trace() + Math.sqrt(Math.pow(this.trace(), 2) - 4 * this.determinant()))/2;
+      double lambda2 = (this.trace() - Math.sqrt(Math.pow(this.trace(), 2) - 4 * this.determinant()))/2;
+      double[] returnData = {lambda1,lambda2};
+      return returnData;
+    } else {
+      return null;
+    }
+  }
 
 }
