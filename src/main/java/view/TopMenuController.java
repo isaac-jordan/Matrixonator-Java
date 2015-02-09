@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 import main.java.help.HelpController;
 
 public class TopMenuController {
+  
+  private HelpController hc;
 
   @FXML
   public void handleMenuClose() {
@@ -61,9 +63,8 @@ public class TopMenuController {
 
   @FXML
   public void handleMenuHelp() {
-    System.out.println("I'll show help sometime soon");
-    HelpController hc = new HelpController();
-    hc.run();
+    if (hc == null) { hc = new HelpController(); }    
+    if (!hc.isOpen()) { hc.run(); }
   }
 
   @FXML

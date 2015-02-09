@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.input.*?>
 <?import javafx.scene.web.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -14,23 +15,28 @@
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
+                    <MenuItem mnemonicParsing="false" onAction="#handleClose" text="Close Help">
+                           <accelerator>
+                              <KeyCodeCombination alt="DOWN" code="F4" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
-                  </items>
-                </Menu>
+                  <Menu mnemonicParsing="false" text="View">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#handleRefresh" text="Refresh" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleForward" text="Forward" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleBack" text="Back" />
+                    </items>
+                  </Menu>
+                <Menu mnemonicParsing="false" onAction="#handleAbout" text="About ">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="Help Viewer" />
+                     </items></Menu>
               </menus>
             </MenuBar>
          </top>
       </BorderPane>
-      <WebView fx:id="lewis" layoutX="69.0" layoutY="83.0" prefHeight="360.0" prefWidth="328.0" />
+      <WebView fx:id="lewis" layoutY="25.0" minHeight="-1.0" minWidth="-1.0" prefHeight="500.0" prefWidth="500.0" />
    </children>
 </AnchorPane>
