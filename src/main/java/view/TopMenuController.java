@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
+import main.java.help.HelpController;
 
 public class TopMenuController {
 
@@ -61,15 +62,8 @@ public class TopMenuController {
   @FXML
   public void handleMenuHelp() {
     System.out.println("I'll show help sometime soon");
-    try {
-      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HelpViewer.fxml"));
-      Parent helpPage = (Parent) fxmlLoader.load();
-      Stage stage = new Stage();
-      stage.setScene(new Scene(helpPage));
-      stage.show();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    HelpController hc = new HelpController();
+    hc.run();
   }
 
   @FXML
