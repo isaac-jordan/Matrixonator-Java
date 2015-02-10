@@ -448,9 +448,27 @@ public class MatrixTest {
   }
   
   @Test
-  public void testEigenvalues2x2Extra() {
+  public void testEigenvaluesExtra1() {
     double[][] data = {{42, -70}, {62, 532}};
     double[] dataResult = {287+Math.sqrt(55685), 287-Math.sqrt(55685)};
+    final Matrix testMatrix = new Matrix("Test", data, null);
+    assertTrue("Matrix eigenvalue calculation gives incorrect result",
+        Arrays.equals(dataResult, testMatrix.eigenvalues()));
+  }
+  
+  @Test
+  public void testEigenvaluesExtra2() {
+    double[][] data = {{-5,0},{0,-5}};
+    double[] dataResult = {-5, -5};
+    final Matrix testMatrix = new Matrix("Test", data, null);
+    assertTrue("Matrix eigenvalue calculation gives incorrect result",
+        Arrays.equals(dataResult, testMatrix.eigenvalues()));
+  }
+  
+  @Test
+  public void testEigenvaluesExtra3() {
+    double[][] data = {{187463,-29374},{-19364,-5725613}};
+    double[] dataResult = {2* Math.sqrt(2185421435895.0)-2769075, -2769075-2 *Math.sqrt(2185421435895.0)};
     final Matrix testMatrix = new Matrix("Test", data, null);
     assertTrue("Matrix eigenvalue calculation gives incorrect result",
         Arrays.equals(dataResult, testMatrix.eigenvalues()));
