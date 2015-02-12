@@ -44,6 +44,9 @@ public class HelpController {
     ewan = lewis.getEngine();
 
     ewan.getLoadWorker().stateProperty().addListener(new ChangeListener<State>() {
+
+      @SuppressWarnings("rawtypes")
+      // Might need to fix this someday
       @Override
       public void changed(ObservableValue ov, State oldState, State newState) {
 
@@ -113,27 +116,32 @@ public class HelpController {
   @FXML
   /**
    * Gets the next item in the WebEngine history
-   * TODO Catch OutOfBoundsException for cleaner console output
    */
   public void handleForward() {
-    ewan.getHistory().go(1);
+    try {
+      ewan.getHistory().go(1);
+    } catch (IndexOutOfBoundsException e) {
+      System.out.println("Nothing to go forward to in Web History. Moving on...");
+    }
   }
 
   @FXML
   /**
    * Gets the last item in the WebEngine history
-   * TODO Catch OutOfBoundException for cleaner console output
    */
   public void handleBack() {
-    ewan.getHistory().go(-1);
+    try {
+      ewan.getHistory().go(-1);
+    } catch (IndexOutOfBoundsException e) {
+      System.out.println("Nothing to go back to in Web History. Moving on...");
+    }
   }
-  
+
   @FXML
   /**
    * Return back to Index of help
    */
-  public void handleHome()
-  {
+  public void handleHome() {
     ewan.load(generateURL("test.html"));
   }
 

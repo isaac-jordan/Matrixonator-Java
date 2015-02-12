@@ -62,9 +62,4 @@ public class TopMenuController {
     if (hc == null) { hc = new HelpController(); }    
     if (!hc.isOpen()) { hc.run(); }
   }
-
-  @FXML
-  public void handleMenuSaveAll() {
-
-  }
 }
