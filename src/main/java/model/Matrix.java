@@ -127,12 +127,13 @@ public class Matrix {
    * @return
    */
   public Matrix normalise() {
+    double[][] data = getData();
     for (int i = 0; i < getNumRows(); i++) {
       for (int j = 0; j < getNumCols(); j++) {
-        if (getData()[i][j] == -0.0)
-          getData()[i][j] = 0.0;
+        if (data[i][j] == -0.0)
+          data[i][j] = 0.0;
         // Round number to 10 decimal places.
-        getData()[i][j] = Math.round(getData()[i][j] * 10000000000.0) / 10000000000.0;
+        data[i][j] = Math.round(data[i][j] * 10000000000.0) / 10000000000.0;
       }
     }
     return this;
@@ -263,7 +264,7 @@ public class Matrix {
     if (cofactor != null) {
       return cofactor;
     }
-    double[][] data = getData();
+    double[][] data = cloneData();
     double[][] cofactorData = new double[getNumRows()][getNumCols()];
     double det;
     for (int i = 0; i < getNumRows(); i++) {
