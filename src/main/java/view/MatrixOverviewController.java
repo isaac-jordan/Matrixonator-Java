@@ -262,6 +262,8 @@ public class MatrixOverviewController {
       } else {
         MatrixAlerts.showRemComplete(m.getName());
       }
+      
+      //TODO Remove misleading info if there is no such file existing
 
       matrixTable.getItems().remove(selectedIndex);
     } else {

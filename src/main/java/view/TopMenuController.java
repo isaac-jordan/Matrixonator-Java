@@ -7,8 +7,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
+import main.java.help.HelpController;
 
 public class TopMenuController {
+  
+  private HelpController hc;
 
   @FXML
   public void handleMenuClose() {
@@ -55,7 +58,8 @@ public class TopMenuController {
   }
 
   @FXML
-  public void handleMenuSaveAll() {
-
+  public void handleMenuHelp() {
+    if (hc == null) { hc = new HelpController(); }    
+    if (!hc.isOpen()) { hc.run(); }
   }
 }
