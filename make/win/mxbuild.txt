@@ -1,2 +1,2 @@
-Main-Class: ijordan.matrixonator.MainApp
+Main-Class: main.java.MainApp
 Class-Path: lib\openjfx-dialogs-1.0.2.jar lib\controlsfx-8.20.8.jar 

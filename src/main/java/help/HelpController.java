@@ -163,9 +163,9 @@ public class HelpController {
   private String generateURL(String webpage) {
     File newPage = null;
     if (System.getProperty("os.name").contains("Windows")) {
-      newPage = new File("help/" + webpage);
-    } else {
       newPage = new File("help\\" + webpage);
+    } else {
+      newPage = new File("help/" + webpage);
     }
     try {
       return newPage.toURI().toURL().toString();
