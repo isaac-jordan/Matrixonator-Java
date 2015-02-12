@@ -48,7 +48,7 @@ public class HelpController {
       public void changed(ObservableValue ov, State oldState, State newState) {
 
         if (newState == Worker.State.SUCCEEDED) {
-          System.out.println("WE'VE LOADED> " + ewan.getLocation());
+          System.out.println("Loaded> " + ewan.getLocation());
           // TODO check if the location is a special external URL then open it in the default
           // browser
         }
@@ -127,13 +127,22 @@ public class HelpController {
   public void handleBack() {
     ewan.getHistory().go(-1);
   }
+  
+  @FXML
+  /**
+   * Return back to Index of help
+   */
+  public void handleHome()
+  {
+    ewan.load(generateURL("test.html"));
+  }
 
   @FXML
   /**
    * Navigates to the About Help page
    */
   public void handleAbout() {
-    ewan.load(generateURL("AA.html"));
+    ewan.load(generateURL("About.html"));
   }
 
 

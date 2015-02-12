@@ -23,15 +23,25 @@
                 </Menu>
                   <Menu mnemonicParsing="false" text="View">
                     <items>
-                      <MenuItem mnemonicParsing="false" onAction="#handleRefresh" text="Refresh" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleHome" text="Home" />
+                      <MenuItem mnemonicParsing="false" onAction="#handleRefresh" text="Refresh">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="F5" control="UP" meta="ANY" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#handleForward" text="Forward" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleBack" text="Back" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleBack" text="Back">
+                           <accelerator>
+                              <KeyCodeCombination alt="ANY" code="BACK_SPACE" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
                     </items>
                   </Menu>
                 <Menu mnemonicParsing="false" onAction="#handleAbout" text="About ">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="Help Viewer" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="Help Viewer">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="F12" control="ANY" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
                      </items></Menu>
               </menus>
             </MenuBar>
