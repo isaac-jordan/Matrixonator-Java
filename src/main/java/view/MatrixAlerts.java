@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
 
 /**
  * Provides basic alert templates for Matrixonator.
+ * 
  * @author BigE
  */
 public class MatrixAlerts {
@@ -153,4 +154,83 @@ public class MatrixAlerts {
     alert.showAndWait();
   }
 
+  /**
+   * Asks user if they wish to update Matrixonator, if it can find an update
+   * 
+   * @param version - new version of program
+   * @return true if user wishes to continue, false otherwise
+   */
+  public static boolean showUpdates(String version) {
+    Alert alert = new Alert(AlertType.INFORMATION);
+    alert.setTitle("Matrixonator - Update");
+    alert.setHeaderText("Update available");
+    alert.setContentText("Matrixonator Version " + version
+        + " is ready to download. Do you wish to download?");
+
+    ButtonType yesButton = new ButtonType("Yes", ButtonData.YES);
+    ButtonType noButton = new ButtonType("No", ButtonData.NO);
+    alert.getButtonTypes().setAll(yesButton, noButton);
+
+    Optional<ButtonType> result = alert.showAndWait();
+
+    if (result.get().getButtonData() == ButtonData.YES) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Tells user there will be a short delay while the program updates
+   */
+  public static void showUpdateWarning() {
+    Alert alert = new Alert(AlertType.INFORMATION);
+    alert.setTitle("Matrixonator - Update");
+    alert.setHeaderText("Updating");
+    alert.setContentText("Matrixonator will reopen again shortly after the update is complete.");
+    ButtonType yesButton = new ButtonType("Ok, start updating...", ButtonData.OK_DONE);
+    alert.getButtonTypes().setAll(yesButton);
+    alert.showAndWait();
+  }
+
+  /**
+   * Alerts user that there are no updates
+   */
+  public static void showNoUpdates() {
+    Alert alert = new Alert(AlertType.INFORMATION);
+    alert.setTitle("Matrixonator - Update");
+    alert.setHeaderText("Up-to-Date");
+    alert.setContentText("You're already running the latest version of Matrixonator.");
+    alert.showAndWait();
+  }
+
+  /**
+   * Alerts user we were unable to check for an update
+   */
+  public static void showNoUpdateCheck() {
+    Alert alert = new Alert(AlertType.WARNING);
+    alert.setTitle("Matrixonator - Update");
+    alert.setHeaderText("Couldn't check for Update");
+    alert
+        .setContentText("Matrixonator was unable to check for updates. Perahps you're not connected to the internet?");
+    alert.showAndWait();
+  }
+
+  /**
+   * Tells the user matrixonator was updated :)
+   */
+  public static void showWasUpdate() {
+    Alert alert = new Alert(AlertType.INFORMATION);
+    alert.setTitle("Matrixonator - Updated");
+    alert.setHeaderText("Matrixonator Updated");
+    GridPane gp = new GridPane();
+
+    gp.add(
+        new Label(
+            "Matrixonator was updated to the lastest version!\nNow you can enjoy all the lastest features and updates."),
+        0, 0);
+
+    alert.getDialogPane().setContent(gp);
+    alert.showAndWait();
+  }
 }

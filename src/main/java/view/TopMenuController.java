@@ -1,18 +1,11 @@
 package main.java.view;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Optional;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -20,7 +13,7 @@ import main.java.help.HelpController;
 
 public class TopMenuController {
 
-  private static final int MAJOR_VERSION = 0;
+  private static final int MAJOR_VERSION = 1;
   private static final int MINOR_VERSION = 0;
   private HelpController hc;
 
@@ -79,6 +72,9 @@ public class TopMenuController {
   }
 
   @FXML
+  /**
+   * Initiates and update check and prompts user is one is found
+   */
   public void handleMenuUpdate() {
     try {
       URL url = new URL("https://gist.githubusercontent.com/projectgoav/58b6e2d5f1f317eefe4f/raw");
@@ -93,28 +89,19 @@ public class TopMenuController {
       int minor = Integer.parseInt(String.valueOf(s.charAt(2)));
 
       if ((major > MAJOR_VERSION) || (minor > MINOR_VERSION)) {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Matrixonator - Update");
-        alert.setHeaderText("Update available");
-        alert.setContentText("Matrixonator Version " + s
-            + " is ready to download. Do you wish to download?");
-
-        ButtonType yesButton = new ButtonType("Yes", ButtonData.YES);
-        ButtonType noButton = new ButtonType("No", ButtonData.NO);
-        alert.getButtonTypes().setAll(yesButton, noButton);
-
-        Optional<ButtonType> result = alert.showAndWait();
-
-        if (result.get().getButtonData() == ButtonData.YES) {
-          // DOWNLOAD THE UPDATE AND INSTALL?
-          // START DOWNLOAD APPLICATION AND INSTALL?
-          Process p = Runtime.getRuntime().exec("java -jar Updater.jar " + path);
+        MatrixAlerts.showUpdates(s);
+        MatrixAlerts.showUpdateWarning();
+        // TODO Add in check for if updater.jar isn't actually there :(
+        Process p = Runtime.getRuntime().exec("java -jar Updater.jar" + path);
+        if (p.isAlive()) {
           System.exit(0);
         }
-
+      } else {
+        MatrixAlerts.showNoUpdates();
       }
     } catch (Exception e) {
       System.out.println("An error occured when checking for updates...");
+      MatrixAlerts.showNoUpdateCheck();
     }
   }
 }
