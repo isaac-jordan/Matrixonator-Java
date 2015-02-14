@@ -35,24 +35,11 @@ public class TopMenuController {
 
     String aboutText = aboutInfo.toString();
 
-    TextArea aboutArea = new TextArea(aboutText);
-    aboutArea.setEditable(false);
-    aboutArea.setWrapText(true);
-
-    aboutArea.setMaxWidth(Double.MAX_VALUE);
-    aboutArea.setMaxHeight(Double.MAX_VALUE);
-    GridPane.setVgrow(aboutArea, Priority.ALWAYS);
-    GridPane.setHgrow(aboutArea, Priority.ALWAYS);
-
-    GridPane aboutContent = new GridPane();
-    aboutContent.setMaxWidth(Double.MAX_VALUE);
-    aboutContent.add(aboutArea, 0, 0);
-
     Alert alert = new Alert(AlertType.INFORMATION);
     alert.setTitle("About: Matrixonator - Java");
-    alert.setHeaderText("Matrixonator-Java: [VERSION NO]");
-    alert.setContentText("Click 'Show Details' for more information");
-    alert.getDialogPane().setExpandableContent(aboutContent);
+    alert.setHeaderText("Matrixonator-Java: Alpha");
+    alert.setContentText(aboutText);
+    alert.getDialogPane().setPrefSize(500, 400);
     alert.showAndWait();
   }
 
