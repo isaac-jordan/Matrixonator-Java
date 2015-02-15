@@ -2,6 +2,10 @@ package main.java.model;
 
 import java.time.LocalDate;
 
+/**
+ * Matrix subclass that handles specialised methods for diagonal matrices.
+ * @author Isaac Jordan
+ */
 public class DiagonalMatrix extends Matrix {
 
   /**

@@ -67,7 +67,7 @@ public class MatrixAlerts {
   }
 
   /**
-   * Shows an invalid Row & Column alert when creating a Matrix
+   * Shows an invalid Row and Column alert when creating a Matrix
    */
   public static void invalidRowColAlert() {
     Alert alert = new Alert(AlertType.ERROR);
@@ -94,7 +94,7 @@ public class MatrixAlerts {
   /**
    * Performs checks when User asks for a Matrix to be removed
    * 
-   * @param matrix to be deleted
+   * @param name of matrix to be deleted
    */
   public static boolean handleDeleteRequest(String name) {
     // Need to check if there is a file of given name there. If not we just return false, so no

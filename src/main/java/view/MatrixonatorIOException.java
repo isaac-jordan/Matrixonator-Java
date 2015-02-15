@@ -6,7 +6,6 @@ package main.java.view;
  * @author Ewan McCartney
  *
  */
-
 public class MatrixonatorIOException extends Exception {
 
   // Added by Eclipse to suppress warnings
