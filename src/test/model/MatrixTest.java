@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.util.Arrays;
 
 import main.java.model.*;
-import main.java.view.MatrixIO;
 import main.java.view.MatrixonatorIOException;
 
 import org.junit.AfterClass;

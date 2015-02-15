@@ -3,6 +3,7 @@ package main.java.view;
 import java.util.Optional;
 
 import main.java.model.Matrix;
+import main.java.model.MatrixIO;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
