@@ -1,4 +1,4 @@
-package main.java.view;
+package main.java.model;
 
 import java.util.ArrayList;
 import java.io.BufferedReader;
@@ -10,7 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 
-import main.java.model.Matrix;
+import main.java.view.MatrixonatorIOException;
 
 /**
  * MatrixIO -------- Provides static methods to deal with load and saving of matrices

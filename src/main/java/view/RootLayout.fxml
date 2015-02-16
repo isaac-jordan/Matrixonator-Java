@@ -23,6 +23,8 @@
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#handleMenuHelp" text="Help" />
               <MenuItem mnemonicParsing="false" onAction="#handleMenuAbout" text="About" />
+              <SeparatorMenuItem mnemonicParsing="false" />
+			  <MenuItem mnemonicParsing="false" onAction="#handleMenuUpdate" text="Check for Updates" />
             </items>
           </Menu>
         </menus>

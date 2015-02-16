@@ -1,16 +1,20 @@
 package main.java.view;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-
 import main.java.help.HelpController;
 
 /**
  * Class for handling the top GUI menu elements.
  */
 public class TopMenuController {
-  
+
+  private static final int MAJOR_VERSION = 1;
+  private static final int MINOR_VERSION = 0;
   private HelpController hc;
 
   @FXML
@@ -46,7 +50,45 @@ public class TopMenuController {
 
   @FXML
   public void handleMenuHelp() {
-    if (hc == null) { hc = new HelpController(); }    
-    if (!hc.isOpen()) { hc.run(); }
+    if (hc == null) {
+      hc = new HelpController();
+    }
+    if (!hc.isOpen()) {
+      hc.run();
+    }
+  }
+
+  @FXML
+  /**
+   * Initiates and update check and prompts user is one is found
+   */
+  public void handleMenuUpdate() {
+    try {
+      URL url = new URL("https://gist.githubusercontent.com/projectgoav/58b6e2d5f1f317eefe4f/raw");
+      BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+
+      String s = reader.readLine();
+      String path = reader.readLine();
+
+      reader.close();
+
+      int major = Integer.parseInt(String.valueOf(s.charAt(0)));
+      int minor = Integer.parseInt(String.valueOf(s.charAt(2)));
+
+      if ((major > MAJOR_VERSION) || (minor > MINOR_VERSION)) {
+        MatrixAlerts.showUpdates(s);
+        MatrixAlerts.showUpdateWarning();
+        // TODO Add in check for if updater.jar isn't actually there :(
+        Process p = Runtime.getRuntime().exec("java -jar Updater.jar" + path);
+        if (p.isAlive()) {
+          System.exit(0);
+        }
+      } else {
+        MatrixAlerts.showNoUpdates();
+      }
+    } catch (Exception e) {
+      System.out.println("An error occured when checking for updates...");
+      MatrixAlerts.showNoUpdateCheck();
+    }
   }
 }

@@ -1,7 +1,8 @@
 package main.java;
 
 import main.java.model.Matrix;
-import main.java.view.MatrixIO;
+import main.java.model.MatrixIO;
+import main.java.view.MatrixAlerts;
 import main.java.view.MatrixOverviewController;
 import main.java.view.MatrixonatorIOException;
 
@@ -27,6 +28,11 @@ public class MainApp extends Application {
 
   private Stage primaryStage;
   private BorderPane rootLayout;
+
+  /**
+   * Set on startup if passed with update arg Means update message is displayed
+   */
+  private static boolean wasUpdate = false;
 
   /**
    * The data as an observable list of matrices.
@@ -55,6 +61,10 @@ public class MainApp extends Application {
       alert.setContentText(e.getMessage());
       alert.showAndWait();
       MatrixIO.setSaveFlag();
+    }
+
+    if (wasUpdate) {
+      MatrixAlerts.showWasUpdate();
     }
 
     // Load in all saved matrices for display
@@ -136,6 +146,14 @@ public class MainApp extends Application {
   }
 
   public static void main(String[] args) {
+
+    // Check if called with update args
+    if (args.length == 1) {
+      if (args[0].toLowerCase().compareTo("update") == 0) {
+        wasUpdate = true;
+      }
+    }
+
     launch(args);
   }
 

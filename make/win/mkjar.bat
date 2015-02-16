@@ -14,32 +14,38 @@
 ::PACKAGE EXTENSION
 
 ::SOURCE - Home directory of source (without package extension)
-set SOURCE="C:\Users\[USERNAME]\Documents\GitHub\Matrixonator-Java\Matrixonator-Java-E\bin\"
+set SOURCE="C:\Users\Ewan\Documents\GitHub\Matrixonator-Java\Matrixonator-Java\bin\"
 
 ::LIBS - Location of any library/.jar files we may require to be packed within
-set LIBS="C:\Users\[USERNAME]\Documents\GitHub\Matrixonator-Java\Matrixonator-Java\lib\"
+set LIBS="C:\Users\Ewan\Documents\GitHub\Matrixonator-Java\Matrixonator-Java\lib\"
 
-::Allows jar to compress [root]\ijordan\matrixonator\ and not full path from Windows
-set EXTENSION=ijordan\matrixonator\
+::Allows jar to compress [root]\main\java\ and not full path from Windows
+set EXTENSION=main\java
 
 ::JAVA CLASS LOCATION
 ::========
 
 ::MAIN - Main startup class for JAR Manifest
-set MAIN=%EXTENSION%MainApp.class
+set MAIN=%EXTENSION%\MainApp.class
 
 ::FOLDERS/PACKAGES
 ::---------
 ::MODEL - Includes all CLASS files from the model package
-set MODEL=%EXTENSION%model\*.class
+set MODEL=%EXTENSION%\model\*.class
 
 ::VIEW - Includes all CLASS files from view package
-set VIEW=%EXTENSION%view\*.class
+set VIEW=%EXTENSION%\view\*.class
+
+::HELPDIR - HelpViewer addon package
+set HELPDIR="%EXTENSION%\help\*.class"
 
 ::EXTRAS
 ::--------
 ::FXBUILD - Adds .fx files required for runtime
-set FXBUILD=%EXTENSION%view\*.fxml
+set FXBUILD=%EXTENSION%\view\*.fxml
+
+::FXHELPDIR - FXML files for HelpViewer
+set FXHELPDIR="%EXTENSION%\help\*.fxml"
 
 ::=============================::
 ::**[END OF EDITABLE SECTION]**::
@@ -66,7 +72,7 @@ xcopy /s/y *.jar %MYPATH%\lib\
 cd %SOURCE%
 
 ::Calling jar creator with required data 
-call jar cfm Matrixonator.jar %MANIFEST% %MAIN% %MODEL% %VIEW% %FXBUILD%
+call jar cfm Matrixonator.jar %MANIFEST% %MAIN% %MODEL% %VIEW% %HELPDIR% %FXBUILD% %FXHELPDIR%
 
 ::Move created jar back to where we called the script from
 move /Y Matrixonator.jar %MYPATH%Matrixonator.jar
