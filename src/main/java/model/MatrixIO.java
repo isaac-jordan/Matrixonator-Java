@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 import main.java.view.MatrixonatorIOException;
 
-/*
+/**
  * MatrixIO -------- Provides static methods to deal with load and saving of matrices
  * 
  * Author: Ewan McCartney

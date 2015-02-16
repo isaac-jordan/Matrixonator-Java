@@ -49,7 +49,6 @@ public class MatrixAlerts {
         // Ternary 'if' to remove '.0' from a value like '5.0'.
         label.setText((long) value == value ? "" + (long) value : "" + value);
         alertGrid.add(label, j, i);
-        System.out.println((long) value + " " + value);
 
       }
     }
@@ -70,7 +69,7 @@ public class MatrixAlerts {
   }
 
   /**
-   * Shows an invalid Row & Column alert when creating a Matrix
+   * Shows an invalid Row and Column alert when creating a Matrix
    */
   public static void invalidRowColAlert() {
     Alert alert = new Alert(AlertType.ERROR);
@@ -97,7 +96,7 @@ public class MatrixAlerts {
   /**
    * Performs checks when User asks for a Matrix to be removed
    * 
-   * @param matrix to be deleted
+   * @param name of matrix to be deleted
    */
   public static boolean handleDeleteRequest(String name) {
     // Need to check if there is a file of given name there. If not we just return false, so no
@@ -106,8 +105,7 @@ public class MatrixAlerts {
       Alert alert = new Alert(AlertType.WARNING);
       alert.setTitle("Warning : Delete");
       alert.setHeaderText("Delete " + name);
-      alert
-          .setContentText(name
+      alert.setContentText(name
               + " is saved on your system. Do you wish to remove this? (This operation can't be undone)");
 
       ButtonType yesButton = new ButtonType("Yes", ButtonData.YES);
@@ -119,14 +117,10 @@ public class MatrixAlerts {
       // Only return true if the user wants the stuff to be removed
       if (result.get().getButtonData() == ButtonData.YES) {
         return true;
-      } else {
-        return false;
       }
-    }
-
-    else {
       return false;
     }
+    return true;
   }
 
   /**
@@ -138,7 +132,7 @@ public class MatrixAlerts {
     Alert alert = new Alert(AlertType.INFORMATION);
     alert.setTitle("Matrix deleted!");
     alert.setHeaderText(name + " Deleted");
-    alert.setContentText("The matrix " + name + " has be removed completely.");
+    alert.setContentText("The matrix " + name + " has been removed completely.");
     alert.showAndWait();
   }
 

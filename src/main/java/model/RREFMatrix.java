@@ -2,6 +2,10 @@ package main.java.model;
 
 import java.time.LocalDate;
 
+/**
+ * Reduced Row Echelon Form matrix class.
+ * @author Isaac Jordan
+ */
 public class RREFMatrix extends Matrix {
 
   /**

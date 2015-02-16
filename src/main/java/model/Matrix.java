@@ -9,6 +9,10 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Main Matrix class for mathematical matrix operations.
+ * @author Isaac Jordan
+ */
 public class Matrix {
 
   private StringProperty name;

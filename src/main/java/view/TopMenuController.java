@@ -8,6 +8,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import main.java.help.HelpController;
 
+/**
+ * Class for handling the top GUI menu elements.
+ */
 public class TopMenuController {
 
   private static final int MAJOR_VERSION = 1;

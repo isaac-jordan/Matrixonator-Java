@@ -20,6 +20,10 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
+/**
+ * Main entry point for Matrixonator application.
+ * @author Isaac Jordan
+ */
 public class MainApp extends Application {
 
   private Stage primaryStage;

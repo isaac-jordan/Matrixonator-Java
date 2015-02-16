@@ -20,6 +20,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
+/**
+ * Main handler class for GUI elements in Matrixonator.
+ * @author Isaac Jordan
+ */
 public class MatrixOverviewController {
 
   @FXML
