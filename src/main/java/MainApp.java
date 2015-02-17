@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -35,18 +33,12 @@ public class MainApp extends Application {
   private static boolean wasUpdate = false;
 
   /**
-   * The data as an observable list of matrices.
-   */
-  private ObservableList<Matrix> matrixData = FXCollections.observableArrayList();
-
-  /**
    * Constructor
    */
   public MainApp() {
     // Add some sample data
-    matrixData
-        .add(new Matrix("Example", new double[][] { {5, 2, 13}, {3, 2, -5}, {7, 0, 9}}, null));
-    matrixData.add(new Matrix("Identity2", new double[][] { {1, 0}, {0, 1}}, null));
+    Global.addMatrix(new Matrix("Example", new double[][] { {5, 2, 13}, {3, 2, -5}, {7, 0, 9}}, null));
+    Global.addMatrix(new Matrix("Identity2", new double[][] { {1, 0}, {0, 1}}, null));
 
     /*
      * NB: ONLY HERE FOR TESTING PURPOSES, PERHAPS MOVE TO INIT AND OUT OF CONSTRUCTOR? OUT OF
@@ -70,17 +62,8 @@ public class MainApp extends Application {
     // Load in all saved matrices for display
     ArrayList<Matrix> result = MatrixIO.loadAll();
     for (Matrix m : result) {
-      matrixData.add(m);
+      Global.addMatrix(m);
     }
-  }
-
-  /**
-   * Returns the data as an observable list of matrices.
-   * 
-   * @return
-   */
-  public ObservableList<Matrix> getMatrixData() {
-    return matrixData;
   }
 
   @Override
