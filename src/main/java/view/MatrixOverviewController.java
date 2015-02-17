@@ -23,6 +23,7 @@ import javafx.scene.layout.Priority;
 
 /**
  * Main handler class for GUI elements in Matrixonator.
+ * 
  * @author Isaac Jordan
  */
 public class MatrixOverviewController {
@@ -68,11 +69,13 @@ public class MatrixOverviewController {
 
     // Clear matrix details.
     showMatrixDetails(null);
+  }
 
-    // Listen for selection changes and show the person details when
-    // changed.
-    matrixTable.getSelectionModel().selectedItemProperty()
-        .addListener((observable, oldValue, newValue) -> showMatrixDetails(newValue));
+  /**
+   * Handler when MatrixOverview has been brought back into focus
+   */
+  private void updateMatrixList() {
+    matrixTable.setItems(Global.getMatrices());
   }
 
   /**
@@ -267,15 +270,15 @@ public class MatrixOverviewController {
       } else {
         MatrixAlerts.showRemComplete(m.getName());
       }
-      
-      //TODO Remove misleading info if there is no such file existing
+
+      // TODO Remove misleading info if there is no such file existing
 
       matrixTable.getItems().remove(selectedIndex);
-      
-      //TODO Remove from Global as well (TEST)
+
+      // TODO Remove from Global as well (TEST)
       Global.removeMatrix(m);
-      
-      
+
+
     } else {
       // Nothing is selected
       MatrixAlerts.noSelectionAlert();
@@ -311,13 +314,19 @@ public class MatrixOverviewController {
   private void handleCalculateDeterminant() {
     int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
     if (selectedIndex >= 0) {
-      Alert alert = new Alert(AlertType.INFORMATION);
-      alert.setTitle("Determinant of "
-          + matrixTable.getSelectionModel().getSelectedItem().getName());
-      alert.setHeaderText("Value displayed below.");
-      alert.setContentText(String.valueOf(matrixTable.getSelectionModel().getSelectedItem()
-          .determinant()));
-      alert.showAndWait();
+
+      Matrix m = matrixTable.getSelectionModel().getSelectedItem();
+
+      if (m.getNumCols() != m.getNumRows()) {
+        MatrixAlerts.showSquareWarning();
+      } else {
+
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Determinant of " + m.getName());
+        alert.setHeaderText("Value displayed below.");
+        alert.setContentText(String.valueOf(m.determinant()));
+        alert.showAndWait();
+      }
     } else {
       // Nothing is selected
       MatrixAlerts.noSelectionAlert();
@@ -328,23 +337,37 @@ public class MatrixOverviewController {
   private void handleCalculateTrace() {
     int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
     if (selectedIndex >= 0) {
-      Alert alert = new Alert(AlertType.INFORMATION);
-      alert.setTitle("Trace of " + matrixTable.getSelectionModel().getSelectedItem().getName());
-      alert.setHeaderText("Value displayed below.");
-      alert.setContentText(String
-          .valueOf(matrixTable.getSelectionModel().getSelectedItem().trace()));
-      alert.showAndWait();
+
+      Matrix m = matrixTable.getSelectionModel().getSelectedItem();
+
+      if (m.getNumCols() != m.getNumRows()) {
+        MatrixAlerts.showSquareWarning();
+      } else {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Trace of " + m.getName());
+        alert.setHeaderText("Value displayed below.");
+        alert.setContentText(String.valueOf(m.trace()));
+        alert.showAndWait();
+      }
     } else {
       MatrixAlerts.noSelectionAlert();
     }
+
   }
 
   @FXML
   private void handleCalculateInverse() {
     int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
     if (selectedIndex >= 0) {
-      MatrixAlerts.dataAlert(matrixTable.getSelectionModel().getSelectedItem().inverse(),
-          matrixTable.getSelectionModel().getSelectedItem().getName());
+
+      Matrix m = matrixTable.getSelectionModel().getSelectedItem();
+
+      if (m.getNumCols() != m.getNumRows()) {
+        MatrixAlerts.showSquareWarning();
+      } else {
+
+        MatrixAlerts.dataAlert(m.inverse(), m.getName());
+      }
     } else {
       // Nothing is selected
       MatrixAlerts.noSelectionAlert();
@@ -355,8 +378,15 @@ public class MatrixOverviewController {
   private void handleCalculateCofactor() {
     int selectedIndex = matrixTable.getSelectionModel().getSelectedIndex();
     if (selectedIndex >= 0) {
-      MatrixAlerts.dataAlert(matrixTable.getSelectionModel().getSelectedItem().cofactorMatrix(),
-          matrixTable.getSelectionModel().getSelectedItem().getName());
+
+      Matrix m = matrixTable.getSelectionModel().getSelectedItem();
+
+      if (m.getNumCols() != m.getNumRows()) {
+        MatrixAlerts.showSquareWarning();
+      } else {
+
+        MatrixAlerts.dataAlert(m.cofactorMatrix(), m.getName());
+      }
     } else {
       // Nothing is selected
       MatrixAlerts.noSelectionAlert();
@@ -399,5 +429,18 @@ public class MatrixOverviewController {
     textField.setPrefWidth(width);
     GridPane.setHgrow(textField, Priority.ALWAYS);
     return textField;
+  }
+
+
+  public void setupListener() {
+    // Listen for focus to update the window
+    // TODO Do we really need this, or just call function when data is updated
+    mainApp.primaryStage.focusedProperty().addListener(
+        (observable, oldValue, newValue) -> updateMatrixList());
+
+    // Listen for selection changes and show the person details when
+    // changed.
+    matrixTable.getSelectionModel().selectedItemProperty()
+        .addListener((observable, oldValue, newValue) -> showMatrixDetails(newValue));
   }
 }

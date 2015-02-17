@@ -20,11 +20,12 @@ import javafx.scene.layout.BorderPane;
 
 /**
  * Main entry point for Matrixonator application.
+ * 
  * @author Isaac Jordan
  */
 public class MainApp extends Application {
 
-  private Stage primaryStage;
+  public Stage primaryStage;
   private BorderPane rootLayout;
 
   /**
@@ -37,7 +38,8 @@ public class MainApp extends Application {
    */
   public MainApp() {
     // Add some sample data
-    Global.addMatrix(new Matrix("Example", new double[][] { {5, 2, 13}, {3, 2, -5}, {7, 0, 9}}, null));
+    Global.addMatrix(new Matrix("Example", new double[][] { {5, 2, 13}, {3, 2, -5}, {7, 0, 9}},
+        null));
     Global.addMatrix(new Matrix("Identity2", new double[][] { {1, 0}, {0, 1}}, null));
 
     /*
@@ -113,6 +115,7 @@ public class MainApp extends Application {
       // Give the controller access to the main app.
       MatrixOverviewController controller = loader.getController();
       controller.setMainApp(this);
+      controller.setupListener();
 
     } catch (IOException e) {
       e.printStackTrace();
