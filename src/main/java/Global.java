@@ -4,6 +4,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import main.java.model.Matrix;
 
+/**
+ * Contains many properties and methods that are used globally throughout Matrixonator
+ * @author Ewan
+ *
+ */
 public class Global {
 
   /**
@@ -17,10 +22,21 @@ public class Global {
   public static final int MINOR_VERSION_NUMBER = 0;
    
   /**
+   * IO Flag set if there is no proper working directories
+   */
+  public static boolean DONT_SAVE = false;
+  
+  
+  /**
+   * Global Path seperator to use
+   * DEFAULT : '/' for linux
+   */
+  public static char PATH_SEP = '/';
+  
+  /**
    * The data as an observable list of matrices.
    */
   private static ObservableList<Matrix> matrixData = FXCollections.observableArrayList();
-  
   
   /**
    * Add matrix to global list of Matrices
@@ -39,6 +55,7 @@ public class Global {
    * @param m - Matrix to remove
    * @return True if success
    */
-  public static boolean removeMatrix(Matrix m) { return matrixData.remove(m); } 
-  
+  public static boolean removeMatrix(Matrix m) { return matrixData.remove(m); }
+
+
 }

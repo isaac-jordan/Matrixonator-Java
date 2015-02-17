@@ -3,6 +3,7 @@ package main.java.help;
 import java.io.File;
 import java.net.MalformedURLException;
 
+import main.java.Global;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -161,12 +162,7 @@ public class HelpController {
    * @return URL in String format of file. Returns null if invalid URL
    */
   private String generateURL(String webpage) {
-    File newPage = null;
-    if (System.getProperty("os.name").contains("Windows")) {
-      newPage = new File("help\\" + webpage);
-    } else {
-      newPage = new File("help/" + webpage);
-    }
+    File newPage = new File ("help" + Global.PATH_SEP + webpage);
     try {
       return newPage.toURI().toURL().toString();
     } catch (MalformedURLException e) {
