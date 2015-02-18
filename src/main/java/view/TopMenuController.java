@@ -3,9 +3,11 @@ package main.java.view;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import main.java.Global;
 import main.java.help.HelpController;
 
 /**
@@ -13,8 +15,6 @@ import main.java.help.HelpController;
  */
 public class TopMenuController {
 
-  private static final int MAJOR_VERSION = 1;
-  private static final int MINOR_VERSION = 0;
   private HelpController hc;
 
   @FXML
@@ -75,7 +75,7 @@ public class TopMenuController {
       int major = Integer.parseInt(String.valueOf(s.charAt(0)));
       int minor = Integer.parseInt(String.valueOf(s.charAt(2)));
 
-      if ((major > MAJOR_VERSION) || (minor > MINOR_VERSION)) {
+      if ((major > Global.MAJOR_VERSION_NUMBER) || (minor > Global.MINOR_VERSION_NUMBER)) {
         MatrixAlerts.showUpdates(s);
         MatrixAlerts.showUpdateWarning();
         // TODO Add in check for if updater.jar isn't actually there :(

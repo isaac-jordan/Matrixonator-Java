@@ -81,6 +81,18 @@ public class MatrixAlerts {
   }
 
   /**
+   * Shows a warning when calculating square matrix property on a non-square matrix
+   */
+  public static void showSquareWarning() {
+    Alert alert = new Alert(AlertType.WARNING);
+    alert.setTitle("Matrixonator - Calculate");
+    alert.setHeaderText("Calculation");
+    alert
+        .setContentText("You need a square matrix (Number of Rows = Number of Columns) to calculate this value!");
+    alert.showAndWait();
+  }
+
+  /**
    * Displays confirmation that the matrix has been saved to file!
    */
   public static void onSave() {
@@ -105,7 +117,8 @@ public class MatrixAlerts {
       Alert alert = new Alert(AlertType.WARNING);
       alert.setTitle("Warning : Delete");
       alert.setHeaderText("Delete " + name);
-      alert.setContentText(name
+      alert
+          .setContentText(name
               + " is saved on your system. Do you wish to remove this? (This operation can't be undone)");
 
       ButtonType yesButton = new ButtonType("Yes", ButtonData.YES);
