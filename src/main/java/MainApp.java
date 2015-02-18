@@ -115,7 +115,6 @@ public class MainApp extends Application {
       // Give the controller access to the main app.
       MatrixOverviewController controller = loader.getController();
       controller.setMainApp(this);
-      controller.setupListener();
 
     } catch (IOException e) {
       e.printStackTrace();

@@ -88,6 +88,11 @@ public class MatrixOverviewController {
 
     // Add observable list data to the table
     matrixTable.setItems(Global.getMatrices());
+    
+    // Listen for selection changes and show the person details when
+    // changed.
+    matrixTable.getSelectionModel().selectedItemProperty()
+        .addListener((observable, oldValue, newValue) -> showMatrixDetails(newValue));
   }
 
   /**
@@ -212,6 +217,7 @@ public class MatrixOverviewController {
         }
 
         Global.addMatrix(new Matrix(name, data, null));
+        updateMatrixList();
 
       }
     };
@@ -243,6 +249,8 @@ public class MatrixOverviewController {
       Optional<String> result = dialog.showAndWait();
 
       result.ifPresent(name -> matrixTable.getSelectionModel().getSelectedItem().setName(name));
+      
+      updateMatrixList();
 
     } else {
       // Nothing is selected
@@ -277,7 +285,8 @@ public class MatrixOverviewController {
 
       // TODO Remove from Global as well (TEST)
       Global.removeMatrix(m);
-
+      
+      updateMatrixList();
 
     } else {
       // Nothing is selected
@@ -429,18 +438,5 @@ public class MatrixOverviewController {
     textField.setPrefWidth(width);
     GridPane.setHgrow(textField, Priority.ALWAYS);
     return textField;
-  }
-
-
-  public void setupListener() {
-    // Listen for focus to update the window
-    // TODO Do we really need this, or just call function when data is updated
-    mainApp.primaryStage.focusedProperty().addListener(
-        (observable, oldValue, newValue) -> updateMatrixList());
-
-    // Listen for selection changes and show the person details when
-    // changed.
-    matrixTable.getSelectionModel().selectedItemProperty()
-        .addListener((observable, oldValue, newValue) -> showMatrixDetails(newValue));
   }
 }
