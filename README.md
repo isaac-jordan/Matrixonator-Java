@@ -2,7 +2,7 @@ Status:
 ======
 Latest Status: [![Build Status](https://travis-ci.org/Sheepzez/Matrixonator-Java.svg?branch=master)](https://travis-ci.org/Sheepzez/Matrixonator-Java)
 
-Fork Status: [![Build Status](https://travis-ci.org/projectgoav/Matrixonator-Java.svg?branch=master)](https://travis-ci.org/projectgoav/Matrixonator-Java)
+ProjectGoav's Fork Status: [![Build Status](https://travis-ci.org/projectgoav/Matrixonator-Java.svg?branch=master)](https://travis-ci.org/projectgoav/Matrixonator-Java)
 
 A Java port of [The-Matrixonator](https://github.com/Sheepzez/The-Matrixonator) - A program written in Python designed to deal with mathematical matrices. This has already become a richer, better application than the original Matrixonator.
 

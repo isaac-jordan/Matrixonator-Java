@@ -1,4 +1,4 @@
-package main.java.help;
+package main.java.view.help;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -61,7 +61,7 @@ public class HelpController {
       }
     });
 
-    ewan.load(generateURL("test.html"));
+    ewan.load(generateURL("Index.html"));
   }
 
   /**
@@ -79,8 +79,8 @@ public class HelpController {
       viewer = new Stage();
       viewer.setTitle("Matrixonator - HelpViewer");
       viewer.setScene(new Scene(helpPage));
-      viewer.setWidth(505.0);
-      viewer.setHeight(500.0);
+      //viewer.setWidth(505.0);
+      //viewer.setHeight(500.0);
       viewer.setResizable(false);
       
       viewer.setOnCloseRequest(new EventHandler<WindowEvent>() {public void handle( WindowEvent we) { isOpen = false; }});
@@ -148,7 +148,7 @@ public class HelpController {
    * Return back to Index of help
    */
   public void handleHome() {
-    ewan.load(generateURL("test.html"));
+    ewan.load(generateURL("Index.html"));
   }
 
   @FXML

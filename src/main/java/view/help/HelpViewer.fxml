@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.input.*?>
+<?import javafx.scene.web.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.view.help.HelpController">
+   <children>
+      <AnchorPane layoutY="27.0" prefHeight="573.0" prefWidth="700.0">
+         <children>
+            <WebView fx:id="lewis" minHeight="300.0" minWidth="300.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <MenuBar minHeight="-Infinity" minWidth="-Infinity" prefWidth="700.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#handleClose" text="Close Help">
+                     <accelerator>
+                        <KeyCodeCombination alt="DOWN" code="F4" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="View">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleHome" text="Home" />
+                <MenuItem mnemonicParsing="false" onAction="#handleRefresh" text="Refresh">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="F5" control="UP" meta="ANY" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleForward" text="Forward" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleBack" text="Back">
+                     <accelerator>
+                        <KeyCodeCombination alt="ANY" code="BACK_SPACE" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+              </items>
+            </Menu>
+          <Menu mnemonicParsing="false" onAction="#handleAbout" text="About ">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="Help Viewer">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="F12" control="ANY" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+               </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>
