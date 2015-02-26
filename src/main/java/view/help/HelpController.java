@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 
 import main.java.Global;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker.State;
@@ -80,6 +82,9 @@ public class HelpController {
       //viewer.setWidth(505.0);
       //viewer.setHeight(500.0);
       viewer.setResizable(false);
+      
+      viewer.setOnCloseRequest(new EventHandler<WindowEvent>() {public void handle( WindowEvent we) { isOpen = false; }});
+      
       isOpen = true;
       viewer.show();
     } catch (Exception e) {
