@@ -226,6 +226,8 @@ public class MatrixOverviewController {
 
     // create wizard
     wizard.setFlow(new LinearFlow(page1, page2, page3));
+    //TODO USE A CUSTOM FLOW HERE TO PROPERLY DEFINE INPUT VALIDATION FLOW
+    //EG. GO BACK TO START IF DATA IS INCORRECT
 
     // show wizard and wait for response
     wizard.showAndWait();
