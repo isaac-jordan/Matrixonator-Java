@@ -148,6 +148,12 @@ public class MatrixOverviewController {
     WizardPane page1 = new WizardPane();
     page1.setHeaderText("Please Enter Matrix Details");
     page1.setContent(page1Grid);
+    
+    TextField[] userData = new TextField[3];
+    userData[0] = txFirstName;
+    userData[1] = txNumRows;
+    userData[2] = txNumCols;
+    page1.setUserData(userData);
 
     // --- page 2
 
@@ -223,11 +229,45 @@ public class MatrixOverviewController {
     };
     page3.setHeaderText("Goodbye!");
     page3.setContentText("Matrix created.");
+    
+    Wizard.Flow branchingFlow = new Wizard.Flow() {
+        public Optional<WizardPane> advance(WizardPane currentPage) {
+            return Optional.of(getNext(currentPage));
+        }
 
-    // create wizard
-    wizard.setFlow(new LinearFlow(page1, page2, page3));
-    //TODO USE A CUSTOM FLOW HERE TO PROPERLY DEFINE INPUT VALIDATION FLOW
-    //EG. GO BACK TO START IF DATA IS INCORRECT
+        public boolean canAdvance(WizardPane currentPage) {
+            if (currentPage != page3) {
+            	return true;
+            }
+            return false;
+        }
+             
+        private WizardPane getNext(WizardPane currentPage) {
+            if ( currentPage == null ) {
+                return page1;
+            } else if ( currentPage == page1) {
+            	// Input validation for page 1
+            	if (page1.getUserData() != null) {
+            		System.out.println(((TextField[]) page1.getUserData())[0].getText());
+            		try {
+                        Integer.parseInt(((TextField[]) page1.getUserData())[1].getText());
+                        Integer.parseInt(((TextField[]) page1.getUserData())[2].getText());
+                      } catch (NumberFormatException e) {
+                        MatrixAlerts.invalidRowColAlert();
+                        return page1;
+                      }
+            		return page2;
+            		
+            	}
+            	
+            	return page2;
+            } else {
+                return page3;
+            }
+        }
+    };
+    
+    wizard.setFlow(branchingFlow);
 
     // show wizard and wait for response
     wizard.showAndWait();
