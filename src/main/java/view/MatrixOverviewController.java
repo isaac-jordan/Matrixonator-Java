@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.controlsfx.dialog.Wizard;
 import org.controlsfx.dialog.Wizard.WizardPane;
-import org.controlsfx.dialog.Wizard.LinearFlow;
 
 import main.java.Global;
 import main.java.MainApp;
@@ -47,6 +46,7 @@ public class MatrixOverviewController {
   private Label createdDateLabel;
 
   // Reference to the main application.
+  @SuppressWarnings("unused")
   private MainApp mainApp;
 
   /**
