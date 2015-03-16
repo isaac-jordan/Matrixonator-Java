@@ -10,26 +10,36 @@ package main.java.model;
  */
 public class Real implements Field<Real> {
 	
-	public final double value;
+	private final double value;
 	
 	public Real(double value) {
 		this.value = value;
 	}
 	
-	
-	@Override
 	public Real add(Real b) {
 		return new Real(value + b.value);
 	}
 
-	@Override
 	public Real multiply(Real b) {
 		return new Real(value * b.value);
 	}
 
-	@Override
 	public Real inverse() {
 		return new Real(1/value);
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		return value == ((Real) o).getValue();
+	}
+	
+	@Override
+	public String toString() {
+		return ((long) value == value ? "" + (long) value : "" + value);
+	}
+	
+	public double getValue() {
+		return value;
 	}
 
 }
