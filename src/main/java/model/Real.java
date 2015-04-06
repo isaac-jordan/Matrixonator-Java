@@ -8,24 +8,32 @@ package main.java.model;
  * @author Isaac Jordan
  *
  */
-public class Real implements Field<Real> {
+public class Real implements Field {
 	
-	private final double value;
+	private double value;
+	private static final Real ZERO = new Real(0.0);
+	private static final Real UNITY = new Real(1.0);
 	
 	public Real(double value) {
 		this.value = value;
 	}
 	
-	public Real add(Real b) {
-		return new Real(value + b.value);
+	public Real add(Field b) {
+		Real bee = (Real) b;
+		return new Real(value + bee.value);
 	}
 
-	public Real multiply(Real b) {
-		return new Real(value * b.value);
+	public Real multiply(Field b) {
+		Real bee = (Real) b;
+		return new Real(value * bee.value);
 	}
 
 	public Real inverse() {
 		return new Real(1/value);
+	}
+	
+	public Real negate() {
+		return new Real(value*-1);
 	}
 	
 	@Override
@@ -40,6 +48,20 @@ public class Real implements Field<Real> {
 	
 	public double getValue() {
 		return value;
+	}
+	
+	public Real getZero() {
+		return ZERO;
+	}
+	
+	public Real getUnity() {
+		return UNITY;
+	}
+	
+	public void normalise() {
+		if (value == -0.0) {
+			value = 0.0;
+		}
 	}
 
 }

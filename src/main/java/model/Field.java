@@ -3,16 +3,26 @@ package main.java.model;
 /**
  * Defines the methods required to define a mathematical Field for use in a Matrix.
  * Example concrete classes are the Reals, or Complex numbers.
- * @author isaac
+ * @author Isaac Jordan
  *
- * @param <T>
  */
-public interface Field<T> {
+public interface Field {
 	
-	public T add(T a);
+	public Field add(Field a);
 	
-	public T multiply(T a);
+	public Field multiply(Field a);
 	
-	public T inverse();
+	public Field inverse();
+	
+	public Field negate();
+	
+	public Field getUnity();
+	
+	public Field getZero();
+	
+	public void normalise();
+	
+	public boolean equals(Object o);
+	
 
 }

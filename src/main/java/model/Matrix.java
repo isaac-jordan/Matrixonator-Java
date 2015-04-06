@@ -1,6 +1,8 @@
 package main.java.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -13,27 +15,19 @@ import javafx.beans.property.StringProperty;
  * Main Matrix class for mathematical matrix operations.
  * @author Isaac Jordan
  */
-public class Matrix {
+@SuppressWarnings({"rawtypes", "unchecked"})
+public class Matrix<T extends Field> {
 
   private StringProperty name;
   private final IntegerProperty numRows;
   private final IntegerProperty numCols;
   private final ObjectProperty<LocalDate> createdDate;
-  private final ObjectProperty<double[][]> data;
+  private final SimpleObjectProperty<List<List<T>>> data;
 
-  private Double determinant;
+  private T determinant;
   private Matrix inverse;
   private RREFMatrix RREForm;
   private Matrix cofactor;
-
-  /**
-   * Default constructor. Creates an empty, unnamed matrix, with current date.
-   * 
-   * @throws Exception
-   */
-  public Matrix() {
-    this(null, new double[0][0], null);
-  }
 
   /**
    * Constructor with some initial data.
@@ -42,11 +36,12 @@ public class Matrix {
    * @param data
    * @throws Exception
    */
-  public Matrix(String name, double[][] data, LocalDate date) {
+  public Matrix(String name, List<List<T>> data, LocalDate date) {
     this.name = new SimpleStringProperty(name);
-    this.data = new SimpleObjectProperty<double[][]>(data);
-    numRows = new SimpleIntegerProperty(data.length);
-    numCols = new SimpleIntegerProperty(data[0].length);
+    //this.data = new SimpleObjectProperty<T[][]>(data);
+    this.data = new SimpleObjectProperty<>(data);
+    numRows = new SimpleIntegerProperty(data.size());
+    numCols = new SimpleIntegerProperty(data.get(0).size());
     if (date != null)
       createdDate = new SimpleObjectProperty<LocalDate>(date);
     else
@@ -95,31 +90,33 @@ public class Matrix {
   }
 
   // data
-  public double[][] getData() {
+  public List<List<T>> getData() {
     return data.get();
   }
 
-  public double[] getRow(int row) {
-    return data.get()[row];
+  public List<T> getRow(int row) {
+    return data.get().get(row);
   }
 
-  public double[] getCol(int colNum) {
-    double[] column = new double[getNumRows()];
+  public List<T> getCol(int colNum) {
+	List<T> column = new ArrayList<>();
     for (int i = 0; i < getNumRows(); i++)
-      column[i] = data.get()[i][colNum];
+      column.add(data.get().get(i).get(colNum));
     return column;
   }
 
-  public double getCell(int row, int col) {
-    
-    return data.get()[row][col];
+  public T getCell(int row, int col) {
+    return data.get().get(row).get(col);
   }
 
-  public double[][] cloneData() {
-    double[][] result = new double[getNumRows()][getNumCols()];
+  public List<List<T>> cloneData() {
+	List<List<T>> result = new ArrayList<>(getNumRows());
+	for (List<T> row : result) {
+		row = new ArrayList<>(getNumCols());
+	}
     for (int i = 0; i < getNumRows(); i++) {
       for (int j = 0; j < getNumCols(); j++) {
-        result[i][j] = getData()[i][j];
+        result.get(i).set(j, getData().get(i).get(j));
       }
     }
     return result;
@@ -131,13 +128,10 @@ public class Matrix {
    * @return
    */
   public Matrix normalise() {
-    double[][] data = getData();
+    List<List<T>> data = getData();
     for (int i = 0; i < getNumRows(); i++) {
       for (int j = 0; j < getNumCols(); j++) {
-        if (data[i][j] == -0.0)
-          data[i][j] = 0.0;
-        // Round number to 10 decimal places.
-        data[i][j] = Math.round(data[i][j] * 10000000000.0) / 10000000000.0;
+        data.get(i).get(j).normalise();
       }
     }
     return this;
@@ -151,7 +145,7 @@ public class Matrix {
    * @return
    */
   public static Boolean checkMultCompatibility(Matrix A, Matrix B) {
-    if (A.getData().length != B.getData()[0].length)
+    if (A.getNumRows() != B.getNumCols())
       return false;
     return true;
   }
@@ -161,19 +155,23 @@ public class Matrix {
    * Throws IllegalArgumentException if the matrices are not compatible.
    * 
    * @param A
-   * @param B
    * @return
    */
-  public static Matrix multiplyMatrices(Matrix A, Matrix B) {
-    if (checkMultCompatibility(A, B)) {
-      double[][] data = new double[A.getNumRows()][B.getNumCols()];
+  public Matrix multiplyMatrices(Matrix A) {
+    if (checkMultCompatibility(this, A)) {
+      List<List<T>> result = new ArrayList<>(this.getNumRows());
+  	for (List<T> row : result) {
+  		row = new ArrayList<>(A.getNumCols());
+  	}
+  	List<List<T>> local1 = this.getData();
+  	List<List<T>> local2 = A.getData();
       int i = 0;
       int j = 0;
       int k = 0;
-      while (i < A.getNumRows()) {
-        while (j < B.getNumCols()) {
-          while (k < B.getNumRows()) {
-            data[i][j] = data[i][j] + A.getData()[i][k] * B.getData()[k][j];
+      while (i < this.getNumRows()) {
+        while (j < A.getNumCols()) {
+          while (k < A.getNumRows()) {
+            result.get(i).set(j, (T) result.get(i).get(j).add(local1.get(i).get(k).multiply(local2.get(k).get(j))));
             k += 1;
           }
           j += 1;
@@ -182,7 +180,7 @@ public class Matrix {
         i += 1;
         j = 0;
       }
-      return (new Matrix(null, data, null));
+      return (new Matrix(null, result, null));
     }
     throw new IllegalArgumentException("Matrices are not compatible");
   }
@@ -192,11 +190,15 @@ public class Matrix {
    * @param c - A double value to multiple all entries of the matrix by.
    * @return
    */
-  public Matrix multiplyScalar(double c) {
+  public Matrix multiplyScalar(T c) {
+	  List<List<T>> result = new ArrayList<>(this.getNumRows());
+	  	for (List<T> row : result) {
+	  		row = new ArrayList<>(getNumCols());
+	  	}
     for (int i = 0; i < getNumRows(); i++)
       for (int j = 0; j < getNumCols(); j++)
-        getData()[i][j] *= c;
-    return this;
+        result.get(i).set(j, (T) result.get(i).get(j).multiply(c));
+    return (new Matrix<>(null, result, null));
   }
 
   /**
@@ -206,9 +208,9 @@ public class Matrix {
    * @return
    */
   public Matrix toPower(int n) {
-    Matrix resultMatrix = new Matrix(null, cloneData(), null);
+    Matrix resultMatrix = new Matrix<>(null, cloneData(), null);
     for (int i = 1; i < n; i++)
-      resultMatrix = Matrix.multiplyMatrices(this, resultMatrix);
+      resultMatrix = multiplyMatrices(resultMatrix);
     return resultMatrix;
   }
 
@@ -218,16 +220,20 @@ public class Matrix {
    * IllegalArgumentException is thrown.
    *
    * @param A
-   * @param B
    * @return
    */
-  public static Matrix addMatrices(Matrix A, Matrix B) {
-    if (A.getNumRows() == B.getNumRows() && A.getNumCols() == B.getNumCols()) {
-      double[][] data = new double[A.getNumRows()][A.getNumCols()];
-      for (int i = 0; i < A.getNumRows(); i++)
-        for (int j = 0; j < A.getNumCols(); j++)
-          data[i][j] = A.getData()[i][j] + B.getData()[i][j];
-      return (new Matrix(null, data, null));
+  public Matrix addMatrices(Matrix A) {
+    if (getNumRows() == A.getNumRows() && getNumCols() == A.getNumCols()) {
+    	List<List<T>> local1 = getData();
+    	List<List<T>> local2 = A.getData();
+    	List<List<T>> result = new ArrayList<>(this.getNumRows());
+	  	for (List<T> row : result) {
+	  		row = new ArrayList<>(getNumCols());
+	  	}
+      for (int i = 0; i < getNumRows(); i++)
+        for (int j = 0; j < getNumCols(); j++)
+          result.get(i).set(j, (T) local1.get(i).get(j).add(local2.get(i).get(j)));
+      return (new Matrix<>(null, result, null));
     } else
       throw new IllegalArgumentException("Matrices are not compatible.");
   }
@@ -243,15 +249,16 @@ public class Matrix {
    * @param numRows - How many rows initialData has.
    * @return
    */
-  private static double[][] reduce(double[][] initialData, double[][] returnData, int row,
+  private List<List<T>> reduce(List<List<T>> initialData, List<List<T>> returnData, int row,
       int column, int numRows) {
+	  //initialData.get(0).get(0).getClass();
     for (int h = 0, j = 0; h < numRows; h++) {
       if (h == row)
         continue;
       for (int i = 0, k = 0; i < numRows; i++) {
         if (i == column)
           continue;
-        returnData[j][k] = initialData[h][i];
+        returnData.get(j).set(k, initialData.get(h).get(i));
         k++;
       }
       j++;
@@ -268,14 +275,20 @@ public class Matrix {
     if (cofactor != null) {
       return cofactor;
     }
-    double[][] data = cloneData();
-    double[][] cofactorData = new double[getNumRows()][getNumCols()];
-    double det;
+    List<List<T>> data = cloneData();
+    List<List<T>> cofactorData = new ArrayList<>(this.getNumRows());
+  	for (List<T> row : cofactorData) {
+  		row = new ArrayList<>(getNumCols());
+  	}
+    T det;
     for (int i = 0; i < getNumRows(); i++) {
       for (int j = 0; j < getNumCols(); j++) {
-        double[][] reduced = new double[getNumRows() - 1][getNumCols() - 1];
+        List<List<T>> reduced = new ArrayList<>(getNumRows() -1);
+	  	for (List<T> row : reduced) {
+	  		row = new ArrayList<>(getNumCols()-1);
+	  	}
         det = determinant(reduce(data, reduced, i, j, getNumRows()));
-        cofactorData[i][j] = ((i + j) % 2 == 0 ? det : -det);
+        cofactorData.get(i).set(j, ((i + j) % 2 == 0 ? det : (T) det.negate()));
       }
     }
     cofactor = new Matrix(null, cofactorData, null);
@@ -291,36 +304,41 @@ public class Matrix {
    * @param data
    * @return
    */
-  private static double determinant(double[][] data) {
-    int numRows = data.length;
-    double ret = 0;
+  private T determinant(List<List<T>> data) {
+    int numRows = data.size();
+    T ret = (T) data.get(0).get(0).getZero();
     if (numRows == 2)
-      return data[0][0] * data[1][1] - data[0][1] * data[1][0];
+    	//[0][0]*[1][1] - [0][1]*[1][0]
+      return (T) data.get(0).get(0).multiply(data.get(1).get(1)).add((data.get(0).get(1).multiply(data.get(1).get(0)).negate()));
 
     if (numRows < 4) {
-      double prod1 = 1, prod2 = 1;
+      T prod1 = (T) data.get(0).get(0).getUnity();
+      T prod2 = (T) data.get(0).get(0).getUnity();
       for (int i = 0; i < numRows; i++) {
-        prod1 = 1;
-        prod2 = 1;
+    	  prod1 = (T) prod1.getUnity();
+          prod2 = (T) prod2.getUnity();
 
         for (int j = 0; j < numRows; j++) {
-          prod1 *= data[(j + i + 1) % numRows][j];
-          prod2 *= data[(j + i + 1) % numRows][numRows - j - 1];
+          prod1 = (T) prod1.multiply(data.get((j + i + 1) % numRows).get(j));
+          prod2 = (T) prod2.multiply(data.get((j + i + 1) % numRows).get(numRows - j - 1));
         }
-        ret += prod1 - prod2;
+        ret.add(prod1.add(prod2.negate()));
       }
       return ret;
     }
 
-    double[][] reduced = new double[numRows - 1][numRows - 1];
+    List<List<T>> reduced = new ArrayList<>(numRows - 1);
+  	for (List<T> row : reduced) {
+  		row = new ArrayList<>(numRows - 1);
+  	}
     for (int h = 0; h < numRows; h++) {
-      if (data[h][0] == 0)
+      if (data.get(h).get(0).equals(data.get(h).get(0).getZero()))
         continue;
       reduce(data, reduced, h, 0, numRows);
       if (h % 2 == 0)
-        ret -= determinant(reduced) * data[h][0];
+        ret.add(determinant(reduced).multiply(data.get(h).get(0)).negate());
       if (h % 2 == 1)
-        ret += determinant(reduced) * data[h][0];
+        ret.add(determinant(reduced).multiply(data.get(h).get(0)));
     }
     return ret;
   }
@@ -330,7 +348,7 @@ public class Matrix {
    * 
    * @return
    */
-  public double determinant() {
+  public T determinant() {
     if (determinant != null) {
       return determinant;
     }
@@ -345,10 +363,11 @@ public class Matrix {
    * @param row2
    * @return
    */
-  public static Matrix ERO1(Matrix A, int row1, int row2) {
-    double[] temp = A.getData()[row1];
-    A.getData()[row1] = A.getData()[row2];
-    A.getData()[row2] = temp;
+  public Matrix ERO1(Matrix A, int row1, int row2) {
+    List<T> temp = new ArrayList<>(A.getNumCols());
+    temp = (List<T>) A.getData().get(row1);
+    A.getData().set(row1, A.getData().get(row2));
+    A.getData().set(row2, temp);
     return A;
   }
 
@@ -359,9 +378,10 @@ public class Matrix {
    * @param scalar
    * @return
    */
-  public static Matrix ERO2(Matrix A, int row, double scalar) {
+  public Matrix ERO2(Matrix A, int row, T scalar) {
+	  List<List<T>> data = A.getData();
     for (int i = 0; i < A.getNumCols(); i++) {
-      A.getData()[row][i] *= scalar;
+      data.get(row).set(i, (T) data.get(row).get(i).multiply(scalar));
     }
     return A;
   }
@@ -374,9 +394,10 @@ public class Matrix {
    * @param scalar
    * @return
    */
-  public static Matrix ERO3(Matrix A, int row1, int row2, double scalar) {
+  public Matrix ERO3(Matrix A, int row1, int row2, T scalar) {
+	  List<List<T>> data = A.getData();
     for (int i = 0; i < A.getNumCols(); i++) {
-      A.getData()[row1][i] += scalar * A.getData()[row2][i];
+      data.get(row1).set(i, (T) data.get(row1).get(i).add(scalar.multiply(data.get(row2).get(i))));
     }
     return A;
   }
@@ -386,9 +407,12 @@ public class Matrix {
    * @return
    */
   public Matrix transpose() {
-    double[][] data = new double[this.getNumCols()][this.getNumRows()];
+	  List<List<T>> data = new ArrayList<>(this.getNumRows());
+	  	for (List<T> row : data) {
+	  		row = new ArrayList<>(getNumCols());
+	  	}
     for (int i = 0; i < this.getNumRows(); i++) {
-      data[i] = this.getCol(i);
+      data.set(i, this.getCol(i));
     }
     return new Matrix(null, data, null);
   }
@@ -403,9 +427,9 @@ public class Matrix {
     if (inverse != null) {
       return inverse;
   }
-  double det = determinant();
-  if (det != 0) {
-    inverse = cofactorMatrix().transpose().multiplyScalar(1 / det).normalise();
+  T det = determinant();
+  if (!det.equals(det.getZero())) {
+    inverse = cofactorMatrix().transpose().multiplyScalar((T) det.inverse()).normalise();
     return inverse;
   } else
     return null;
@@ -415,11 +439,15 @@ public class Matrix {
    * Returns the sum of all values on the main diagonal of this matrix.
    * @return
    */
-  public double trace() {
-    double total = 0;
-    double[][] data = getData();
+  public T trace() {
+    T total = (T) getCell(0, 0).getZero();
+    List<List<T>> data = new ArrayList<>(this.getNumRows());
+  	for (List<T> row : data) {
+  		row = new ArrayList<>(getNumCols());
+  	}
+    data = getData();
     for (int i = 0; i < getNumRows(); i++) {
-      total += data[i][i];
+      total.add(data.get(i).get(i));
     }
     return total;
   }
@@ -437,7 +465,7 @@ public class Matrix {
    * http://en.wikipedia.org/wiki/Eigenvalue_algorithm#Direct_calculation
    * @return
    */
-  public double[] eigenvalues() {
+  /*public List<T> eigenvalues() {
     if (getNumRows() == 2 && getNumCols() == 2){
       double lambda1 = (this.trace() + Math.sqrt(Math.pow(this.trace(), 2) - 4 * this.determinant()))/2;
       double lambda2 = (this.trace() - Math.sqrt(Math.pow(this.trace(), 2) - 4 * this.determinant()))/2;
@@ -446,6 +474,6 @@ public class Matrix {
     } else {
       return null;
     }
-  }
+  }*/
 
 }
