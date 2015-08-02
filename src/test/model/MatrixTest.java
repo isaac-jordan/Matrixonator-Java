@@ -3,16 +3,22 @@ package test.model;
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import main.java.model.*;
 import main.java.view.MatrixonatorIOException;
 
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class MatrixTest {
+  
+  private List<List<Real>> data1;
+  private List<List<Real>> data2;
 
   /*
    * -------------------------- Matrix Creation and Methods Tests ---
@@ -28,6 +34,21 @@ public class MatrixTest {
   // Removes the Test file, s wont appear on startup of main application
   public static void tearDown() {
     MatrixIO.deleteFile("testMatrixSave.matrix");  
+  }
+  
+  @Before
+  public void init() {
+    List<List<Real>> data = new ArrayList<>();
+    for (List<Real> row : data) {
+        row = new ArrayList<>();
+    }
+    data1 = data;
+    
+    List<List<Real>> data2 = new ArrayList<>();
+    for (List<Real> row : data2) {
+        row = new ArrayList<>();
+    }
+    data2 = data;
   }
 
 

@@ -37,11 +37,6 @@ public class MainApp extends Application {
    * Constructor
    */
   public MainApp() {
-    // Add some sample data
-    Global.addMatrix(new Matrix("Example", new double[][] { {5, 2, 13}, {3, 2, -5}, {7, 0, 9}},
-        null));
-    Global.addMatrix(new Matrix("Identity2", new double[][] { {1, 0}, {0, 1}}, null));
-
     /*
      * NB: ONLY HERE FOR TESTING PURPOSES, PERHAPS MOVE TO INIT AND OUT OF CONSTRUCTOR? OUT OF
      * CONSTRUCTOR?
